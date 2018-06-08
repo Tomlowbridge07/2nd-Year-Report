@@ -556,7 +556,7 @@ We first relax the problem of the patroller only being able to visit one adjacen
 For ease of notation we will define $\pi_{i}:\Omega \rightarrow \alpha_{i}$, that is the resultant element map, which we will use when we only care about a single node.
 
 \begin{note}
-Our previous un-relaxed policies, $\pi: \Omega \rightarrow N$ can be converted to a MN policy by mapping $\bm{s}$ to $\bm{\alpha}$ where $\alpha_{i}=1$ for $i=\pi(\bm{s})$ and $\alpha_{i}=0$ for $i \neq \pi(\bm{s})$ to form a policy $\pi^{n} \equiv \pi$.
+Our previous un-relaxed policies, $\pi: \Omega \rightarrow N$ can be converted to a MN policy by mapping $\bm{s}$ to $\bm{\alpha}$ where $\alpha_{i}=1$ for $i=\pi(\bm{s})$ and $\alpha_{i}=0$ for $i \neq \pi(\bm{s})$.
 \end{note}
 
 Like before $\pi^{n}$ will induce a patrol pattern, $\psi^{k}_{\pi^{n}}$ with length $K'$. We define the long-run average visit rate at which node, $i$ is visited to be under $\pi^{n}$ starting from $\bm{s}_{0}$ as
@@ -571,15 +571,16 @@ Now we restrict ourselves to having a maximum long-run average visit rate of one
 \Pi^{\text{TR}}=\left\{ \pi^{n} \in \Pi^{\text{MN}} \, \bigg| \, \sum\limits_{i=1}^{N} \mu_{i}(\pi_{i},\bm{s}_{0}) \leq 1 \, , \, \forall \bm{s}_{0} \in \Omega \right\}
 \end{align*}
 
-We define the Problems optimal minimum cost, $C^{\text{TR}}=\min\limits_{\pi^{n} \in \Pi^{\text{TR}}} \sum\limits_{i=1}^{n} V_{i}(\pi^{n})$, similarly to before.
+We define the Problems optimal minimum cost, $C^{\text{TR}}=\min\limits_{\pi^{n} \in \Pi^{n}} \sum\limits_{i=1}^{n} V_{i}(\pi^{n})$, similarly to before (with a slight change as more than one node can be visited
 
 \begin{note}
-We have dropped the dependency on the initial state, $\bm{s}_{0}$, as even though $V_{i}(\pi^{n},\bm{s}_{0})$ depends on it, the long-run average cost does not. We will similarly drop the notation on the long-run visit rate, using $\mu_{i}(\pi^{n})$.
+We have dropped the dependency on the initial state, $\bm{s}_{0}$, as even though $V_{i}(\pi)$
 \end{note}
+
 
 Again,  $\exists \; \pi^{n} \in \Pi^{\text{TR}} \text{ s.t } \pi \equiv \pi^{n}$, so $C^{\text{OPT}} \geq C^{\text{TR}} $
 
-Secondly we relax the MN problem by introducing the TR constraint as a Lagrangian multiplier.
+Secondly we relax
 
 
 
