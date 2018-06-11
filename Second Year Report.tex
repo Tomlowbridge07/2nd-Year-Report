@@ -516,9 +516,10 @@ $C_{j}(\bm{s},i)$ is not dependent on $i$, the choice of $i$ affects the future 
   
 With a countable infinite state space, $\Omega$, problems of finding an optimal policy may exisit (See [Need reference from Peuterman]), so we bound the state space to make it finite. A reasonable assumption is to bound the attack times and define, the smallest interger for this bound
 
-\begin{align*}
+\begin{align}
+\label{Equation:Definition of attack time bound}
 B_{j} \equiv \min \{ k \, | \, k \in \mathbb{Z}^{+} , P(X_{j} \leq k)=1 \}
-\end{align*}
+\end{align}
 
 We now see that the cost function remains constant, $c_{j} \lambda_{j}$, for all $s_{j} \geq B_{j}+1$ and so we restrict our state space to $s_{j} \leq B_{j}+1$ and modify the transitions slightly so $\widetilde{s}_{j}=\min(s_{j}+1,B_{j}+1) \; \forall j \neq i$.
 
@@ -869,8 +870,8 @@ While the standard set-up remains mostly intact, the cost function is slightly a
 
 \begin{align*}
 C_{j}(\bm{s},i) &= \begin{cases}
-c_{i} \lambda_{i} \left( \int_{s_{j}-1}^{s_{j}} P(X_{j} \leq t) dt - \int_{0}^{1} P(X_{j} \leq t) dt \right)  \text{ if } j=i \\
-c_{i} \lambda_{i} \int_{s_{j}-1}^{s_{j}} P(X_{j} \leq t) dt \text{ if } j \neq i \\
+0  \text{ if } j=i \\
+c_{j} \lambda_{j} \int_{s_{j}-1}^{s_{j}} P(X_{j} \leq t) dt \text{ if } j \neq i \\
 \end{cases}
 \end{align*}
 
@@ -1102,10 +1103,31 @@ That is the $\bm{s}$ state transitions as before, and the $\bm{v}$ state updates
 
 Again the future of the process is independent of its past, so we can formulate its movement as an MC and hence the patrollers problem is a MDP.
 
-The patroller incurs costs for all attackers able to complete their attacks.
+The patroller incurs cost $c_{j}$ for all successful attacks at node $j$. A successful attack will fall into two categories; an observed attack or an attacker who arrived. We simply sum the expected costs of both types of attacker to work out the cost at a node for the next unit time, given we choose to move to node $i$.
 
-\subsection{Problem relaxation}
-\subsection{Discrete attack time assumption}
+\begin{align*}
+C_{j}(\bm{s},i) &= \begin{cases}
+0  \text{ if } j=i \\
+\underbrace{c_{j} P(s_{j}-1 < X_{j} \leq s_{j})}_{\text{Observed finishing}} + \uderbrace{c_{j} \lambda_{j} \int_{s_{j}-1}^{s_{j}} P(X_{j} \leq t) dt}_{\text{Arrivals finishing}} \text{ if } j \neq i \\
+\end{cases}
+\end{align*}
+
+We run into the same problem as before, with a countably infinite state space, $\Omega$, we therefore wish to bound ourselves to a finite state space. As before we can bound the attack times, defining $B_{j}$ as in \ref{Equation:Definition of attack time bound}, but this only partially solves our problem, as it bounds the $\bm{s}$ part of the state space but not the $\bm{v}$ part.
+
+To bound $\bm{v}$ we introduce a observable capacity, $\bm{b}$, where $b_{i}$ is the maximum number of local-observations at node $i$. We assume that all other attackers leave once this capacity is reached.
+
+We as before want to work out the long-run average cost among all 
+
+We can then use the standard reduction tools of making the problem into a MN problem and then applying the TR constraint and/or the Lagrangian relaxation. We shall therefore focus on the single node problem
+
+\begin{align*}
+g \equiv \min\limits_{\pi \in}
+\end{align*}
+
+\subsection{Deterministic attack time assumption}
+Because we are at a loss of how to deal with the state space in the single node problem, we shall reduce the problem, by assuming that the attack times are deterministic, that is $P(X=x)=1$, this reduces our cost function to
+
+
 \subsection{Single node solution}
 \subsection{Indices, heuristics and numerical experiments}
 
