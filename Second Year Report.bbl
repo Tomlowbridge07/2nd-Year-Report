@@ -1,0 +1,34 @@
+\begin{thebibliography}{3}
+\providecommand{\natexlab}[1]{#1}
+\providecommand{\url}[1]{\texttt{#1}}
+\expandafter\ifx\csname urlstyle\endcsname\relax
+  \providecommand{\doi}[1]{doi: #1}\else
+  \providecommand{\doi}{doi: \begingroup \urlstyle{rm}\Url}\fi
+
+\bibitem[Alpern et~al.(2011)Alpern, Morton, and Papadaki]{Alpern2011}
+Steve Alpern, Alec Morton, and Katerina Papadaki.
+\newblock {Patrolling Games}.
+\newblock \emph{Operations Research}, 59\penalty0 (5):\penalty0 1246--1257,
+  2011.
+\newblock \doi{10.1287/opre.1110.0983}.
+\newblock URL \url{http://pubsonline.informs.org http://}.
+
+\bibitem[Papadaki et~al.(2016)Papadaki, Alpern, Lidbetter, and
+  Morton]{Papadaki2016}
+Katerina Papadaki, Steve Alpern, Thomas Lidbetter, and Alec Morton.
+\newblock {Patrolling a Border}.
+\newblock \emph{Operations Research}, 64\penalty0 (6):\penalty0 1256--1269,
+  2016.
+\newblock \doi{10.1287/opre.2016.1511}.
+\newblock URL \url{http://pubsonline.informs.org
+  http://dx.doi.org/10.1287/opre.2016.1511}.
+
+\bibitem[Lin et~al.(2013)Lin, Atkinson, Chung, and Glazebrook]{Lin2013}
+Kyle~Y Lin, Michael~P Atkinson, Timothy~H Chung, and Kevin~D Glazebrook.
+\newblock {A Graph Patrol Problem with Random Attack Times}.
+\newblock \emph{Operations Research}, 61\penalty0 (3):\penalty0 694--710, 2013.
+\newblock \doi{10.1287/opre.1120.1149}.
+\newblock URL \url{http://pubsonline.informs.org
+  http://dx.doi.org/10.1287/opre.1120.1149}.
+
+\end{thebibliography}

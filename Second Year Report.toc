@@ -4,23 +4,28 @@
 \contentsline {subsubsection}{\numberline {1.2.1}Bounds and Tools}{2}{subsubsection.1.2.1}
 \contentsline {subsubsection}{\numberline {1.2.2}Solved Graphs}{6}{subsubsection.1.2.2}
 \contentsline {subsection}{\numberline {1.3}Patrolling games with random attackers}{7}{subsection.1.3}
-\contentsline {subsubsection}{\numberline {1.3.1}Problem relaxation}{9}{subsubsection.1.3.1}
-\contentsline {section}{\numberline {2}Strategic Patroller and Strategic Attacker}{10}{section.2}
-\contentsline {subsection}{\numberline {2.1}Problem and correction to line graph strategy}{10}{subsection.2.1}
-\contentsline {subsection}{\numberline {2.2}New Tools}{13}{subsection.2.2}
-\contentsline {subsection}{\numberline {2.3}Star graph solution}{14}{subsection.2.3}
-\contentsline {subsection}{\numberline {2.4}Extending the star graph}{14}{subsection.2.4}
-\contentsline {subsection}{\numberline {2.5}Joining star graphs by centralised connections}{14}{subsection.2.5}
-\contentsline {section}{\numberline {3}Strategic Patroller with Random Attackers and Local-observations}{14}{section.3}
-\contentsline {subsection}{\numberline {3.1}Altering problem to accommodate local information}{14}{subsection.3.1}
-\contentsline {subsection}{\numberline {3.2}Problem relaxation}{15}{subsection.3.2}
-\contentsline {subsection}{\numberline {3.3}Discrete attack time assumption}{15}{subsection.3.3}
-\contentsline {subsection}{\numberline {3.4}Single node solution}{15}{subsection.3.4}
-\contentsline {subsection}{\numberline {3.5}Indices, heuristics and numerical experiments}{15}{subsection.3.5}
-\contentsline {section}{\numberline {4}Future Work}{15}{section.4}
-\contentsline {subsection}{\numberline {4.1}Proof completions}{15}{subsection.4.1}
-\contentsline {subsection}{\numberline {4.2}Extending Discrete Attack time to generic distributions}{15}{subsection.4.2}
-\contentsline {subsection}{\numberline {4.3}Strategic Patroller with Random Attackers on Edges}{15}{subsection.4.3}
-\contentsline {section}{Appendices}{i}{section*.9}
+\contentsline {subsubsection}{\numberline {1.3.1}Game Set-up}{7}{subsubsection.1.3.1}
+\contentsline {subsubsection}{\numberline {1.3.2}Problem relaxation}{9}{subsubsection.1.3.2}
+\contentsline {subsubsection}{\numberline {1.3.3}Single-node problem}{11}{subsubsection.1.3.3}
+\contentsline {subsubsection}{\numberline {1.3.4}More heuristics}{12}{subsubsection.1.3.4}
+\contentsline {section}{\numberline {2}Strategic Patroller and Strategic Attacker}{13}{section.2}
+\contentsline {subsection}{\numberline {2.1}Problem and correction to line graph strategy}{13}{subsection.2.1}
+\contentsline {subsection}{\numberline {2.2}New Tools}{15}{subsection.2.2}
+\contentsline {subsection}{\numberline {2.3}Star graph solution}{16}{subsection.2.3}
+\contentsline {subsection}{\numberline {2.4}Extending the star graph}{17}{subsection.2.4}
+\contentsline {subsection}{\numberline {2.5}Joining star graphs by centralised connections}{17}{subsection.2.5}
+\contentsline {section}{\numberline {3}Strategic Patroller with Random Attackers and Local-observations}{17}{section.3}
+\contentsline {subsection}{\numberline {3.1}Altering the problem for instantaneous moving patroller}{17}{subsection.3.1}
+\contentsline {subsection}{\numberline {3.2}Numerical results for instantaneously moving patroller}{18}{subsection.3.2}
+\contentsline {subsection}{\numberline {3.3}Altering problem to accommodate local-observable information}{18}{subsection.3.3}
+\contentsline {subsection}{\numberline {3.4}Problem relaxation}{20}{subsection.3.4}
+\contentsline {subsection}{\numberline {3.5}Discrete attack time assumption}{20}{subsection.3.5}
+\contentsline {subsection}{\numberline {3.6}Single node solution}{20}{subsection.3.6}
+\contentsline {subsection}{\numberline {3.7}Indices, heuristics and numerical experiments}{20}{subsection.3.7}
+\contentsline {section}{\numberline {4}Future Work}{20}{section.4}
+\contentsline {subsection}{\numberline {4.1}Proof completions}{20}{subsection.4.1}
+\contentsline {subsection}{\numberline {4.2}Extending Discrete Attack time to generic distributions}{20}{subsection.4.2}
+\contentsline {subsection}{\numberline {4.3}Strategic Patroller with Random Attackers on Edges}{20}{subsection.4.3}
+\contentsline {section}{Appendices}{i}{section*.12}
 \contentsline {section}{\numberline {A}Graph Definitions}{i}{appendix.A}
 \contentsline {section}{\numberline {B}Optimal Solution for a Random Attacker}{iii}{appendix.B}

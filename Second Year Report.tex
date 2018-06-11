@@ -82,7 +82,7 @@ cross/.default={1pt}}
 \date{\today}
 \author{Thomas Lowbridge \\ School of Mathematical Sciences \\ University of Nottingham}
 
-\bibliographystyle{plain}
+\bibliographystyle{unsrtnat}
 
 \begin{document}
 
@@ -372,6 +372,10 @@ The value of the complete bipartite graph, $K_{a,b}$, with $b \geq a$, then $V=\
 This is because a lower bound of $V \geq \frac{m}{2b}$ is given by the random Hamiltonian patrol in $K_{b,b}$ , which simplifies to $K_{a,b}$.
 
 \subsection{Patrolling games with random attackers}
+\label{Section:Patrolling games with random attackers}
+This section summarizes the key work from \cite{Lin2013} and their work on Patrolling games with random attackers. Providing a baseline for future work done in Section \ref{Section:Patrolling games with random attackers and local-observations}
+
+\subsubsection{Game Set-up}
 A patrolling game is random attackers, $G=G(Q,\bm{X},\bm{\lambda},\bm{c})$ is a minimizing game for the patroller. The parameters of the game are
 
 \begin{itemize}
@@ -457,14 +461,14 @@ The attackers arrive at node, $i$, according a poisson process of rate $\lambda_
   \node (TimeLabel) at (10,-0.8) {Time};
 
 %Inserting patroller and attackers
-  \node[main node,fill=blue!30] (Pat1) at (1,1) {\textcolor{red}{$1$}};
+  \node[main node,fill=blue!30] (Pat1) at (1,1) {\textcolor{red}{$0$}};
   \draw[color=blue!30,line width=0.1cm] (Pat1)--(1,-0.5);
   
   \node[main node,fill=blue!30] (Pat2) at (6,1) {\textcolor{red}{$3$}};
   \draw[color=blue!30,line width=0.1cm] (Pat2)--(6,-0.5);
   
-  \node[cross=5pt,color=red] (AttackStart1) at (0.5,0) {};
-  \node (AttackEnd1) at (2.2,0) {};
+  \node[cross=5pt,color=red] (AttackStart1) at (0.2,0) {};
+  \node (AttackEnd1) at (0.8,0) {};
   \draw[bend left,color=red,->,dashed] (AttackStart1) to (AttackEnd1);
   
   \node[cross=5pt,color=red] (AttackStart2) at (1.5,0) {};
@@ -553,7 +557,7 @@ We first relax the problem of the patroller only being able to visit one adjacen
 \Pi^{\text{MN}}=\{\pi^{n}: \Omega \rightarrow \bm{\alpha} \, | \alpha_{i}=0,1 \text{ for } i=1,...,n \}
 \end{align*}
 
-For ease of notation we will define $\pi_{i}:\Omega \rightarrow \alpha_{i}$, that is the resultant element map, which we will use when we only care about a single node.
+For ease of notation we will define $\pi_{i}:\Omega \rightarrow \alpha_{i} \in \Pi^{\text{MN}}_{i}$, that is the resultant element map, which we will use when we only care about a single node.
 
 \begin{note}
 Our previous un-relaxed policies, $\pi: \Omega \rightarrow N$ can be converted to a MN policy by mapping $\bm{s}$ to $\bm{\alpha}$ where $\alpha_{i}=1$ for $i=\pi(\bm{s})$ and $\alpha_{i}=0$ for $i \neq \pi(\bm{s})$ to form a policy $\pi^{n} \equiv \pi$.
@@ -579,10 +583,84 @@ We have dropped the dependency on the initial state, $\bm{s}_{0}$, as even thoug
 
 Again,  $\exists \; \pi^{n} \in \Pi^{\text{TR}} \text{ s.t } \pi \equiv \pi^{n}$, so $C^{\text{OPT}} \geq C^{\text{TR}} $
 
-Secondly we relax the MN problem by introducing the TR constraint as a Lagrangian multiplier.
+Secondly we relax the MN problem by introducing the TR constraint as a Lagrangian multiplier, $\omega \geq 0$, to form
 
+\begin{align*}
+C(\omega) & \equiv \min\limits_{\pi^{n} \in \Pi^{\text{MN}}} \left(\sum\limits_{i=1}^{n} V_{i}(\pi^{n}) + \omega \left(\sum\limits_{i=1}^{n} \mu_{i}(\pi^{n}) -1\right) \right) \\
+&= \min\limits_{\pi^{n} \in \Pi^{\text{MN}}} \sum\limits_{i=1}^{n} \left(V_{i}(\pi^{n}) + \omega \mu_{i}(\pi^{n})\right)  -\omega
+\end{align*}
 
+This formulation means that $C^{\text{TR}} \geq C(\omega)$, hence $C^{\text{OPT}} \geq C^{\text{TR}} \geq C(\omega)$.
 
+The Lagrangian relaxtion can be interpreted as the cost of missed attacks plus a cost of $\omega$ for ever visit we make, therefore we call $\omega$ the \textit{service charge}. As the Lagrangian relaxation, splits up into $n$ separate problems, where node $i$'s problem is
+
+\begin{align*}
+C_{i}(\omega) \equiv \min\limits_{\pi_{i} \in \Pi^{\text{MN}}_{i}} \left(V_{i}(\pi_{i}) + \omega \mu_{i}(\pi_{i})\right)
+\end{align*}
+
+With $C(\omega)=\left(\sum\limits_{i}^{n} C_{i}(\omega)\right) -\omega$
+
+\subsubsection{Single-node problem}
+
+Focusing on the separated, single node problem is equivalent to deciding when to visit the node. We shall remove node subscript, $i$, for ease of reading. Each time has a binary decision, visit ($1$) or wait ($0$). Because we are only considering stationary, deterministic policies, the optimal action of when to visit remains constant and the optimal policy will be one that visits every, $k$ periods. Such a policy gives us an expected number of arrivals who finish before we visit of
+
+\begin{align*}
+\lambda \int_{0}^{k} P(X \leq k-t) dt= \lambda \int_{0}^{k} P(X \leq t) dt
+\end{align*}
+
+Each successful attack costs $c$ and the visit costs us $\omega$ and this cycle is of length $k$ so the long-run average cost is
+
+\begin{align*}
+f(k) \equiv \frac{c \lambda \int_{0}^{k} P(X \leq t) dt + \omega}{k}
+\end{align*}
+
+Thus solving the single node problem is equivalent to minimizing $f(k)$, by setting $f(k) = f(k+1)$ we can find the cost that makes the patroller indifferent between visiting every $k$ and $k+1$ time units. This solution helps us characterise the optimal policy that minimizes $f(k)$ defined as
+
+\begin{align*}
+W(k) \equiv c \lambda \left( k \int_{k}^{k+1} P(x \leq t) dt - \int_{0}^{k} P(x \leq t) dt \right)
+\end{align*}
+
+We have $W(0)=0$ and as $X$ is bounded by $B$, we have for $k \geq B$ that $W(k)= c \lambda E[X]$. We us this function to characterise the optimal policy minimizing the single node objective
+
+\begin{theorem}[Single node optimal policy]
+\label{Theorem:Single node optimal policy}
+\begin{itemize}
+\item[a)] $W(k)$ is non-decreasing in $k$.
+\item[b)] If $\omega \in [W(k-1),W(k)]$ then it optimal to visit the node once every $k$ time periods, for $k=1,2,...$
+\item[c)] Moreover if $\omega \geq c \lambda E[X]$ it is never optimal to visit the node.
+\end{itemize}
+\end{theorem}
+
+Proof: See Appendix \ref{Appendix:Optimal Solution for a Random Attacker}
+
+This motivates a simple Index Heuristic(IH) based on the optimal solution to the single node problem, by reinserting the node subscript, we suggest an index of
+
+\begin{align*}
+W_{i}(\bm{s}) \equiv c_{i} \lambda_{i} \left(s_{i} \int_{s_{i}}^{s_{i}+1} P(X_{i} \leq t) dt - \int_{0}^{s_{i}} P(X_{i} \leq t) dt \right)
+\end{align*}
+
+The IH computes the index for all adjacent nodes (including the current node) from the state $\bm{s}$ and moves to the node with the highest index. In the cases of ties in indices, they are broke arbitrarily.
+
+\subsubsection{More heuristics}
+The IH is simplistic and short sighted, we can develop more sophisticated heuristics based on the index.
+
+\textbf{Index Reward Heuristic(IRH)}
+We can interpret the index as a reward for visiting the node and pick a look-ahead window of length $l$, we then look at all paths of length $l$ from the current node, aggregating the index along the path. Then choosing the next node to visit according to which path has the highest aggregate reward.
+
+\textbf{Index Penalty Heuristic(IPH)}
+We could also interpret the index as a penalty for not visiting the node. With a look-ahead window of length $l$, we look at all paths of length $l$ from the current node, aggregating the indices not along the path. Then choosing the next node to visit according to which path has the lowest aggregate penalty. 
+
+\begin{note}
+We only use the aggregate reward/penalty to determine the next node, then we repeat the process, we do not follow the path.
+\end{note}
+
+A natural question to ask is; does increasing the look-ahead window improve the heuristic. The answer is no, as $l$ and $l+1$ may return two distinct patrol patterns, with $l$'s patrol pattern performing better than $l+1$'s. However when considering using a look-ahead window of $l+1$ we have to compute $l$'s paths, so we might as well look at all look-ahead windows up to a value. We shall call this the heuristic depth, $d$ and denote the depth heuristics as IRH($d$) and IPH($d$) which apply IRH and IPH respectively to all look-ahead windows of length $l=1,...,d$.
+
+\begin{note}
+IRH($1$) $\equiv$ IPH($1$)
+\end{note}
+
+The numerical results of these heuristics can be found in Section 3.4 in \citep{Lin2013}. A key result of the study, that we will look at later is that IPH seems to outform IRH on the Complete and Line graph.
 
 \section{Strategic Patroller and Strategic Attacker}
 
@@ -722,7 +800,228 @@ As a special case of Complete bipartite we have the star graph, $S_{n}=K_{1,n}$,
 \subsection{Joining star graphs by centralised connections}
 
 \section{Strategic Patroller with Random Attackers and Local-observations}
-\subsection{Altering problem to accommodate local information}
+\label{Section:Patrolling games with random attackers and local-observations}
+We now look at altering the work summarized in Section \ref{Section:Patrolling games with random attackers} to incorporate suspicious behaviour of attackers who arrive while the patroller is present.
+
+\subsection{Altering the problem for instantaneous moving patroller}
+As the standard set-up has a patroller moving at unit speed along the edges, they are never really present at a node (even when waiting). As we wish to have the patroller observe some arrivals we shall first alter this assumption to that of an instantaneous moving patrolling. For now we will use the same assumption that attackers who arrive while the patroller is present are caught, however we will soon assume they are smart enough to not start their attack and instantly get caught.
+
+\begin{myfigure}
+\begin{center}
+\begin{tikzpicture}[-,auto,node distance=2cm,
+                    thick,main node/.style={rectangle,draw,font=\sffamily\Large\bfseries}]
+
+%DRAWING Base line
+
+ \draw[->] (0,0)--(10,0);
+ 
+ \foreach \x in {0,...,9}
+ {\draw  (\x,0.5)--(\x,-0.5) ;
+  \node (TimeLabel\x) at (\x,-0.8) {$\x$};} 
+  
+  \node (TimeLabel) at (10,-0.8) {Time};
+
+%Inserting patroller and attackers
+  
+    \node[main node,fill=blue!30] (Pat1) at (1,1) {\textcolor{red}{$1$}};
+  \draw[color=blue!30,line width=0.1cm] (Pat1)--(1,-0.5);
+  \draw[color=blue!30,line width=0.1cm] (0,0)--(1,0);
+  
+  \node[main node,fill=blue!30] (Pat2) at (6,1) {\textcolor{red}{$3$}};
+  \draw[color=blue!30,line width=0.1cm] (Pat2)--(6,-0.5);
+  \draw[color=blue!30,line width=0.1cm] (5,0)--(6,0);
+  
+  
+  \node[cross=5pt,color=red] (AttackStart1) at (0.2,0) {};
+  \node (AttackEnd1) at (0.8,0) {};
+  \draw[bend left,color=red,->,dashed] (AttackStart1) to (AttackEnd1);
+  
+  \node[cross=5pt,color=red] (AttackStart2) at (1.5,0) {};
+  \node (AttackEnd2) at (4.3,0) {};
+  \draw[bend left,color=red,->,dashed] (AttackStart2) to (AttackEnd2);
+  
+  \node[cross=5pt,color=red] (AttackStart3) at (3,0) {};
+  \node (AttackEnd3) at (3.9,0) {};
+  \draw[bend left,color=red,->,dashed] (AttackStart3) to (AttackEnd3);
+  
+  \node[cross=5pt,color=red] (AttackStart4) at (4.5,0) {};
+  \node (AttackEnd4) at (8.7,0) {};
+  \draw[bend left,color=red,->,dashed] (AttackStart4) to (AttackEnd4);
+  
+  \node[cross=5pt,color=red] (AttackStart5) at (5.4,0) {};
+  \node (AttackEnd5) at (9,0) {};
+  \draw[bend left,color=red,->,dashed] (AttackStart5) to (AttackEnd5);
+  
+  \node[cross=5pt,color=red] (AttackStart6) at (5.7,0) {};
+  \node (AttackEnd6) at (6.8,0) {};
+  \draw[bend left,color=red,->,dashed] (AttackStart6) to (AttackEnd6);
+  
+  
+  \node (AttacksCaught) at (3.5,1) {\textcolor{blue!50}{Attacks caught}};
+  
+       
+\end{tikzpicture}
+\end{center}
+\caption{Example of timing}
+\end{myfigure} 
+
+While the standard set-up remains mostly intact, the cost function is slightly altered to accommodate this change. We note there is now a difference in cost depending on if the node is visited or not.
+
+\begin{align*}
+C_{j}(\bm{s},i) &= \begin{cases}
+c_{i} \lambda_{i} \left( \int_{s_{j}-1}^{s_{j}} P(X_{j} \leq t) dt - \int_{0}^{1} P(X_{j} \leq t) dt \right)  \text{ if } j=i \\
+c_{i} \lambda_{i} \int_{s_{j}-1}^{s_{j}} P(X_{j} \leq t) dt \text{ if } j \neq i \\
+\end{cases}
+\end{align*}
+
+This change does not the theory that much, the problem can still be reduced to the single node version of the problem. However there is a slight change here, which results in a slight change to the optimal solution and hence the index which is suggested.
+
+The following are the changes
+
+\begin{align*}
+&f(k) \equiv \frac{c \lambda \int_{0}^{k-1} P(X \leq t) dt + \omega}{k} \\
+&W(k) \equiv c \lambda \left( \int_{k-1}^{k} P(X \leq t) dt - \int_{0}^{k-1} P(X \leq t) dt \right)
+\end{align*}
+
+\begin{note}
+$W(0)=0$ and for $k \geq B+1$ $W(k)= c \lambda E[X]$
+\end{note}
+
+Using this new definition of $W(k)$, Theorem \ref{Theorem:Single node optimal policy} still holds and gives us the optimal policy. Hence suggesting an index of
+
+\begin{align*}
+W_{i}(\bm{s}) \equiv c_{i} \lambda_{i} \left( \int_{s_{i}-1}^{s_{i}} P(X_{i} \leq t) dt - \int_{0}^{s_{i}-1} P(X_{i} \leq t) dt \right)
+\end{align*}
+
+For completness sake, we provide numerical results for the IRH and IPH defined as before, but using this index.
+
+\subsection{Numerical results for instantaneously moving patroller}
+For completeness sake, we provide numerical results for the IRH and IPH defined as before, but using this index.
+
+
+\begin{huge}
+THIS NEEDS TO BE DONE
+\end{huge}
+
+
+
+\subsection{Altering problem to accommodate local-observable information}
+Now that we have established a instantaneously moving patroller, we now introduce the idea of local-observations, that is the patroller witnesses attackers arriving at there current node, but the attackers do not begin there attack immediately,as they are aware of the patroller's presence. For now we assume that any such attacker is only able to delay their attack to start at the beginning of the next time period.
+
+\begin{figure}
+\begin{center}
+\begin{tikzpicture}[-,auto,node distance=2cm,
+                    thick,main node/.style={circle,fill=white,draw,font=\sffamily\Large\bfseries}]
+
+%DRAWING GRAPH
+  \node[main node] (1) {$1$};
+  \node[main node] (2) [right of=1] {$2$};
+  \node[main node,fill=blue!30] (3) [below of=1]  {$3$};
+  \node[main node] (4) [below of=2]  {$4$};
+
+  \path[every node/.style={font=\sffamily}]
+    (1) edge (2)
+        edge (3)
+        edge (4)
+    (2) edge (3)
+        edge (4)
+    (3) edge (4);
+  
+  
+%DRAWING ARRIVALS  
+  \node (1ArrowStart) [shift={(-4,0)}] at (1) {};
+  \draw[->] (1ArrowStart)--(1);
+  
+  \node[cross=5pt,color=red] (1Cross1) [shift={(-3,0)}] at (1) { };
+  \node (1CrossEnd1) [shift={(-1.5,0)}] at (1) {};
+  \draw[->,bend left,dashed,color=red] (1Cross1) to (1CrossEnd1);
+  \node[cross=5pt,color=red] (1Cross2) [shift={(-2.2,0)}] at (1) { };
+  \node (1CrossEnd2) [shift={(-0.5,0)}] at (1) {};
+  \draw[->,bend left,dashed,color=red] (1Cross2) to (1CrossEnd2);
+  
+  \node (2ArrowStart) [shift={(4,0)}] at (2) {};
+  \draw[->] (2ArrowStart)--(2);
+  
+  \node[cross=5pt,color=red] (2Cross1) [shift={(3,0)}] at (2) { };
+  \node (2CrossEnd1) [shift={(1,0)}] at (2) {};
+  \draw[->,bend right,dashed,color=red] (2Cross1) to (2CrossEnd1);
+
+  \node (3ArrowStart) [shift={(-4,0)}] at (3) {};
+  \draw[->] (3ArrowStart)--(3);
+  
+  \node[cross=5pt,color=red] (3Cross1) [shift={(-2,0)}] at (3) { };
+  \node (3CrossEnd1) [shift={(-1.5,0)}] at (3) {};
+  \draw[->,bend left,dashed,color=red] (3Cross1) to (3CrossEnd1);
+  \node[cross=5pt,color=red] (3Cross1) [shift={(-1,0)}] at (3) { };
+  
+  \node (4ArrowStart) [shift={(4,0)}] at (4) {};
+  \draw[->] (4ArrowStart)--(4);
+  
+  \node[cross=5pt,color=red] (4Cross1) [shift={(2,0)}] at (4) { };
+  \node (4CrossEnd1) [shift={(1.2,0)}] at (4) {};
+  \draw[->,bend right,dashed,color=red] (4Cross1) to (4CrossEnd1);
+  
+%Drawing Observable capacity boxes
+ \node (1LowerLeft) [shift={(-0.4,0.6)}] at (1) { };
+ \node (1LowerRight) [shift={(0.4,0.6)}] at (1) { };
+ \node (1UpperLeft) [shift={(-0.4,1.6)}] at (1) { };
+ \node (1UpperRight) [shift={(0.4,1.6)}] at (1) { }; 
+ 
+ \draw[-] (1LowerLeft.center)--(1LowerRight.center)--(1UpperRight.center)
+ --(1UpperLeft.center)--(1LowerLeft.center);
+ 
+ \node (1FillPointLeft1) [shift={(0,0.25)}] at (1LowerLeft) { };
+ \node (1FillPointRight1) [shift={(0,0.25)}] at (1LowerRight) { };
+ \node (1FillPointLeft2) [shift={(0,0.5)}] at (1LowerLeft) { };
+ \node (1FillPointRight2) [shift={(0,0.5)}] at (1LowerRight) { };
+ \node (1FillPointLeft3) [shift={(0,0.75)}] at (1LowerLeft) { };
+ \node (1FillPointRight3) [shift={(0,0.75)}] at (1LowerRight) { };
+
+ \filldraw[fill=red!40!white, draw=black] (1LowerLeft) rectangle (1FillPointRight3);
+ 
+ \draw[-] (1FillPointLeft1.center)--(1FillPointRight1.center);
+ \draw[-] (1FillPointLeft2.center)--(1FillPointRight2.center);
+ \draw[-] (1FillPointLeft3.center)--(1FillPointRight3.center);
+ 
+ 
+ 
+ \node (2LowerLeft) [shift={(-0.4,0.6)}] at (2) { };
+ \node (2LowerRight) [shift={(0.4,0.6)}] at (2) { };
+ \node (2UpperLeft) [shift={(-0.4,1.1)}] at (2) { };
+ \node (2UpperRight) [shift={(0.4,1.1)}] at (2) { }; 
+ 
+ \draw[-] (2LowerLeft.center)--(2LowerRight.center)--(2UpperRight.center)
+ --(2UpperLeft.center)--(2LowerLeft.center);
+ 
+ \node (2FillPointLeft1) [shift={(0,0.25)}] at (2LowerLeft) { };
+ \node (2FillPointRight1) [shift={(0,0.25)}] at (2LowerRight) { };
+
+ \filldraw[fill=red!40!white, draw=black] (2LowerLeft) rectangle (2FillPointRight1);
+ 
+ \draw[-] (1FillPointLeft1.center)--(1FillPointRight1.center);
+ 
+ 
+ \node (3LowerLeft) [shift={(-0.4,-0.6)}] at (3) { };
+ \node (3LowerRight) [shift={(0.4,-0.6)}] at (3) { };
+ \node (3UpperLeft) [shift={(-0.4,-1.35)}] at (3) { };
+ \node (3UpperRight) [shift={(0.4,-1.35)}] at (3) { }; 
+ 
+ \draw[-] (3LowerLeft.center)--(3LowerRight.center)--(3UpperRight.center)
+ --(3UpperLeft.center)--(3LowerLeft.center);
+ 
+ \node (3FillPointLeft1) [shift={(0,-0.25)}] at (3LowerLeft) { };
+ \node (3FillPointRight1) [shift={(0,-0.25)}] at (3LowerRight) { };
+ \node (3FillPointLeft2) [shift={(0,-0.5)}] at (3LowerLeft) { };
+ \node (3FillPointRight2) [shift={(0,-0.5)}] at (3LowerRight) { };
+
+ 
+ \draw[-] (3FillPointLeft1.center)--(3FillPointRight1.center);
+ \draw[-] (3FillPointLeft2.center)--(3FillPointRight2.center);
+    
+\end{tikzpicture}
+\end{center}
+\caption{Example of $G=(K_{4},\bm{X},\bm{b},\bm{\lambda},\bm{c})$ with patroller currently at node $3$}
+\end{figure}
 
 
 \begin{myfigure}
@@ -752,7 +1051,7 @@ As a special case of Complete bipartite we have the star graph, $S_{n}=K_{1,n}$,
   \draw[color=blue!30,line width=0.1cm] (5,0)--(6,0);
   
   
-  \node[cross=5pt,color=red] (AttackStart1) at (0.5,0) {};
+  \node[cross=5pt,color=red] (AttackStart1) at (0.2,0) {};
   \draw[-,color=red] (AttackStart1.center) to (1,0);
   \draw[->,color=red] (1,0) to (1,-0.5);
   \node[cross=5pt,color=red] (NewAttackStart1) at (1,-0.6) {};
@@ -785,7 +1084,7 @@ As a special case of Complete bipartite we have the star graph, $S_{n}=K_{1,n}$,
 
  \node (AttacksCaught) at (3.5,1.7) {\textcolor{blue!50}{Attacks caught}};
  
- \node (AttacksCaught) at (3.5,-1.7) {\textcolor{blue!50}{Attackers Observed}};
+ \node (AttacksObs) at (3.5,-1.7) {\textcolor{blue!50}{Attackers Observed}};
   
        
 \end{tikzpicture}
@@ -793,6 +1092,17 @@ As a special case of Complete bipartite we have the star graph, $S_{n}=K_{1,n}$,
 \caption{Example of timing}
 \end{myfigure}
 
+The problem can still be formulated as a MDP, however our states now need to hold the information about how many attackers where observed when the node was last visited. Our state space is
+
+$$\Omega= \{ (\bm{s},\bm{v})=(s_{1},...,s_{n},v_{1},...,v_{n}) \, | \, s_{i}=1,2,...., \; v_{i}=0,1,...  \text{ for } i=1,...,n\}$$
+
+Where as before, $s_{i}$ denotes the time since the last decision to visit node $i$ was taken and the newly introduced $v_{i}$ denotes how many attackers where observed when the patroller last visited node $i$.The current node is $l(\bm{s},\bm{v})=\argmin_{i} s_{i}$ and the decisions from $(\bm{s},\bm{v})$ are still adjacent node, $\mathcal{A}(\bm{s},\bm{v})$. The transition when node $i$ is chosen to move to are $\phi(\bm{s},\bm{v},i)=(\widetilde{\bm{s}},\widetilde{\bm{v}})$, where; $\widetilde{s}_{i}=1$,  $\widetilde{s}_{j}=s_{j}+1 \; \forall j \neq i$, $\widetilde{v}_{i} \sim Po(\lambda_{i})$ and $\widetilde{v}_{j}=v_{j} \; \forall j \neq i$.
+
+That is the $\bm{s}$ state transitions as before, and the $\bm{v}$ state updates the chosen node to be the amount observed while the patroller is at the node, which is drawn from a Poisson distribution of rate $\lambda_{i}$ due to the arrivals being a Poisson Process.
+
+Again the future of the process is independent of its past, so we can formulate its movement as an MC and hence the patrollers problem is a MDP.
+
+The patroller incurs costs for all attackers able to complete their attacks.
 
 \subsection{Problem relaxation}
 \subsection{Discrete attack time assumption}
