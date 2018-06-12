@@ -800,6 +800,29 @@ As a special case of Complete bipartite we have the star graph, $S_{n}=K_{1,n}$,
 \subsection{Extending the star graph}
 \subsection{Joining star graphs by centralised connections}
 
+\section{Strategic Patroller with Random Attackers}
+In this section we provide further work developed from the literature review in Section \ref{Section:Patrolling games with random attackers}.
+
+\subsection{Deterministic Attack time experiments}
+As the theory  works for all bounded attack time distributions, we shall look at the deterministic attack time, using $P(X_{j}=x_{j})=1$, we can note that this does some level of reduction on the state space as costs are only incurred at states with $s_{j}=B_{j}$ or $B_{j}+1$. The cost function reduces to
+
+\begin{align*}
+C_{j}(\bm{s},\bm{v},i)=\begin{cases}
+c_{j} \lambda_{j} R_{j} + c_{j} v_{j}  \text{ for } s_{j}=B_{j},i \neq j \\ 
+c_{j} \lambda_{j} \text{ for } s_{j}=B_{j}+1,i \neq j  \\
+0 \text{ Otherwise} \\
+\end{cases}
+\end{align*}
+
+Looking at the single node problem, we notice that there is no cost to transition to the state $s=B$, so at this point we must decide if we are renew now or renew at $s=B+1$ or never renew at all (If indifferent between $B+1,B+2,....$)
+
+It is curious whether this sudden spike in the cost (and therefore in the resulting index) will cause any issue with the proposed heuristics.
+
+\begin{Huge}
+This numerical experiment needs to be done
+\end{Huge}
+
+
 \section{Strategic Patroller with Random Attackers and Local-observations}
 \label{Section:Patrolling games with random attackers and local-observations}
 We now look at altering the work summarized in Section \ref{Section:Patrolling games with random attackers} to incorporate suspicious behaviour of attackers who arrive while the patroller is present.
@@ -1108,24 +1131,98 @@ The patroller incurs cost $c_{j}$ for all successful attacks at node $j$. A succ
 \begin{align*}
 C_{j}(\bm{s},i) &= \begin{cases}
 0  \text{ if } j=i \\
-\underbrace{c_{j} P(s_{j}-1 < X_{j} \leq s_{j})}_{\text{Observed finishing}} + \uderbrace{c_{j} \lambda_{j} \int_{s_{j}-1}^{s_{j}} P(X_{j} \leq t) dt}_{\text{Arrivals finishing}} \text{ if } j \neq i \\
+\underbrace{c_{j} P(s_{j}-1 < X_{j} \leq s_{j})}_{\text{Observed finishing}} + \underbrace{c_{j} \lambda_{j} \int_{s_{j}-1}^{s_{j}} P(X_{j} \leq t) dt}_{\text{Arrivals finishing}} \text{ if } j \neq i \\
 \end{cases}
 \end{align*}
 
 We run into the same problem as before, with a countably infinite state space, $\Omega$, we therefore wish to bound ourselves to a finite state space. As before we can bound the attack times, defining $B_{j}$ as in \ref{Equation:Definition of attack time bound}, but this only partially solves our problem, as it bounds the $\bm{s}$ part of the state space but not the $\bm{v}$ part.
 
-To bound $\bm{v}$ we introduce a observable capacity, $\bm{b}$, where $b_{i}$ is the maximum number of local-observations at node $i$. We assume that all other attackers leave once this capacity is reached.
+To bound $\bm{v}$ we introduce a observable capacity, $\bm{b}$, where $b_{i}$ is the maximum number of local-observations at node $i$. We assume that all other attackers fail once this capacity is reached.
 
-We as before want to work out the long-run average cost among all 
+\begin{figure}[H]
+\begin{center}
+\resizebox{0.8\linewidth}{!}{
+\begin{tikzpicture}[-,auto,node distance=1cm,
+                    thick,main node/.style={circle,fill=white,draw,font=\sffamily\large,minimum size=0.5cm}]
+ \foreach \x in {0,...,7}
+    \foreach \y in {0,...,5} 
+       {\pgfmathtruncatemacro{\label}{\x - 5 *  \y +21}
+        \pgfmathtruncatemacro{\v}{\x}
+        \pgfmathtruncatemacro{\s}{6-\y}
+       \node [main node]  (\x\y) at (1.5*\x,1.5*\y) {\s,\v};} 
 
-We can then use the standard reduction tools of making the problem into a MN problem and then applying the TR constraint and/or the Lagrangian relaxation. We shall therefore focus on the single node problem
+\node (XaxisLeft) [shift={(-0.5,1)}] at (05) {};
+\node (XaxisRight) [shift={(1,1)}] at (75) {};
+
+\node (YaxisBottom) [shift={(-1,-0.5)}] at (00) {};
+\node (YaxisTop) [shift={(-1,1)}] at (05) {};
+
+\draw[->,line width=1mm] (XaxisLeft)--(XaxisRight);
+\draw[->,line width=1mm] (YaxisTop)--(YaxisBottom);
+
+\node[font=\sffamily\large] (OLabel) [shift={(0.5,1.5)}] at (35) {Observation, $v_{j}$};
+\node[font=\sffamily\large] (SLabel) [shift={(-1.5,0.5)}] at (02) {\rotatebox{90}{Time since last visit, $s_{j}$}};
+
+\node[main node] (Example) [shift={(-1,1)}] at (05) {$(s_{j},v_{j})$};
+
+\foreach \y in {0,...,5}
+{\node (DottedStart\y) [shift={(0.5,0)}] at (7\y) {};
+ \node (DottedEnd\y) [shift={(1.5,0)}] at (7\y) {};
+ \draw[decorate sep={1mm}{2mm},fill] (DottedStart\y)--(DottedEnd\y);}
+ 
+\foreach \x in {0,...,7}
+{\node (\x DottedStart) [shift={(0,-0.5)}] at (\x0) {};
+ \node (\x DottedEnd) [shift={(0,-1.5)}] at (\x0) {};
+ \draw[decorate sep={1mm}{2mm},fill] (\x DottedStart)--(\x DottedEnd);
+}
+
+\node (Box1) [draw,thick,fit=(65) (60) (DottedEnd5) (DottedEnd0) (6DottedEnd) (7DottedEnd),fill,blue,opacity=0.2] {};
+
+\node (Box2) [draw,thick,fit=(00) (70)(DottedEnd0) (0DottedEnd) (7DottedEnd),fill,red,opacity=0.2] {};
+
+\node[font=\sffamily\large,color=blue] (Box1Text) [shift={(2.5,0)}] at (Box1) {\rotatebox{270}{Removed by observabled capacity}};
+
+\node[font=\sffamily\large,color=red] (Box2Text) [shift={(0,-1.5)}] at (Box2) {Removed by bounded attack times};           
+
+\end{tikzpicture}
+}
+\end{center}
+\caption{State space diagram for node $j$, with \textcolor{blue}{$b_{j}=5$} and \textcolor{red}{$B_{j}=4$} (e.g. $X_{j} \leq 3.7$)}
+\end{figure}
+
+This change to a finite state space, $\Omega = \{ (\bm{s},\bm{v})=(s_{1},...,s_{n},v_{1},...,v_{n}) \, | \, s_{i}=1,2,....,B_{i}+1 \; v_{i}=0,1,...,b_{i}  \text{ for } i=1,...,n\}$ and caps the transitions. That is that $\widetilde{s}_{j}= \min \{s_{j}+1, B_{j}+1 \}$ and $\widetilde{v}_{i} \sim TPo(\lambda_{i},b_{i)}$, where $TPo(\lambda,b)$ is the truncated Poisson distribution, with all the tail probability at the value $b_{i}$. I.e.
 
 \begin{align*}
-g \equiv \min\limits_{\pi \in}
+P(TPo(\lambda,b)=\begin{cases}
+P(Po(\lambda) \text{ if } i \neq b \\
+P(Po(\lambda) \geq i) \text{ if } i=b \\
+0 \text{ Otherwise}
+\end{cases}
 \end{align*}
 
+Even though the state space is now finite, the transitions are not deterministic, so a cyclic behaviour is not induced when the same state is reached again. For notational purposes we will still use $\phi^{k}_{\pi}(\bm{s}_{0},\bm{v}_{0})$ to be the state after $k$ transitions from $(\bm{s}_{0},\bm{v}_{0})$.
+
+\begin{Huge}
+More work is needed to see if the cyclic behaviour property does still hold just in some probabilistic fashion
+\end{Huge}
+
+This problem, as before, can be solved by standard techniques such as value iteration or linear programing to compute the long-run average cost. This is left to Appendix \ref{Appendix:Optimal Solution for Random Attacker with Local-Observations}.
+
+We can then use the standard reduction tools of making the problem into a MN problem and then applying the TR constraint and/or the Lagrangian relaxation. We shall therefore focus on the Lagrangian relaxation which is equivalent to the single node problem.
+
+That is we wish to minimize $V(\pi)+\omega \mu(\pi)$. Our state space is more complicated than before due to the inclusion of the time since it was last visited and the amount of local-observations made when it was last visited.
+
 \subsection{Deterministic attack time assumption}
-Because we are at a loss of how to deal with the state space in the single node problem, we shall reduce the problem, by assuming that the attack times are deterministic, that is $P(X=x)=1$, this reduces our cost function to
+Because our state space is hard to deal with,in the single node problem, we shall reduce the problem, by assuming that the attack times are deterministic, that is $P(X=x)=1$, this reduces our cost function to
+
+\begin{align*}
+C_{j}(\bm{s},\bm{v},i)=\begin{cases}
+c_{j} \lambda_{j} R_{j} + c_{j} v_{j}  \text{ for } s_{j}=B_{j},i \neq j \\ 
+c_{j} \lambda_{j} \text{ for } s_{j}=B_{j}+1,i \neq j  \\
+0 \text{ Otherwise} \\
+\end{cases}
+\end{align*}
+Where $R_{j}=B_{j}-x_{j}$. We see that we only worry about incurring costs in states when $s_{i}=B_{i}$ or $B_{i}+1$ for some $i$.
 
 
 \subsection{Single node solution}
@@ -1457,4 +1554,6 @@ The reverse process is called \textit{Smoothing} of a graph, $G$, is a new graph
 \section{Optimal Solution for a Random Attacker}
 \label{Appendix:Optimal Solution for a Random Attacker}
 
+\section{Optimal Solution for Random Attacker with Local-Observations}
+\label{Appendix:Optimal Solution for Random Attacker with Local-Observations}
 \end{document}

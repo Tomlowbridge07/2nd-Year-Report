@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.19 (MiKTeX 2.9.6630 64-bit) (preloaded format=pdflatex 2018.6.1)  11 JUN 2018 17:50
+This is pdfTeX, Version 3.14159265-2.6-1.40.19 (MiKTeX 2.9.6630 64-bit) (preloaded format=pdflatex 2018.6.1)  12 JUN 2018 01:10
 entering extended mode
 **"./Second Year Report.tex"
 ("Second Year Report.tex"
@@ -1021,27 +1021,583 @@ Package: etoolbox 2018/02/11 v2.5e e-TeX tools for LaTeX (JAW)
 \tcb@out=\write5
 \tcb@record@out=\write6
 )
+("C:\Program Files\MiKTeX 2.9\tex\latex\chngcntr\chngcntr.sty"
+Package: chngcntr 2018/04/09 v1.1a change counter resetting
+)
+("C:\Program Files\MiKTeX 2.9\tex\generic\pgf\frontendlayer\tikz\libraries\tikz
+librarycalc.code.tex"
+File: tikzlibrarycalc.code.tex 2013/07/15 v3.0.1a (rcs-revision 1.9)
+)
+("C:\Program Files\MiKTeX 2.9\tex\generic\pgf\frontendlayer\tikz\libraries\tikz
+libraryfit.code.tex"
+File: tikzlibraryfit.code.tex 2013/07/12 v3.0.1a (rcs-revision 1.5)
+)
+("C:\Program Files\MiKTeX 2.9\tex\generic\pgf\frontendlayer\tikz\libraries\tikz
+librarydecorations.shapes.code.tex"
+("C:\Program Files\MiKTeX 2.9\tex\generic\pgf\frontendlayer\tikz\libraries\tikz
+librarydecorations.code.tex"
+("C:\Program Files\MiKTeX 2.9\tex\generic\pgf\modules\pgfmoduledecorations.code
+.tex"
+\pgfdecoratedcompleteddistance=\dimen188
+\pgfdecoratedremainingdistance=\dimen189
+\pgfdecoratedinputsegmentcompleteddistance=\dimen190
+\pgfdecoratedinputsegmentremainingdistance=\dimen191
+\pgf@decorate@distancetomove=\dimen192
+\pgf@decorate@repeatstate=\count153
+\pgfdecorationsegmentamplitude=\dimen193
+\pgfdecorationsegmentlength=\dimen194
+)
+\tikz@lib@dec@box=\box52
+)
+("C:\Program Files\MiKTeX 2.9\tex\generic\pgf\libraries\decorations\pgflibraryd
+ecorations.shapes.code.tex"))
+("C:\Program Files\MiKTeX 2.9\tex\generic\pgf\frontendlayer\tikz\libraries\tikz
+libraryshapes.misc.code.tex"
+File: tikzlibraryshapes.misc.code.tex 2008/01/09 v3.0.1a (rcs-revision 1.1)
 
-! LaTeX Error: File `chngcntr.sty' not found.
+("C:\Program Files\MiKTeX 2.9\tex\generic\pgf\libraries\shapes\pgflibraryshapes
+.misc.code.tex"
+File: pgflibraryshapes.misc.code.tex 2013/07/18 v3.0.1a (rcs-revision 1.5)
+))
+("C:\Program Files\MiKTeX 2.9\tex\generic\pgf\frontendlayer\tikz\libraries\tikz
+librarypositioning.code.tex"
+File: tikzlibrarypositioning.code.tex 2008/10/06 v3.0.1a (rcs-revision 1.7)
+)
+("C:\Program Files\MiKTeX 2.9\tex\latex\hobby\tikzlibraryhobby.code.tex"
+("C:\Program Files\MiKTeX 2.9\tex\latex\hobby\pgflibraryhobby.code.tex"
+("C:\Program Files\MiKTeX 2.9\tex\latex\hobby\hobby.code.tex"
+("C:\Program Files\MiKTeX 2.9\tex\latex\l3kernel\expl3.sty"
+Package: expl3 2018-05-13 L3 programming layer (loader) 
 
-Type X to quit or <RETURN> to proceed,
-or enter new name. (Default extension: sty)
+("C:\Program Files\MiKTeX 2.9\tex\latex\l3kernel\expl3-code.tex"
+Package: expl3 2018-05-13 L3 programming layer (code)
+\c_max_int=\count154
+\l_tmpa_int=\count155
+\l_tmpb_int=\count156
+\g_tmpa_int=\count157
+\g_tmpb_int=\count158
+\g__kernel_prg_map_int=\count159
+\c_log_iow=\count160
+\l_iow_line_count_int=\count161
+\l__iow_line_target_int=\count162
+\l__iow_one_indent_int=\count163
+\l__iow_indent_int=\count164
+\c_zero_dim=\dimen195
+\c_max_dim=\dimen196
+\l_tmpa_dim=\dimen197
+\l_tmpb_dim=\dimen198
+\g_tmpa_dim=\dimen256
+\g_tmpb_dim=\dimen257
+\c_zero_skip=\skip73
+\c_max_skip=\skip74
+\l_tmpa_skip=\skip75
+\l_tmpb_skip=\skip76
+\g_tmpa_skip=\skip77
+\g_tmpb_skip=\skip78
+\c_zero_muskip=\muskip12
+\c_max_muskip=\muskip13
+\l_tmpa_muskip=\muskip14
+\l_tmpb_muskip=\muskip15
+\g_tmpa_muskip=\muskip16
+\g_tmpb_muskip=\muskip17
+\l_keys_choice_int=\count165
+\l__intarray_loop_int=\count166
+\c__intarray_sp_dim=\dimen258
+\g__intarray_font_int=\count167
+\c__fp_leading_shift_int=\count168
+\c__fp_middle_shift_int=\count169
+\c__fp_trailing_shift_int=\count170
+\c__fp_big_leading_shift_int=\count171
+\c__fp_big_middle_shift_int=\count172
+\c__fp_big_trailing_shift_int=\count173
+\c__fp_Bigg_leading_shift_int=\count174
+\c__fp_Bigg_middle_shift_int=\count175
+\c__fp_Bigg_trailing_shift_int=\count176
+\c__kernel_randint_max_int=\count177
+\g__fp_array_int=\count178
+\l__fp_array_loop_int=\count179
+\l__sort_length_int=\count180
+\l__sort_min_int=\count181
+\l__sort_top_int=\count182
+\l__sort_max_int=\count183
+\l__sort_true_max_int=\count184
+\l__sort_block_int=\count185
+\l__sort_begin_int=\count186
+\l__sort_end_int=\count187
+\l__sort_A_int=\count188
+\l__sort_B_int=\count189
+\l__sort_C_int=\count190
+\l__tl_analysis_normal_int=\count191
+\l__tl_analysis_index_int=\count192
+\l__tl_analysis_nesting_int=\count193
+\l__tl_analysis_type_int=\count194
+\l__regex_internal_a_int=\count195
+\l__regex_internal_b_int=\count196
+\l__regex_internal_c_int=\count197
+\l__regex_balance_int=\count198
+\l__regex_group_level_int=\count266
+\l__regex_mode_int=\count267
+\c__regex_cs_in_class_mode_int=\count268
+\c__regex_cs_mode_int=\count269
+\l__regex_catcodes_int=\count270
+\l__regex_default_catcodes_int=\count271
+\c__regex_catcode_D_int=\count272
+\c__regex_catcode_S_int=\count273
+\c__regex_catcode_L_int=\count274
+\c__regex_catcode_O_int=\count275
+\c__regex_catcode_A_int=\count276
+\c__regex_all_catcodes_int=\count277
+\l__regex_show_lines_int=\count278
+\l__regex_min_state_int=\count279
+\l__regex_max_state_int=\count280
+\l__regex_left_state_int=\count281
+\l__regex_right_state_int=\count282
+\l__regex_capturing_group_int=\count283
+\l__regex_min_pos_int=\count284
+\l__regex_max_pos_int=\count285
+\l__regex_curr_pos_int=\count286
+\l__regex_start_pos_int=\count287
+\l__regex_success_pos_int=\count288
+\l__regex_curr_char_int=\count289
+\l__regex_curr_catcode_int=\count290
+\l__regex_last_char_int=\count291
+\l__regex_case_changed_char_int=\count292
+\l__regex_curr_state_int=\count293
+\l__regex_step_int=\count294
+\l__regex_min_active_int=\count295
+\l__regex_max_active_int=\count296
+\l__regex_replacement_csnames_int=\count297
+\l__regex_match_count_int=\count298
+\l__regex_min_submatch_int=\count299
+\l__regex_submatch_int=\count300
+\l__regex_zeroth_submatch_int=\count301
+\g__regex_trace_regex_int=\count302
+\c_empty_box=\box53
+\l_tmpa_box=\box54
+\l_tmpb_box=\box55
+\g_tmpa_box=\box56
+\g_tmpb_box=\box57
+\l__box_top_dim=\dimen259
+\l__box_bottom_dim=\dimen260
+\l__box_left_dim=\dimen261
+\l__box_right_dim=\dimen262
+\l__box_top_new_dim=\dimen263
+\l__box_bottom_new_dim=\dimen264
+\l__box_left_new_dim=\dimen265
+\l__box_right_new_dim=\dimen266
+\l__box_internal_box=\box58
+\l__coffin_internal_box=\box59
+\l__coffin_internal_dim=\dimen267
+\l__coffin_offset_x_dim=\dimen268
+\l__coffin_offset_y_dim=\dimen269
+\l__coffin_x_dim=\dimen270
+\l__coffin_y_dim=\dimen271
+\l__coffin_x_prime_dim=\dimen272
+\l__coffin_y_prime_dim=\dimen273
+\c_empty_coffin=\box60
+\l__coffin_aligned_coffin=\box61
+\l__coffin_aligned_internal_coffin=\box62
+\l_tmpa_coffin=\box63
+\l_tmpb_coffin=\box64
+\l__coffin_display_coffin=\box65
+\l__coffin_display_coord_coffin=\box66
+\l__coffin_display_pole_coffin=\box67
+\l__coffin_display_offset_dim=\dimen274
+\l__coffin_display_x_dim=\dimen275
+\l__coffin_display_y_dim=\dimen276
+\g__file_internal_ior=\read3
+\l__coffin_bounding_shift_dim=\dimen277
+\l__coffin_left_corner_dim=\dimen278
+\l__coffin_right_corner_dim=\dimen279
+\l__coffin_bottom_corner_dim=\dimen280
+\l__coffin_top_corner_dim=\dimen281
+\l__coffin_scaled_total_height_dim=\dimen282
+\l__coffin_scaled_width_dim=\dimen283
+\l__seq_internal_a_int=\count303
+\l__seq_internal_b_int=\count304
+)
+("C:\Program Files\MiKTeX 2.9\tex\latex\l3kernel\l3pdfmode.def"
+File: l3pdfmode.def 2018-05-13 v L3 Experimental driver: PDF mode
+\l__driver_color_stack_int=\count305
+))
+("C:\Program Files\MiKTeX 2.9\tex\latex\l3packages\xparse\xparse.sty"
+Package: xparse 2018-05-12 L3 Experimental document command parser
+\l__xparse_current_arg_int=\count306
+\g__xparse_grabber_int=\count307
+\l__xparse_m_args_int=\count308
+\l__xparse_mandatory_args_int=\count309
+\l__xparse_v_nesting_int=\count310
+)
+("C:\Program Files\MiKTeX 2.9\tex\latex\hobby\pml3array.sty"
+\l_array_base_int=\count311
+\l_array_top_int=\count312
+\l_array_tmp_int=\count313
+\g_array_base_int=\count314
+)
+.................................................
+. LaTeX info: "xparse/define-command"
+. 
+. Defining command \hobbyVersion with sig. '' on line 41.
+.................................................
+.................................................
+. LaTeX info: "xparse/define-command"
+. 
+. Defining command \hobbyDate with sig. '' on line 45.
+.................................................
+.................................................
+. LaTeX info: "xparse/define-command"
+. 
+. Defining command \HobbyDisableAux with sig. '' on line 59.
+.................................................
+\l_hobby_npoints_int=\count315
+\l_hobby_draw_int=\count316
+.................................................
+. LaTeX info: "xparse/define-command"
+. 
+. Defining command \hobbyinit with sig. 'mmm' on line 669.
+.................................................
+.................................................
+. LaTeX info: "xparse/define-command"
+. 
+. Defining command \hobbyaddpoint with sig. 'm' on line 699.
+.................................................
+.................................................
+. LaTeX info: "xparse/define-command"
+. 
+. Defining command \hobbysetparams with sig. 'm' on line 705.
+.................................................
+.................................................
+. LaTeX info: "xparse/define-command"
+. 
+. Defining command \hobbygenpath with sig. '' on line 721.
+.................................................
+.................................................
+. LaTeX info: "xparse/define-command"
+. 
+. Defining command \hobbygenifnecpath with sig. 'm' on line 732.
+.................................................
+.................................................
+. LaTeX info: "xparse/define-command"
+. 
+. Defining command \hobbygenuseifnecpath with sig. 'm' on line 744.
+.................................................
+.................................................
+. LaTeX info: "xparse/define-command"
+. 
+. Defining command \hobbyusepath with sig. 'm' on line 748.
+.................................................
+.................................................
+. LaTeX info: "xparse/define-command"
+. 
+. Defining command \hobbysavepath with sig. 'm' on line 751.
+.................................................
+.................................................
+. LaTeX info: "xparse/define-command"
+. 
+. Defining command \hobbyrestorepath with sig. 'm' on line 756.
+.................................................
+.................................................
+. LaTeX info: "xparse/define-command"
+. 
+. Defining command \hobbyshowpath with sig. 'm' on line 761.
+.................................................
+.................................................
+. LaTeX info: "xparse/define-command"
+. 
+. Defining command \hobbygenusepath with sig. '' on line 767.
+.................................................
+.................................................
+. LaTeX info: "xparse/define-command"
+. 
+. Defining command \hobbyclearpath with sig. '' on line 770.
+.................................................
+)))
+("C:\Program Files\MiKTeX 2.9\tex\generic\pgf\frontendlayer\tikz\libraries\tikz
+librarybackgrounds.code.tex"
+File: tikzlibrarybackgrounds.code.tex 2013/07/18 v3.0.1a (rcs-revision 1.3)
+\pgf@layerbox@background=\box68
+\pgf@layerboxsaved@background=\box69
+)
+\c@theorem=\count317
+Package newfloat Info: New float `examplefigure' with options `fileext=los, lis
+tname={List of Example Figures}, name=Example Figure, placement=tbhp, within=se
+ction,' on input line 71.
+\c@examplefigure=\count318
+Package newfloat Info: float type `examplefigure'=4 on input line 71.
+\c@subexamplefigure=\count319
+Package newfloat Info: New float `myfigure' with options `fileext=los, listname
+={List of myFigures}, name=Figure, placement=tbhp, within=section,' on input li
+ne 77.
+\c@myfigure=\count320
+Package newfloat Info: float type `myfigure'=8 on input line 77.
+Package newfloat Info: \newfloat@ext@los is already defined on input line 77.
+\c@submyfigure=\count321
+ ("Second Year Report.aux")
+\openout1 = `"Second Year Report.aux"'.
 
-Enter file name: 
-! Emergency stop.
-<read *> 
-         
-l.26 
-      
-*** (cannot \read from terminal in nonstop modes)
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 87.
+LaTeX Font Info:    ... okay on input line 87.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 87.
+LaTeX Font Info:    ... okay on input line 87.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 87.
+LaTeX Font Info:    ... okay on input line 87.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 87.
+LaTeX Font Info:    ... okay on input line 87.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 87.
+LaTeX Font Info:    ... okay on input line 87.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 87.
+LaTeX Font Info:    ... okay on input line 87.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 87.
+LaTeX Font Info:    ... okay on input line 87.
 
+("C:\Program Files\MiKTeX 2.9\tex\context\base\supp-pdf.mkii"
+[Loading MPS to PDF converter (version 2006.09.02).]
+\scratchcounter=\count322
+\scratchdimen=\dimen284
+\scratchbox=\box70
+\nofMPsegments=\count323
+\nofMParguments=\count324
+\everyMPshowfont=\toks47
+\MPscratchCnt=\count325
+\MPscratchDim=\dimen285
+\MPnumerator=\count326
+\makeMPintoPDFobject=\count327
+\everyMPtoPDFconversion=\toks48
+) ("C:\Program Files\MiKTeX 2.9\tex\latex\oberdiek\epstopdf-base.sty"
+Package: epstopdf-base 2016/05/15 v2.6 Base part for package epstopdf
+
+("C:\Program Files\MiKTeX 2.9\tex\latex\oberdiek\grfext.sty"
+Package: grfext 2016/05/16 v1.2 Manage graphics extensions (HO)
+)
+Package epstopdf-base Info: Redefining graphics rule for `.eps' on input line 4
+38.
+Package grfext Info: Graphics extension search list:
+(grfext)             [.pdf,.png,.jpg,.mps,.jpeg,.jbig2,.jb2,.PDF,.PNG,.JPG,.JPE
+G,.JBIG2,.JB2,.eps]
+(grfext)             \AppendGraphicsExtensions on input line 456.
+)
+ABD: EveryShipout initializing macros
+Package caption Info: Begin \AtBeginDocument code.
+Package caption Info: floatrow package is loaded.
+Package caption Info: float package is loaded.
+Package caption Info: floatrow package is loaded.
+Package caption Info: hyperref package is loaded.
+Package caption Info: End \AtBeginDocument code.
+\AtBeginShipoutBox=\box71
+Package hyperref Info: Link coloring OFF on input line 87.
+
+("C:\Program Files\MiKTeX 2.9\tex\latex\hyperref\nameref.sty"
+Package: nameref 2016/05/21 v2.44 Cross-referencing by name of section
+
+("C:\Program Files\MiKTeX 2.9\tex\generic\oberdiek\gettitlestring.sty"
+Package: gettitlestring 2016/05/16 v1.5 Cleanup title references (HO)
+)
+\c@section@level=\count328
+)
+LaTeX Info: Redefining \ref on input line 87.
+LaTeX Info: Redefining \pageref on input line 87.
+LaTeX Info: Redefining \nameref on input line 87.
+
+("Second Year Report.out") ("Second Year Report.out")
+\@outlinefile=\write7
+\openout7 = `"Second Year Report.out"'.
+
+LaTeX Font Info:    Try loading font information for U+msa on input line 93.
+
+("C:\Program Files\MiKTeX 2.9\tex\latex\amsfonts\umsa.fd"
+File: umsa.fd 2013/01/14 v3.01 AMS symbols A
+)
+LaTeX Font Info:    Try loading font information for U+msb on input line 93.
+
+("C:\Program Files\MiKTeX 2.9\tex\latex\amsfonts\umsb.fd"
+File: umsb.fd 2013/01/14 v3.01 AMS symbols B
+)
+("Second Year Report.toc"
+Overfull \hbox (16.43837pt too wide) in paragraph at lines 17--17
+ [] [][]\OT1/cmr/bx/n/10 Strategic Pa-troller with Ran-dom At-tack-ers and Loca
+l-observations[] []  
+ []
+
+)
+\tf@toc=\write8
+\openout8 = `"Second Year Report.toc"'.
+
+ [1
+
+{C:/Users/Thomas/AppData/Local/MiKTeX/2.9/pdftex/config/pdftex.map}]
+[2]
+LaTeX Font Info:    Try loading font information for OMS+cmr on input line 114.
+
+ ("C:\Program Files\MiKTeX 2.9\tex\latex\base\omscmr.fd"
+File: omscmr.fd 2014/09/29 v2.5h Standard LaTeX font definitions
+)
+LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <10> not available
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 114.
+
+Overfull \hbox (5.87195pt too wide) in paragraph at lines 125--126
+[]\OT1/cmr/m/n/10 A pa-trol, $\OML/cmm/m/it/10 W$\OT1/cmr/m/n/10 , in-ter-cepts
+ the at-tack, $[\OML/cmm/m/it/10 i; I\OT1/cmr/m/n/10 ]$, if $\OML/cmm/m/it/10 i
+ \OMS/cmsy/m/n/10 2 \OML/cmm/m/it/10 W\OT1/cmr/m/n/10 (\OML/cmm/m/it/10 I\OT1/c
+mr/m/n/10 ) = \OMS/cmsy/m/n/10 f\OML/cmm/m/it/10 W\OT1/cmr/m/n/10 (\OML/cmm/m/i
+t/10 \OT1/cmr/m/n/10 )\OML/cmm/m/it/10 ; W\OT1/cmr/m/n/10 (\OML/cmm/m/it/10  
+\OT1/cmr/m/n/10 + 1)\OML/cmm/m/it/10 ; :::; W\OT1/cmr/m/n/10 (\OML/cmm/m/it/10 
+ \OT1/cmr/m/n/10 +
+ []
+
+pdfTeX warning (ext4): destination with the same identifier (name{page.1}) has 
+been already used, duplicate ignored
+<to be read again> 
+                   \relax 
+l.131 
+       [1
+
+]pdfTeX warning (ext4): destination with the same identifier (name{page.2}) has
+ been already used, duplicate ignored
+<to be read again> 
+                   \relax 
+l.167 
+       [2]
+
+LaTeX Warning: Reference `fig: Q' on page 3 undefined on input line 187.
+
+Package hyperref Info: bookmark level for unknown myfigure defaults to 0 on inp
+ut line 219.
+[3]
+
+LaTeX Warning: Reference `fig: Q' on page 4 undefined on input line 241.
+
+[4] [5]
+Overfull \hbox (6.69936pt too wide) in paragraph at lines 358--359
+[][]\OT1/cmr/bx/n/10 Definition 1.16 \OT1/cmr/m/n/10 (Bi-par-tite At-tack)\OT1/
+cmr/bx/n/10 . []\OT1/cmr/m/n/10 The \OT1/cmr/m/it/10 Bi-par-tite At-tack \OT1/c
+mr/m/n/10 se-lects nodes equiprob-
+ []
+
+[6] [7] [8] [9] [10] [11] [12] [13]
+Overfull \hbox (31.98245pt too wide) detected at line 703
+[]
+ []
+
+
+LaTeX Warning: Reference `Condition on T for old diametric proof' on page 14 un
+defined on input line 711.
+
+(Images/DiametricAttack(m_45,d_30).tex)
+
+LaTeX Warning: Reference `Time-limited diametric attack proof' on page 14 undef
+ined on input line 736.
+
+[14]
+Package hyperref Info: bookmark level for unknown examplefigure defaults to 0 o
+n input line 776.
+ [15]
+
+LaTeX Warning: Reference `appendix:Hamiltonian Graph' on page 16 undefined on i
+nput line 797.
+
+[16]
+Overfull \hbox (1.61987pt too wide) in paragraph at lines 822--824
+[]\OT1/cmr/m/n/24.88 This nu-mer-i-cal ex-per-i-ment needs to
+ []
+
+
+Overfull \hbox (7.5396pt too wide) in paragraph at lines 826--826
+[]\OT1/cmr/bx/n/14.4 Strategic Pa-troller with Ran-dom At-tack-ers and
+ []
+
+[17]
+Overfull \hbox (1.93898pt too wide) in paragraph at lines 922--922
+[]\OT1/cmr/bx/n/12 Numerical re-sults for in-stan-ta-neously mov-ing pa-troller
  
+ []
+
+[18] [19] [20]
+
+LaTeX Warning: Reference `Appendix:Optimal Solution for Random Attacker with Lo
+cal-Observations' on page 21 undefined on input line 1209.
+
+[21] ("Second Year Report.bbl" [22]) [23] [1] [2] [3]
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 1559.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 1559.
+ ("Second Year Report.aux")
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 1559.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 1559.
+
+
+
+Package rerunfilecheck Warning: File `"Second Year Report".out' has changed.
+(rerunfilecheck)                Rerun to get outlines right
+(rerunfilecheck)                or use package `bookmark'.
+
+Package rerunfilecheck Info: Checksums for `"Second Year Report".out':
+(rerunfilecheck)             Before: EC45A44A0935AE521572D3ABD6FCC517;2411
+(rerunfilecheck)             After:  5B52DE9C84F756B29AF885FA37C773A5;2675.
+
+LaTeX Warning: There were undefined references.
+
+
+LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
+
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 1559.
+ ) 
 Here is how much of TeX's memory you used:
- 20519 strings out of 493305
- 384958 string characters out of 3138872
- 465773 words of memory out of 3000000
- 23777 multiletter control sequences out of 15000+200000
- 3640 words of font info for 14 fonts, out of 3000000 for 9000
+ 33229 strings out of 493305
+ 643161 string characters out of 3138872
+ 872267 words of memory out of 3000000
+ 36208 multiletter control sequences out of 15000+200000
+ 552364 words of font info for 97 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
- 55i,0n,73p,962b,86s stack positions out of 5000i,500n,10000p,200000b,50000s
-!  ==> Fatal error occurred, no output PDF file produced!
+ 55i,22n,105p,962b,1045s stack positions out of 5000i,500n,10000p,200000b,50000s
+pdfTeX warning (dest): name{figure.caption.14} has been referenced but does n
+ot exist, replaced by a fixed one
+
+pdfTeX warning (dest): name{theorem.1.19} has been referenced but does not exis
+t, replaced by a fixed one
+
+pdfTeX warning (dest): name{subsection.3.6} has been referenced but does not ex
+ist, replaced by a fixed one
+
+pdfTeX warning (dest): name{subsection.3.5} has been referenced but does not ex
+ist, replaced by a fixed one
+
+pdfTeX warning (dest): name{subsection.3.4} has been referenced but does not ex
+ist, replaced by a fixed one
+
+pdfTeX warning (dest): name{subsection.3.3} has been referenced but does not ex
+ist, replaced by a fixed one
+
+pdfTeX warning (dest): name{subsection.3.2} has been referenced but does not ex
+ist, replaced by a fixed one
+
+<C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmbx10.pfb><C:/Prog
+ram Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmbx12.pfb><C:/Program File
+s/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmex10.pfb><C:/Program Files/MiKTeX
+ 2.9/fonts/type1/public/amsfonts/cm/cmmi10.pfb><C:/Program Files/MiKTeX 2.9/fon
+ts/type1/public/amsfonts/cm/cmmi12.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1
+/public/amsfonts/cm/cmmi5.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/a
+msfonts/cm/cmmi6.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/c
+m/cmmi7.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmmi8.p
+fb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmmi9.pfb><C:/Pr
+ogram Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmmib10.pfb><C:/Program F
+iles/MiKTeX 2.9/fonts/type1/public/amsfonts/cmextra/cmmib7.pfb><C:/Program File
+s/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr10.pfb><C:/Program Files/MiKTeX 
+2.9/fonts/type1/public/amsfonts/cm/cmr12.pfb><C:/Program Files/MiKTeX 2.9/fonts
+/type1/public/amsfonts/cm/cmr17.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/pu
+blic/amsfonts/cm/cmr5.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfo
+nts/cm/cmr6.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr
+7.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr9.pfb><C:/
+Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmss10.pfb><C:/Program 
+Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmss12.pfb><C:/Program Files/Mi
+KTeX 2.9/fonts/type1/public/amsfonts/cm/cmssbx10.pfb><C:/Program Files/MiKTeX 2
+.9/fonts/type1/public/amsfonts/cm/cmsy10.pfb><C:/Program Files/MiKTeX 2.9/fonts
+/type1/public/amsfonts/cm/cmsy5.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/pu
+blic/amsfonts/cm/cmsy7.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsf
+onts/cm/cmti10.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/
+cmtt10.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/symbols/msb
+m10.pfb>
+Output written on "Second Year Report.pdf" (28 pages, 517353 bytes).
+PDF statistics:
+ 516 PDF objects out of 1000 (max. 8388607)
+ 121 named destinations out of 1000 (max. 500000)
+ 253 words of extra memory for PDF output out of 10000 (max. 10000000)
+
