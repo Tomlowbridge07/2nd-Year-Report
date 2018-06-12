@@ -22,12 +22,13 @@
 \BOOKMARK [2][-]{subsection.4.3}{Altering problem to accommodate local-observable information}{section.4}% 22
 \BOOKMARK [2][-]{subsection.4.4}{Deterministic attack time assumption}{section.4}% 23
 \BOOKMARK [2][-]{subsection.4.5}{Single node solution}{section.4}% 24
-\BOOKMARK [2][-]{subsection.4.6}{Indices, heuristics and numerical experiments}{section.4}% 25
-\BOOKMARK [1][-]{section.5}{Future Work}{}% 26
-\BOOKMARK [2][-]{subsection.5.1}{Proof completions}{section.5}% 27
-\BOOKMARK [2][-]{subsection.5.2}{Extending Discrete Attack time to generic distributions}{section.5}% 28
-\BOOKMARK [2][-]{subsection.5.3}{Strategic Patroller with Random Attackers on Edges}{section.5}% 29
-\BOOKMARK [1][-]{section*.13}{Appendices}{}% 30
-\BOOKMARK [1][-]{appendix.A}{Graph Definitions}{}% 31
-\BOOKMARK [1][-]{appendix.B}{Optimal Solution for a Random Attacker}{}% 32
-\BOOKMARK [1][-]{appendix.C}{Optimal Solution for Random Attacker with Local-Observations}{}% 33
+\BOOKMARK [2][-]{subsection.4.6}{Indices, heuristics}{section.4}% 25
+\BOOKMARK [2][-]{subsection.4.7}{Numerical experiments}{section.4}% 26
+\BOOKMARK [1][-]{section.5}{Future Work}{}% 27
+\BOOKMARK [2][-]{subsection.5.1}{Proof completions}{section.5}% 28
+\BOOKMARK [2][-]{subsection.5.2}{Extending Discrete Attack time to generic distributions}{section.5}% 29
+\BOOKMARK [2][-]{subsection.5.3}{Strategic Patroller with Random Attackers on Edges}{section.5}% 30
+\BOOKMARK [1][-]{section*.17}{Appendices}{}% 31
+\BOOKMARK [1][-]{appendix.A}{Graph Definitions}{}% 32
+\BOOKMARK [1][-]{appendix.B}{Optimal Solution for a Random Attacker}{}% 33
+\BOOKMARK [1][-]{appendix.C}{Optimal Solution for Random Attacker with Local-Observations}{}% 34

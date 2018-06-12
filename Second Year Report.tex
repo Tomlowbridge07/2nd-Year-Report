@@ -1224,9 +1224,207 @@ c_{j} \lambda_{j} \text{ for } s_{j}=B_{j}+1,i \neq j  \\
 \end{align*}
 Where $R_{j}=B_{j}-x_{j}$. We see that we only worry about incurring costs in states when $s_{i}=B_{i}$ or $B_{i}+1$ for some $i$.
 
+This allows us to see a clear solution to the single node problem.
 
 \subsection{Single node solution}
-\subsection{Indices, heuristics and numerical experiments}
+Again we wish to minimize the long-run average cost, paying $\omega$ when we choose to visit a node. We note as mentioned in Section [refer to section on not cycling] that we are not in a cycle, so will take a different approach. At each state our choice is binary; we either wait or renew/visit.
+
+We wish to solve
+
+\begin{align*}
+g=\min\limits_{\pi_{1} \in \Pi^{\text{MN}}_{1}} V(\pi_{1})+\omega \mu(\pi_{1})
+\end{align*}
+
+And because $g$ is the long-run average cost, we know that in the limit of $n \rightarrow \infty$ that $V_{n}(s,v)=ng + h(s,v)$ where $h(s,v)$ is bias from starting at the state $(s,v)$ rather than in equilibrium.
+
+It should be clear that as the cost of all states where $s<B$ are zero, we should wait until $s=B$ before making any form of decision. However for completeness sake we present a formal argument
+
+From any $(s,v)$ with $s<B$ consider the policy $\pi_{k}$ which waits $k$ time periods and then renews and follows some optimal policy, $\sigma$, with $k=0,...,B-s$.
+
+Using such a policy will get us that
+\begin{equation}
+V_{n}^{\pi_{k}}(x,v)=\omega + E[V_{n-k-1}^{\sigma}(\theta)]
+\end{equation}
+
+where $\theta$ is the state upon renewal (i.e it is the state $(1,V) \sim (1,TPo(\lambda,b))$.
+
+Now we will pick policy $\pi_{k+1}$ over $\pi_{k}$ (or be indifferent) if
+
+\begin{align*}
+&\lim\limits_{n \rightarrow \infty} V_{n}^{\pi_{k}} (x,v) - V_{n}^{\pi_{k+1}}(x,v) \geq 0 \\
+& \iff \lim\limits_{n \rightarrow \infty} E[V_{n-k}^{\sigma}(\theta) - V_{n-k-1}^{\sigma} (\theta)] \geq 0 \\
+& \iff g \geq 0
+\end{align*}
+
+As we only have positive costs, we know that $g \geq 0$ and hence the above argument shows that in such a state it is always best to wait another time period and then make a decision, making the same decision to wait again if we have not reached $s=B$.
+
+\begin{myfigure}
+\begin{center}
+\resizebox{0.8\linewidth}{!}{
+\begin{tikzpicture}[-,auto,node distance=1cm,
+                    thick,main node/.style={circle,fill=white,draw,font=\sffamily\large,minimum size=0.5cm}]
+ \foreach \x in {0,...,5}
+    \foreach \y in {0,...,4} 
+       {\pgfmathtruncatemacro{\label}{\x - 5 *  \y +21}
+        \pgfmathtruncatemacro{\v}{\x}
+        \pgfmathtruncatemacro{\s}{5-\y}
+       \node [main node]  (\x\y) at (1.5*\x,1.5*\y) {\s,\v};}
+       
+       \node[main node] (Renewal) at (1.5*6,1.5*4) {$\theta$};
+
+       
+  \foreach \x in {0,...,5}
+    \foreach \y in {2,...,4} 
+       {\pgfmathtruncatemacro{\label}{\x - 5 *  \y +21}
+        \pgfmathtruncatemacro{\v}{\x}
+        \pgfmathtruncatemacro{\s}{5-\y}
+        \pgfmathtruncatemacro{\nv}{\v}
+        \pgfmathtruncatemacro{\ns}{5-\y+1}
+       \draw[->] (\nv\ns)--(\v\s);}
+       
+
+       
+    \foreach \x in {0,...,5}
+    { 
+     \draw[->,bend right,dashed] (Renewal) to (\x4);    
+    }   
+        
+
+\node (XaxisLeft) [shift={(-0.5,0.5)}] at (05) {};
+\node (XaxisRight) [shift={(1,0.5)}] at (55) {};
+
+\node (YaxisBottom) [shift={(-1,-0.5)}] at (00) {};
+\node (YaxisTop) [shift={(-1,1)}] at (05) {};
+
+\draw[->,line width=1mm] (XaxisLeft)--(XaxisRight);
+\draw[->,line width=1mm] (YaxisTop)--(YaxisBottom);
+
+\node[font=\sffamily\large] (OLabel) [shift={(0.5,1)}] at (25) {Observation, $v_{j}$};
+\node[font=\sffamily\large] (SLabel) [shift={(-1.5,0.5)}] at (02) {\rotatebox{90}{Time since last visit, $s_{j}$}};
+
+\node[main node] (Example) [shift={(-1,0.5)}] at (05) {$(s_{j},v_{j})$};
+   
+
+\end{tikzpicture}
+}
+\end{center}
+\caption{Optimal movements for $s<B$}
+\end{myfigure}
+
+We will look at getting a similar idea for the states $s=B+1$, as it should be clear that if we do not renew initially then as our state does not change, we will never renew. However for completeness sake we will provide a formal argument.
+
+From any $(B+1,v)$ consider the policy $\pi_{k}$ which waits $k$ time periods and then renews and follows some optimal policy, $\sigma$, with $k=0,...$.
+
+Using such a policy will get us that
+\begin{equation}
+V_{n}^{\pi_{k}}(x,v)= kc \lambda + \omega + E[V_{n-k-1}^{\sigma}(\theta)]
+\end{equation}
+
+Again we will pick a policy $\pi_{k+1}$ over $\pi_{k}$ (or be indifferent) if
+
+\begin{align*}
+&\lim\limits_{n \rightarrow \infty} V_{n}^{\pi_{k}} (\floor{B}+2,0) - V_{n}^{\pi_{k+1}}(\floor{B}+2,0) \geq 0 \\
+& \iff \lim\limits_{n \rightarrow \infty} -c \lambda + E[V_{n-k}^{\sigma}(\theta) - V_{n-k-1}^{\sigma}(\theta)] \geq 0 \\
+& \iff g \geq c \lambda
+\end{align*}
+
+Now we introduce a policy, $\pi_{\text{Neg}}(s,v)=0 \; \forall (s,v) \in \Omega$, the policy which never renews. It is clear that this policy gives a long-run average cost of $c \lambda$, so $g \leq c \lambda$ and hence we will always choose to renew immediately in $s=B+1 $.
+
+\begin{myfigure}
+\begin{center}
+\resizebox{0.8\linewidth}{!}{
+\begin{tikzpicture}[-,auto,node distance=1cm,
+                    thick,main node/.style={circle,fill=white,draw,font=\sffamily\large,minimum size=0.5cm}]
+ \foreach \x in {0,...,5}
+    \foreach \y in {0,...,4} 
+       {\pgfmathtruncatemacro{\label}{\x - 5 *  \y +21}
+        \pgfmathtruncatemacro{\v}{\x}
+        \pgfmathtruncatemacro{\s}{5-\y}
+       \node [main node]  (\x\y) at (1.5*\x,1.5*\y) {\s,\v};}
+       
+       \node[main node] (Renewal) at (1.5*6,1.5*4) {$\theta$};
+
+       
+  \foreach \x in {0,...,5}
+    \foreach \y in {2,...,4} 
+       {\pgfmathtruncatemacro{\label}{\x - 5 *  \y +21}
+        \pgfmathtruncatemacro{\v}{\x}
+        \pgfmathtruncatemacro{\s}{5-\y}
+        \pgfmathtruncatemacro{\nv}{\v}
+        \pgfmathtruncatemacro{\ns}{5-\y+1}
+       \draw[->] (\nv\ns)--(\v\s);}
+       
+
+       
+    \foreach \x in {0,...,5}
+    { 
+     \draw[->,bend right,dashed] (Renewal) to (\x4);    
+    }   
+        
+
+\node (XaxisLeft) [shift={(-0.5,0.5)}] at (05) {};
+\node (XaxisRight) [shift={(1,0.5)}] at (55) {};
+
+\node (YaxisBottom) [shift={(-1,-0.5)}] at (00) {};
+\node (YaxisTop) [shift={(-1,1)}] at (05) {};
+
+\draw[->,line width=1mm] (XaxisLeft)--(XaxisRight);
+\draw[->,line width=1mm] (YaxisTop)--(YaxisBottom);
+
+\node[font=\sffamily\large] (OLabel) [shift={(0.5,1)}] at (25) {Observation, $v_{j}$};
+\node[font=\sffamily\large] (SLabel) [shift={(-1.5,0.5)}] at (02) {\rotatebox{90}{Time since last visit, $s_{j}$}};
+
+\node[main node] (Example) [shift={(-1,0.5)}] at (05) {$(s_{j},v_{j})$};
+
+        \draw[->] (1.5*6,1.5*0.4) to (Renewal);                          
+
+    \foreach \x in {0,...,5}
+       {\draw[-] (\x0) to (1.5*\x,-1.5*0.6);}
+       
+       \draw[-] (1.5*0,-1.5*0.6) to (1.5*6,-1.5*0.6);                                            
+       \draw[-] (1.5*6,-1.5*0.6) to (1.5*6,1.5*0.4);                                    
+
+\end{tikzpicture}
+}
+\end{center}
+\caption{Optimal movements for $s<B$ and $s=B+1$}
+\end{myfigure}
+
+\subsection{Indices, heuristics}
+
+\subsection{Numerical experiments}
+We now Look at using our heuristic, at certain depths to see how good it is against optimal. To do this we generate 500 scenario's on the complete graph, $K_{4}$ with attack times, $X_{i}$, on the 4 nodes picked uniformly from $[1,3]$, we lock $b_{i}=1 \; \forall i$ and allow each arrival rates, $\lambda_{i}$, to be picked uniformly from $[0,1]$ and use $c_{i}=1 \; \forall i$ so that the cost incurred can be interpreted as the probability of missing an attack.
+
+For the same scenario, we run BH($d$),PH($d$) for $d=1,2,3,4$ and return the percentage error.
+
+\begin{myfigure}
+\label{Figure:Initial BH and PH for plain index}
+\input{Images/BHvsPHInitialPlainComplete.tex}
+\caption{Frequency density of percentage errors made by heuristics in simulations}
+\end{myfigure}
+
+From Figure \ref{Figure:Initial BH and PH for plain index} we can see that while sometimes the heuristic performs well, in the majority of cases it performs very badly.
+
+We propose altering the index to
+
+\begin{align}
+W_{i}(s_{i},v_{i})&=\begin{cases}
+0 \text{ If } s_{i}<B_{i} \\
+\Delta_{i}(v_{i}) \text{ If } s_{i}=B_{i} \\
+\Delta_{i}(v_{i}+1) \text{ If } s_{i}=B_{i}+1 , v_{i} < v_{i,\text{max}} \\
+\widetilde{\Delta_{i}} \text{ If } s_{i}=B_{i}+1, v_{i} \geq v_{i,\text{max}} \\
+\end{cases}
+\end{align}
+
+We run the same scenarios with our changed index
+
+\begin{myfigure}
+\label{Figure:BH and PH for new plain index}
+\input{Images/BHvsPHNewPlainComplete.tex}
+\caption{Frequency density of percentage errors made by heuristics in simulations for new index}
+\end{myfigure}
+
+As we can see from Figure \ref{Figure:BH and PH for new plain index} the change to index, significantly. We can also note that on the complete the penalty heuristic seems to outperform the benefit heuristic. This agrees with the findings in \cite{Lin2013}.
 
 \section{Future Work}
 \subsection{Proof completions}

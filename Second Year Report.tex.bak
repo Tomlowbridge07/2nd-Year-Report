@@ -516,9 +516,10 @@ $C_{j}(\bm{s},i)$ is not dependent on $i$, the choice of $i$ affects the future 
   
 With a countable infinite state space, $\Omega$, problems of finding an optimal policy may exisit (See [Need reference from Peuterman]), so we bound the state space to make it finite. A reasonable assumption is to bound the attack times and define, the smallest interger for this bound
 
-\begin{align*}
+\begin{align}
+\label{Equation:Definition of attack time bound}
 B_{j} \equiv \min \{ k \, | \, k \in \mathbb{Z}^{+} , P(X_{j} \leq k)=1 \}
-\end{align*}
+\end{align}
 
 We now see that the cost function remains constant, $c_{j} \lambda_{j}$, for all $s_{j} \geq B_{j}+1$ and so we restrict our state space to $s_{j} \leq B_{j}+1$ and modify the transitions slightly so $\widetilde{s}_{j}=\min(s_{j}+1,B_{j}+1) \; \forall j \neq i$.
 
@@ -799,6 +800,29 @@ As a special case of Complete bipartite we have the star graph, $S_{n}=K_{1,n}$,
 \subsection{Extending the star graph}
 \subsection{Joining star graphs by centralised connections}
 
+\section{Strategic Patroller with Random Attackers}
+In this section we provide further work developed from the literature review in Section \ref{Section:Patrolling games with random attackers}.
+
+\subsection{Deterministic Attack time experiments}
+As the theory  works for all bounded attack time distributions, we shall look at the deterministic attack time, using $P(X_{j}=x_{j})=1$, we can note that this does some level of reduction on the state space as costs are only incurred at states with $s_{j}=B_{j}$ or $B_{j}+1$. The cost function reduces to
+
+\begin{align*}
+C_{j}(\bm{s},\bm{v},i)=\begin{cases}
+c_{j} \lambda_{j} R_{j} + c_{j} v_{j}  \text{ for } s_{j}=B_{j},i \neq j \\ 
+c_{j} \lambda_{j} \text{ for } s_{j}=B_{j}+1,i \neq j  \\
+0 \text{ Otherwise} \\
+\end{cases}
+\end{align*}
+
+Looking at the single node problem, we notice that there is no cost to transition to the state $s=B$, so at this point we must decide if we are renew now or renew at $s=B+1$ or never renew at all (If indifferent between $B+1,B+2,....$)
+
+It is curious whether this sudden spike in the cost (and therefore in the resulting index) will cause any issue with the proposed heuristics.
+
+\begin{Huge}
+This numerical experiment needs to be done
+\end{Huge}
+
+
 \section{Strategic Patroller with Random Attackers and Local-observations}
 \label{Section:Patrolling games with random attackers and local-observations}
 We now look at altering the work summarized in Section \ref{Section:Patrolling games with random attackers} to incorporate suspicious behaviour of attackers who arrive while the patroller is present.
@@ -869,8 +893,8 @@ While the standard set-up remains mostly intact, the cost function is slightly a
 
 \begin{align*}
 C_{j}(\bm{s},i) &= \begin{cases}
-c_{i} \lambda_{i} \left( \int_{s_{j}-1}^{s_{j}} P(X_{j} \leq t) dt - \int_{0}^{1} P(X_{j} \leq t) dt \right)  \text{ if } j=i \\
-c_{i} \lambda_{i} \int_{s_{j}-1}^{s_{j}} P(X_{j} \leq t) dt \text{ if } j \neq i \\
+0  \text{ if } j=i \\
+c_{j} \lambda_{j} \int_{s_{j}-1}^{s_{j}} P(X_{j} \leq t) dt \text{ if } j \neq i \\
 \end{cases}
 \end{align*}
 
@@ -1096,12 +1120,311 @@ The problem can still be formulated as a MDP, however our states now need to hol
 
 $$\Omega= \{ (\bm{s},\bm{v})=(s_{1},...,s_{n},v_{1},...,v_{n}) \, | \, s_{i}=1,2,...., \; v_{i}=0,1,...  \text{ for } i=1,...,n\}$$
 
-Where as before, $s_{i}$ denotes the time since the last decision to visit node $i$ was taken and the newly introduced $v_{i}$ denotes how many attackers where observed when the patroller last visited node $i$.
+Where as before, $s_{i}$ denotes the time since the last decision to visit node $i$ was taken and the newly introduced $v_{i}$ denotes how many attackers where observed when the patroller last visited node $i$.The current node is $l(\bm{s},\bm{v})=\argmin_{i} s_{i}$ and the decisions from $(\bm{s},\bm{v})$ are still adjacent node, $\mathcal{A}(\bm{s},\bm{v})$. The transition when node $i$ is chosen to move to are $\phi(\bm{s},\bm{v},i)=(\widetilde{\bm{s}},\widetilde{\bm{v}})$, where; $\widetilde{s}_{i}=1$,  $\widetilde{s}_{j}=s_{j}+1 \; \forall j \neq i$, $\widetilde{v}_{i} \sim Po(\lambda_{i})$ and $\widetilde{v}_{j}=v_{j} \; \forall j \neq i$.
 
-\subsection{Problem relaxation}
-\subsection{Discrete attack time assumption}
+That is the $\bm{s}$ state transitions as before, and the $\bm{v}$ state updates the chosen node to be the amount observed while the patroller is at the node, which is drawn from a Poisson distribution of rate $\lambda_{i}$ due to the arrivals being a Poisson Process.
+
+Again the future of the process is independent of its past, so we can formulate its movement as an MC and hence the patrollers problem is a MDP.
+
+The patroller incurs cost $c_{j}$ for all successful attacks at node $j$. A successful attack will fall into two categories; an observed attack or an attacker who arrived. We simply sum the expected costs of both types of attacker to work out the cost at a node for the next unit time, given we choose to move to node $i$.
+
+\begin{align*}
+C_{j}(\bm{s},i) &= \begin{cases}
+0  \text{ if } j=i \\
+\underbrace{c_{j} P(s_{j}-1 < X_{j} \leq s_{j})}_{\text{Observed finishing}} + \underbrace{c_{j} \lambda_{j} \int_{s_{j}-1}^{s_{j}} P(X_{j} \leq t) dt}_{\text{Arrivals finishing}} \text{ if } j \neq i \\
+\end{cases}
+\end{align*}
+
+We run into the same problem as before, with a countably infinite state space, $\Omega$, we therefore wish to bound ourselves to a finite state space. As before we can bound the attack times, defining $B_{j}$ as in \ref{Equation:Definition of attack time bound}, but this only partially solves our problem, as it bounds the $\bm{s}$ part of the state space but not the $\bm{v}$ part.
+
+To bound $\bm{v}$ we introduce a observable capacity, $\bm{b}$, where $b_{i}$ is the maximum number of local-observations at node $i$. We assume that all other attackers fail once this capacity is reached.
+
+\begin{figure}[H]
+\begin{center}
+\resizebox{0.8\linewidth}{!}{
+\begin{tikzpicture}[-,auto,node distance=1cm,
+                    thick,main node/.style={circle,fill=white,draw,font=\sffamily\large,minimum size=0.5cm}]
+ \foreach \x in {0,...,7}
+    \foreach \y in {0,...,5} 
+       {\pgfmathtruncatemacro{\label}{\x - 5 *  \y +21}
+        \pgfmathtruncatemacro{\v}{\x}
+        \pgfmathtruncatemacro{\s}{6-\y}
+       \node [main node]  (\x\y) at (1.5*\x,1.5*\y) {\s,\v};} 
+
+\node (XaxisLeft) [shift={(-0.5,1)}] at (05) {};
+\node (XaxisRight) [shift={(1,1)}] at (75) {};
+
+\node (YaxisBottom) [shift={(-1,-0.5)}] at (00) {};
+\node (YaxisTop) [shift={(-1,1)}] at (05) {};
+
+\draw[->,line width=1mm] (XaxisLeft)--(XaxisRight);
+\draw[->,line width=1mm] (YaxisTop)--(YaxisBottom);
+
+\node[font=\sffamily\large] (OLabel) [shift={(0.5,1.5)}] at (35) {Observation, $v_{j}$};
+\node[font=\sffamily\large] (SLabel) [shift={(-1.5,0.5)}] at (02) {\rotatebox{90}{Time since last visit, $s_{j}$}};
+
+\node[main node] (Example) [shift={(-1,1)}] at (05) {$(s_{j},v_{j})$};
+
+\foreach \y in {0,...,5}
+{\node (DottedStart\y) [shift={(0.5,0)}] at (7\y) {};
+ \node (DottedEnd\y) [shift={(1.5,0)}] at (7\y) {};
+ \draw[decorate sep={1mm}{2mm},fill] (DottedStart\y)--(DottedEnd\y);}
+ 
+\foreach \x in {0,...,7}
+{\node (\x DottedStart) [shift={(0,-0.5)}] at (\x0) {};
+ \node (\x DottedEnd) [shift={(0,-1.5)}] at (\x0) {};
+ \draw[decorate sep={1mm}{2mm},fill] (\x DottedStart)--(\x DottedEnd);
+}
+
+\node (Box1) [draw,thick,fit=(65) (60) (DottedEnd5) (DottedEnd0) (6DottedEnd) (7DottedEnd),fill,blue,opacity=0.2] {};
+
+\node (Box2) [draw,thick,fit=(00) (70)(DottedEnd0) (0DottedEnd) (7DottedEnd),fill,red,opacity=0.2] {};
+
+\node[font=\sffamily\large,color=blue] (Box1Text) [shift={(2.5,0)}] at (Box1) {\rotatebox{270}{Removed by observabled capacity}};
+
+\node[font=\sffamily\large,color=red] (Box2Text) [shift={(0,-1.5)}] at (Box2) {Removed by bounded attack times};           
+
+\end{tikzpicture}
+}
+\end{center}
+\caption{State space diagram for node $j$, with \textcolor{blue}{$b_{j}=5$} and \textcolor{red}{$B_{j}=4$} (e.g. $X_{j} \leq 3.7$)}
+\end{figure}
+
+This change to a finite state space, $\Omega = \{ (\bm{s},\bm{v})=(s_{1},...,s_{n},v_{1},...,v_{n}) \, | \, s_{i}=1,2,....,B_{i}+1 \; v_{i}=0,1,...,b_{i}  \text{ for } i=1,...,n\}$ and caps the transitions. That is that $\widetilde{s}_{j}= \min \{s_{j}+1, B_{j}+1 \}$ and $\widetilde{v}_{i} \sim TPo(\lambda_{i},b_{i)}$, where $TPo(\lambda,b)$ is the truncated Poisson distribution, with all the tail probability at the value $b_{i}$. I.e.
+
+\begin{align*}
+P(TPo(\lambda,b)=\begin{cases}
+P(Po(\lambda) \text{ if } i \neq b \\
+P(Po(\lambda) \geq i) \text{ if } i=b \\
+0 \text{ Otherwise}
+\end{cases}
+\end{align*}
+
+Even though the state space is now finite, the transitions are not deterministic, so a cyclic behaviour is not induced when the same state is reached again. For notational purposes we will still use $\phi^{k}_{\pi}(\bm{s}_{0},\bm{v}_{0})$ to be the state after $k$ transitions from $(\bm{s}_{0},\bm{v}_{0})$.
+
+\begin{Huge}
+More work is needed to see if the cyclic behaviour property does still hold just in some probabilistic fashion
+\end{Huge}
+
+This problem, as before, can be solved by standard techniques such as value iteration or linear programing to compute the long-run average cost. This is left to Appendix \ref{Appendix:Optimal Solution for Random Attacker with Local-Observations}.
+
+We can then use the standard reduction tools of making the problem into a MN problem and then applying the TR constraint and/or the Lagrangian relaxation. We shall therefore focus on the Lagrangian relaxation which is equivalent to the single node problem.
+
+That is we wish to minimize $V(\pi)+\omega \mu(\pi)$. Our state space is more complicated than before due to the inclusion of the time since it was last visited and the amount of local-observations made when it was last visited.
+
+\subsection{Deterministic attack time assumption}
+Because our state space is hard to deal with,in the single node problem, we shall reduce the problem, by assuming that the attack times are deterministic, that is $P(X=x)=1$, this reduces our cost function to
+
+\begin{align*}
+C_{j}(\bm{s},\bm{v},i)=\begin{cases}
+c_{j} \lambda_{j} R_{j} + c_{j} v_{j}  \text{ for } s_{j}=B_{j},i \neq j \\ 
+c_{j} \lambda_{j} \text{ for } s_{j}=B_{j}+1,i \neq j  \\
+0 \text{ Otherwise} \\
+\end{cases}
+\end{align*}
+Where $R_{j}=B_{j}-x_{j}$. We see that we only worry about incurring costs in states when $s_{i}=B_{i}$ or $B_{i}+1$ for some $i$.
+
+This allows us to see a clear solution to the single node problem.
+
 \subsection{Single node solution}
-\subsection{Indices, heuristics and numerical experiments}
+Again we wish to minimize the long-run average cost, paying $\omega$ when we choose to visit a node. We note as mentioned in Section [refer to section on not cycling] that we are not in a cycle, so will take a different approach. At each state our choice is binary; we either wait or renew/visit.
+
+We wish to solve
+
+\begin{align*}
+g=\min\limits_{\pi_{1} \in \Pi^{\text{MN}}_{1}} V(\pi_{1})+\omega \mu(\pi_{1})
+\end{align*}
+
+And because $g$ is the long-run average cost, we know that in the limit of $n \rightarrow \infty$ that $V_{n}(s,v)=ng + h(s,v)$ where $h(s,v)$ is bias from starting at the state $(s,v)$ rather than in equilibrium.
+
+It should be clear that as the cost of all states where $s<B$ are zero, we should wait until $s=B$ before making any form of decision. However for completeness sake we present a formal argument
+
+From any $(s,v)$ with $s<B$ consider the policy $\pi_{k}$ which waits $k$ time periods and then renews and follows some optimal policy, $\sigma$, with $k=0,...,B-s$.
+
+Using such a policy will get us that
+\begin{equation}
+V_{n}^{\pi_{k}}(x,v)=\omega + E[V_{n-k-1}^{\sigma}(\theta)]
+\end{equation}
+
+where $\theta$ is the state upon renewal (i.e it is the state $(1,V) \sim (1,TPo(\lambda,b))$.
+
+Now we will pick policy $\pi_{k+1}$ over $\pi_{k}$ (or be indifferent) if
+
+\begin{align*}
+&\lim\limits_{n \rightarrow \infty} V_{n}^{\pi_{k}} (x,v) - V_{n}^{\pi_{k+1}}(x,v) \geq 0 \\
+& \iff \lim\limits_{n \rightarrow \infty} E[V_{n-k}^{\sigma}(\theta) - V_{n-k-1}^{\sigma} (\theta)] \geq 0 \\
+& \iff g \geq 0
+\end{align*}
+
+As we only have positive costs, we know that $g \geq 0$ and hence the above argument shows that in such a state it is always best to wait another time period and then make a decision, making the same decision to wait again if we have not reached $s=B$.
+
+\begin{myfigure}
+\begin{center}
+\resizebox{0.8\linewidth}{!}{
+\begin{tikzpicture}[-,auto,node distance=1cm,
+                    thick,main node/.style={circle,fill=white,draw,font=\sffamily\large,minimum size=0.5cm}]
+ \foreach \x in {0,...,5}
+    \foreach \y in {0,...,4} 
+       {\pgfmathtruncatemacro{\label}{\x - 5 *  \y +21}
+        \pgfmathtruncatemacro{\v}{\x}
+        \pgfmathtruncatemacro{\s}{5-\y}
+       \node [main node]  (\x\y) at (1.5*\x,1.5*\y) {\s,\v};}
+       
+       \node[main node] (Renewal) at (1.5*6,1.5*4) {$\theta$};
+
+       
+  \foreach \x in {0,...,5}
+    \foreach \y in {2,...,4} 
+       {\pgfmathtruncatemacro{\label}{\x - 5 *  \y +21}
+        \pgfmathtruncatemacro{\v}{\x}
+        \pgfmathtruncatemacro{\s}{5-\y}
+        \pgfmathtruncatemacro{\nv}{\v}
+        \pgfmathtruncatemacro{\ns}{5-\y+1}
+       \draw[->] (\nv\ns)--(\v\s);}
+       
+
+       
+    \foreach \x in {0,...,5}
+    { 
+     \draw[->,bend right,dashed] (Renewal) to (\x4);    
+    }   
+        
+
+\node (XaxisLeft) [shift={(-0.5,0.5)}] at (05) {};
+\node (XaxisRight) [shift={(1,0.5)}] at (55) {};
+
+\node (YaxisBottom) [shift={(-1,-0.5)}] at (00) {};
+\node (YaxisTop) [shift={(-1,1)}] at (05) {};
+
+\draw[->,line width=1mm] (XaxisLeft)--(XaxisRight);
+\draw[->,line width=1mm] (YaxisTop)--(YaxisBottom);
+
+\node[font=\sffamily\large] (OLabel) [shift={(0.5,1)}] at (25) {Observation, $v_{j}$};
+\node[font=\sffamily\large] (SLabel) [shift={(-1.5,0.5)}] at (02) {\rotatebox{90}{Time since last visit, $s_{j}$}};
+
+\node[main node] (Example) [shift={(-1,0.5)}] at (05) {$(s_{j},v_{j})$};
+   
+
+\end{tikzpicture}
+}
+\end{center}
+\caption{Optimal movements for $s<B$}
+\end{myfigure}
+
+We will look at getting a similar idea for the states $s=B+1$, as it should be clear that if we do not renew initially then as our state does not change, we will never renew. However for completeness sake we will provide a formal argument.
+
+From any $(B+1,v)$ consider the policy $\pi_{k}$ which waits $k$ time periods and then renews and follows some optimal policy, $\sigma$, with $k=0,...$.
+
+Using such a policy will get us that
+\begin{equation}
+V_{n}^{\pi_{k}}(x,v)= kc \lambda + \omega + E[V_{n-k-1}^{\sigma}(\theta)]
+\end{equation}
+
+Again we will pick a policy $\pi_{k+1}$ over $\pi_{k}$ (or be indifferent) if
+
+\begin{align*}
+&\lim\limits_{n \rightarrow \infty} V_{n}^{\pi_{k}} (\floor{B}+2,0) - V_{n}^{\pi_{k+1}}(\floor{B}+2,0) \geq 0 \\
+& \iff \lim\limits_{n \rightarrow \infty} -c \lambda + E[V_{n-k}^{\sigma}(\theta) - V_{n-k-1}^{\sigma}(\theta)] \geq 0 \\
+& \iff g \geq c \lambda
+\end{align*}
+
+Now we introduce a policy, $\pi_{\text{Neg}}(s,v)=0 \; \forall (s,v) \in \Omega$, the policy which never renews. It is clear that this policy gives a long-run average cost of $c \lambda$, so $g \leq c \lambda$ and hence we will always choose to renew immediately in $s=B+1 $.
+
+\begin{myfigure}
+\begin{center}
+\resizebox{0.8\linewidth}{!}{
+\begin{tikzpicture}[-,auto,node distance=1cm,
+                    thick,main node/.style={circle,fill=white,draw,font=\sffamily\large,minimum size=0.5cm}]
+ \foreach \x in {0,...,5}
+    \foreach \y in {0,...,4} 
+       {\pgfmathtruncatemacro{\label}{\x - 5 *  \y +21}
+        \pgfmathtruncatemacro{\v}{\x}
+        \pgfmathtruncatemacro{\s}{5-\y}
+       \node [main node]  (\x\y) at (1.5*\x,1.5*\y) {\s,\v};}
+       
+       \node[main node] (Renewal) at (1.5*6,1.5*4) {$\theta$};
+
+       
+  \foreach \x in {0,...,5}
+    \foreach \y in {2,...,4} 
+       {\pgfmathtruncatemacro{\label}{\x - 5 *  \y +21}
+        \pgfmathtruncatemacro{\v}{\x}
+        \pgfmathtruncatemacro{\s}{5-\y}
+        \pgfmathtruncatemacro{\nv}{\v}
+        \pgfmathtruncatemacro{\ns}{5-\y+1}
+       \draw[->] (\nv\ns)--(\v\s);}
+       
+
+       
+    \foreach \x in {0,...,5}
+    { 
+     \draw[->,bend right,dashed] (Renewal) to (\x4);    
+    }   
+        
+
+\node (XaxisLeft) [shift={(-0.5,0.5)}] at (05) {};
+\node (XaxisRight) [shift={(1,0.5)}] at (55) {};
+
+\node (YaxisBottom) [shift={(-1,-0.5)}] at (00) {};
+\node (YaxisTop) [shift={(-1,1)}] at (05) {};
+
+\draw[->,line width=1mm] (XaxisLeft)--(XaxisRight);
+\draw[->,line width=1mm] (YaxisTop)--(YaxisBottom);
+
+\node[font=\sffamily\large] (OLabel) [shift={(0.5,1)}] at (25) {Observation, $v_{j}$};
+\node[font=\sffamily\large] (SLabel) [shift={(-1.5,0.5)}] at (02) {\rotatebox{90}{Time since last visit, $s_{j}$}};
+
+\node[main node] (Example) [shift={(-1,0.5)}] at (05) {$(s_{j},v_{j})$};
+
+        \draw[->] (1.5*6,1.5*0.4) to (Renewal);                          
+
+    \foreach \x in {0,...,5}
+       {\draw[-] (\x0) to (1.5*\x,-1.5*0.6);}
+       
+       \draw[-] (1.5*0,-1.5*0.6) to (1.5*6,-1.5*0.6);                                            
+       \draw[-] (1.5*6,-1.5*0.6) to (1.5*6,1.5*0.4);                                    
+
+\end{tikzpicture}
+}
+\end{center}
+\caption{Optimal movements for $s<B$ and $s=B+1$}
+\end{myfigure}
+
+\subsection{Indices, heuristics}
+
+\subsection{Numerical experiments}
+We now Look at using our heuristic, at certain depths to see how good it is against optimal. To do this we generate 500 scenario's on the complete graph, $K_{4}$ with attack times, $X_{i}$, on the 4 nodes picked uniformly from $[1,3]$, we lock $b_{i}=1 \; \forall i$ and allow each arrival rates, $\lambda_{i}$, to be picked uniformly from $[0,1]$ and use $c_{i}=1 \; \forall i$ so that the cost incurred can be interpreted as the probability of missing an attack.
+
+For the same scenario, we run BH($d$),PH($d$) for $d=1,2,3,4$ and return the percentage error.
+
+\begin{myfigure}
+\label{Figure:Initial BH and PH for plain index}
+\input{Images/BHvsPHInitialPlainComplete.tex}
+\caption{Frequency density of percentage errors made by heuristics in simulations}
+\end{myfigure}
+
+From Figure \ref{Figure:Initial BH and PH for plain index} we can see that while sometimes the heuristic performs well, in the majority of cases it performs very badly.
+
+We propose altering the index to
+
+\begin{align}
+W_{i}(s_{i},v_{i})&=\begin{cases}
+0 \text{ If } s_{i}<B_{i} \\
+\Delta_{i}(v_{i}) \text{ If } s_{i}=B_{i} \\
+\Delta_{i}(v_{i}+1) \text{ If } s_{i}=B_{i}+1 , v_{i} < v_{i,\text{max}} \\
+\widetilde{\Delta_{i}} \text{ If } s_{i}=B_{i}+1, v_{i} \geq v_{i,\text{max}} \\
+\end{cases}
+\end{align}
+
+We run the same scenarios with our changed index
+
+\begin{myfigure}
+\label{Figure:BH and PH for new plain index}
+\input{Images/BHvsPHNewPlainComplete.tex}
+\caption{Frequency density of percentage errors made by heuristics in simulations for new index}
+\end{myfigure}
+
+As we can see from Figure \ref{Figure:BH and PH for new plain index} the change to index, significantly. We can also note that on the complete the penalty heuristic seems to outperform the benefit heuristic. This agrees with the findings in \cite{Lin2013}. 
 
 \section{Future Work}
 \subsection{Proof completions}
@@ -1429,4 +1752,6 @@ The reverse process is called \textit{Smoothing} of a graph, $G$, is a new graph
 \section{Optimal Solution for a Random Attacker}
 \label{Appendix:Optimal Solution for a Random Attacker}
 
+\section{Optimal Solution for Random Attacker with Local-Observations}
+\label{Appendix:Optimal Solution for Random Attacker with Local-Observations}
 \end{document}
