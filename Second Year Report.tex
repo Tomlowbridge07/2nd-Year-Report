@@ -1213,6 +1213,7 @@ We can then use the standard reduction tools of making the problem into a MN pro
 That is we wish to minimize $V(\pi)+\omega \mu(\pi)$. Our state space is more complicated than before due to the inclusion of the time since it was last visited and the amount of local-observations made when it was last visited.
 
 \subsection{Deterministic attack time assumption}
+\label{Section:Deterministic attack time assumption}
 Because our state space is hard to deal with,in the single node problem, we shall reduce the problem, by assuming that the attack times are deterministic, that is $P(X=x)=1$, this reduces our cost function to
 
 \begin{align*}
@@ -1227,6 +1228,7 @@ Where $R_{j}=B_{j}-x_{j}$. We see that we only worry about incurring costs in st
 This allows us to see a clear solution to the single node problem.
 
 \subsection{Single node solution}
+\label{Section:Single node solution}
 Again we wish to minimize the long-run average cost, paying $\omega$ when we choose to visit a node. We note as mentioned in Section [refer to section on not cycling] that we are not in a cycle, so will take a different approach. At each state our choice is binary; we either wait or renew/visit.
 
 We wish to solve
@@ -1317,7 +1319,7 @@ From any $(B+1,v)$ consider the policy $\pi_{k}$ which waits $k$ time periods an
 
 Using such a policy will get us that
 \begin{equation}
-V_{n}^{\pi_{k}}(x,v)= kc \lambda + \omega + E[V_{n-k-1}^{\sigma}(\theta)]
+V_{n}^{\pi_{k}}(s,v)= k c \lambda + \omega + E[V_{n-k-1}^{\sigma}(\theta)]
 \end{equation}
 
 Again we will pick a policy $\pi_{k+1}$ over $\pi_{k}$ (or be indifferent) if
@@ -1390,7 +1392,214 @@ Now we introduce a policy, $\pi_{\text{Neg}}(s,v)=0 \; \forall (s,v) \in \Omega$
 \caption{Optimal movements for $s<B$ and $s=B+1$}
 \end{myfigure}
 
-\subsection{Indices, heuristics}
+Because either side of our states with $s=B$ we know the decision, we can see in states $(B,v)$ whether we should renew now or wait one period and then renew. Using a similar argument to the two previously, we shall consider a policy, $\pi^{\text{R}}$ a policy which renews immediately and a policy $\pi^{\text{NR}}$ which does not renew immediately, but renews in one time period, which both after these decisions follow some optimal policy, $\sigma$ from the renewed state, $\theta$. Using Such policies will get us
+
+\begin{align*}
+&V_{n}^{\pi_{\text{R}}}(s,v)= \omega + E[V_{n-1}^{\sigma}(\theta)] //
+&V_{n}^{\pi_{\text{NR}}}(s,v)= c (\lambda R +v) \omega + E[V_{n-1}^{\sigma}(\theta)] //
+\end{align*}
+
+We will pick policy, $\pi^{\text{R}}$ over $\pi^{\text{NR}}$
+\begin{align*}
+&\lim\limits_{n \rightarrow \infty} V_{n}^{\pi_{NR}} (B,v) - V_{n}^{\pi_{R}}(B,v) \geq 0 \\
+& \iff \lim\limits_{n \rightarrow \infty} c (\lambda R + v) + E[V_{n-1}^{\sigma}(B+1,0)] - (\omega + E[V_{n-1}^{\sigma}(\theta)]) \geq 0 \\
+& \iff \lim\limits_{n \rightarrow \infty} c (\lambda R + v)  + E[ \omega + V_{n-2}^{\sigma}(\theta)] - \omega - E[V_{n-1}^{\sigma}(\theta)] \geq 0 \\
+& \iff \lim\limits_{n \rightarrow \infty} c(\lambda R + v) + E[V_{n-2}^{\sigma}(\theta) - V_{n-1}^{\sigma}(\theta)] \geq 0 \\
+& \iff c (\lambda R+v) - g \geq 0 \\
+& \iff g \leq c (\lambda R +v) 
+\end{align*}
+
+Meaning that in state, $s=B$ we are dependent on $v$ and if we have that $g \leq c (\lambda R +v)$ then we will renew immediately. We see that if we renew now in $v$ we will definitely renew in $v+1$ (as $g \leq c (\lambda R +v) \implies g \leq c (\lambda R +v+1)$).This motivates the definition of the type of optimal policy, depending on some threshold.
+
+\begin{definition}[Threshold policy]
+A policy, $\pi_{\text{Th}}(v_{\text{crit}})$, is said to be a \textit{threshold} policy, with threshold, $v_{\text{crit}}$, if:
+\begin{itemize}
+\item In states $(s,v)$ , $s < B, \forall v$ it waits until $(B,v)$
+\item In states $(B,v)$ it renews now if $v \geq v_{\text{crit}}$ and waits until $(B+1,v)$ if $v < v_{\text{crit}}$
+\item In states $(B+1,v) \; \forall v$ it renews now.
+\end{itemize}
+\end{definition}
+
+\begin{myfigure}
+\begin{center}
+\resizebox{0.9\linewidth}{!}{
+\begin{tikzpicture}[-,auto,node distance=1cm,
+                    thick,main node/.style={circle,fill=white,draw,font=\sffamily\large,minimum size=0.5cm}]
+ \foreach \x in {0,...,5}
+    \foreach \y in {0,...,4} 
+       {\pgfmathtruncatemacro{\label}{\x - 5 *  \y +21}
+        \pgfmathtruncatemacro{\v}{\x}
+        \pgfmathtruncatemacro{\s}{5-\y}
+       \node [main node]  (\x\y) at (1.5*\x,1.5*\y) {\s,\v};}
+       
+       \node[main node] (Renewal) at (1.5*6,1.5*4) {$\theta$};
+
+ \foreach \x in {0,...,1}
+    \foreach \y in {2,...,5} 
+       {\pgfmathtruncatemacro{\label}{\x - 5 *  \y +21}
+        \pgfmathtruncatemacro{\v}{\x}
+        \pgfmathtruncatemacro{\s}{5-\y}
+        \pgfmathtruncatemacro{\nv}{\v}
+        \pgfmathtruncatemacro{\ns}{5-\y+1}
+       \draw[->] (\nv\ns)--(\v\s);}
+       
+  \foreach \x in {2,...,5}
+    \foreach \y in {2,...,4} 
+       {\pgfmathtruncatemacro{\label}{\x - 5 *  \y +21}
+        \pgfmathtruncatemacro{\v}{\x}
+        \pgfmathtruncatemacro{\s}{5-\y}
+        \pgfmathtruncatemacro{\nv}{\v}
+        \pgfmathtruncatemacro{\ns}{5-\y+1}
+       \draw[->] (\nv\ns)--(\v\s);}
+       
+    \foreach \x in {2,...,5}
+       {\draw[-] (\x1) to (1.5*\x,1.5 *0.4);}
+                 
+        \draw[-] (1.5*2,1.5*0.4) to (1.5*6,1.5*0.4);
+        \draw[->] (1.5*6,1.5*0.4) to (Renewal);                          
+
+    \foreach \x in {0,...,5}
+       {\draw[-] (\x0) to (1.5*\x,-1.5*0.6);}
+       
+       \draw[-] (1.5*0,-1.5*0.6) to (1.5*6,-1.5*0.6);                                            
+       \draw[-] (1.5*6,-1.5*0.6) to (1.5*6,1.5*0.4);                                 
+       
+    \foreach \x in {0,...,5}
+    { 
+     \draw[->,bend right,dashed] (Renewal) to (\x4);    
+    }   
+        
+
+\node (XaxisLeft) [shift={(-0.5,0.5)}] at (05) {};
+\node (XaxisRight) [shift={(1,0.5)}] at (55) {};
+
+\node (YaxisBottom) [shift={(-1,-0.5)}] at (00) {};
+\node (YaxisTop) [shift={(-1,1)}] at (05) {};
+
+\draw[->,line width=1mm] (XaxisLeft)--(XaxisRight);
+\draw[->,line width=1mm] (YaxisTop)--(YaxisBottom);
+
+\node[font=\sffamily\large] (OLabel) [shift={(0.5,1)}] at (25) {Observation, $v_{j}$};
+\node[font=\sffamily\large] (SLabel) [shift={(-1.5,0.5)}] at (02) {\rotatebox{90}{Time since last visit, $s_{j}$}};
+
+\node[main node] (Example) [shift={(-1,0.5)}] at (05) {$(s_{j},v_{j})$};
+   
+
+\end{tikzpicture}
+}
+\end{center}
+\caption{Threshold policy, $\pi_{\text{Th}}(2)$, with \textcolor{blue}{$b_{j}=5$} and \textcolor{red}{$B_{j}=4$} (e.g. $X_{j} \leq 3.7$)}
+\end{myfigure}
+
+But due to knowing that, $g \leq c \lambda$, we may have some maximum threshold. We will define
+
+\begin{align*}
+v_{\text{max}} \equiv \max \{ v \in \{0,1,...,b \} \, | \, v \leq \lambda (1-R) \}
+\end{align*}
+Then we may have $v_{\text{crit}} \in \{0,1,...,v_{\text{max}}+1 \}$.
+
+While we do not yet know, $g$, we can consider splitting it up into regions which imply using different threshold policies.
+
+\begin{itemize}
+\item $g \leq c \lambda R$ gives $v_{\text{crit}}=0$.
+
+\item $c \lambda R +c(k-1) < g \leq c \lambda R + kc$ gives $v_{\text{crit}} \neq 0,v_{\text{max}}+1$
+
+\item $c \lambda R + c v_{\text{max}} < g \leq c \lambda$ gives $v_{\text{crit}}=v_{\text{max}}+1$
+\end{itemize}
+
+Given that we are using a threshold policy, with threshold $\pi_{\text{crit}}$, we can work out the long-run average cost as a function of $\omega$
+
+\begin{align*}
+&g^{\pi_{\text{Th}}(v_{\text{crit}})}(\omega)=\frac{\text{Expected cost per renewal}}{\text{Expected renewal length}} \\
+&= \frac{\omega + c \lambda R (1-P(TPo(\lambda,b) \geq v_{\text{crit}})) + c \sum\limits_{i=0}^{v_{\text{crit}}-1} i P(TPo(\lambda,b)=i)}{B+1-P(TPo(\lambda,b) \geq v_{\text{crit}})}
+\end{align*}
+
+This allows us to convert our previous bounds on, $g$, which imply a  certain threshold should be picked, to bounds on our visitation cost, $\omega$.
+
+\begin{itemize}
+\item $0 \leq \omega \leq c \lambda R (B+1) \equiv \Delta(0)$ if $v_{\text{crit}}=0$.
+
+\item $\Delta(v_{\text{crit}}-1) < \omega \leq  \Delta(v_{\text{crit}})$ if $v_{\text{crit}} \neq 0,v_{\text{max}}$
+
+\item $\Delta(v_{\text{max}}) < \omega \leq \widetilde{\Delta}$ if $v_{\text{crit}}=v_{\text{max}}+1$
+\end{itemize}
+
+Where
+\begin{itemize}
+\item $\Delta(k)=c (\lambda R B +k(B+1-P(TPo(\lambda,b) \geq k))-\sum\limits_{i=0}^{k-1} i P(TPo(\lambda,b)=i))$
+\item $\widetilde{\Delta}= c  ( \lambda (B+1-R + (R-1) P(TPo(\lambda,b) \geq v_{\text{max}}+1)) - \sum\limits_{i=0}^{v_{\text{max}}} i P(TPo(\lambda,b)=i) )$
+\end{itemize}
+And we note, that $\widetilde{\Delta}$ is the `capped' version of $\Delta$ due to the bound of $g \leq c \lambda$.
+
+Hence we have solved the single node problem, and hence $C(\omega)$.
+
+\subsection{Index and heuristics}
+As we know the strategy at a single node, we can imagine in all states `bidding' for how much they want to be visited from the current state of the system, `bidding' a `fair price'.
+
+This fair price can be seen from [reference to omega equations], and considering what a node would be willing to `bid' to be visited now.
+
+Consider a state $(s,v)$ with $s< B$ then the node is not willing to pay for a visit (or will pay zero), so these states are given an index of zero.
+
+To find the fair cost in states $(B,v)$ consider that they will be renewed in threshold policy with $v_{\text{crit}}=0,1,...,v$ policy, but not for any higher thresholds, so the maximum service price it is willing to pay is $Delta(v)$ for visit now.
+
+\begin{note}
+Due to $v_{\text{max}}$ this can be capped to $\widetilde{\Delta}$ for $v \geq v_{\text{max}}+1$
+\end{note} 
+
+To find the fair cost in $(B+1,v)$ consider that for all thresholds we are willing to renew  in these states and are willing to pay up to $\widetilde{\Delta}$.
+
+This gives us a function which can help to classify the optimal solution for the single-node problem.
+
+\begin{align*}
+W(s,v)&=\begin{cases}
+0 \text{ If } s<B \, , \\
+\Delta(v) \text{ If } s_{i}=B_{i} , v_{i} \leq v_{\text{max}} \, , \\
+\widetilde{\Delta} \text{ If } s=B , v \geq v_{\text{max}}+1 \, , \\
+\widetilde{\Delta} \text{ If } s=B+1 \, .
+\end{cases}
+\end{align*}
+
+Then if $\omega \leq W(s,v)$ the optimal action is to renew now.
+
+We can reinsert the node subscript, $i$, and attempt to use this index to aim to implement it as the price a node is willing to pay to be visited
+
+\begin{align*}
+W_{i}(\bm{s},\bm{v})&=\begin{cases}
+0 \text{ If } s_{i}<B_{i} \, , \\
+\Delta_{i}(v_{i}) \text{ If } s_{i}=B_{i} , v_{i} \leq v_{i,\text{max}} \, , \\
+\widetilde{\Delta}_{i} \text{ If } s_{i}=B_{i} , v_{i} \geq v_{i,\text{max}}+1 \, , \\
+\widetilde{\Delta}_{i} \text{ If } s_{i}=B_{i}+1 \, .
+\end{cases}
+\end{align*}
+
+Now we can form a simple heuristic, called the Index Heuristic(IH), which just picks to go an adjacent node with the highest index.
+
+We can see the index as a benefit for visiting the selected node. The patroller can use a look-ahead window of length, $l$, that is to look at all paths of length $l$ and sum all the benefits (indices) collected along the path and using the maximum path for our immediate action. We call this heuristic the Index Benefit Heuristic(IBH).
+
+We can repeat this for every state to get a look-up table for the action to take in any given state.
+
+We notice that as we are looking at summing all indices for all $l$ steps in the look ahead window, we have already calculated this for all look ahead windows $l' \leq l$. We might as well use this information, as it is being computed. We shall call this the heuristics depth, $d$, and denote IBH($d$) to be the index benefit heuristic that look at all look ahead windows $l=1,...,d$ and for each $l$ returns an action to take.
+
+To select between the $d$ paths (and therefore actions) from the different look ahead windows, we need some form of path selection heuristic. We decide to use a proxy for the long-run average cost, by analysing the expected short term average cost along the path and biasing this with the average cost to decay to the fully neglected state $(\bm{B}+\bm{1},\bm{v})$ from the end of the path's state by the patroller leaving the system (and no longer visiting any node).
+
+Instead of seeing the index as a benefit for selecting a node, we can see the index as a penalty for not selecting a node. The patroller can use a look-ahead window of length, $l$, and sum all the penalties (indices for nodes not selected) collected along the path and using the minimum path for our immediate action. We call this heuristic the Index Penalty Heuristic(IPH) and similarly we can look at depth $d$ called the IPH($d$) by comparing all look-ahead window choices of lengths $l=1,...,d$ and using the same path selection as IBH($d$).
+
+\begin{note}
+IBH($1$), IPH($1$) are the same heuristic
+\end{note}
+
+We could also consider a short-sighted for numerical study purposes. We know in state $(\bm{s},\bm{v})$ and the patroller choosing node $i$ then the expected number of attacks they can detect is $\lambda_{i} \int_{0}^{s_{i}-1} P(X_{i} > t ) dt + v_{i} P(X_{i} > s_{i}-1)$. Therefore we define the cost avoided (reward gained) if the patroller visits $i$ from state $(\bm{s},\bm{v})$
+
+\begin{align*}
+R(\bm{s},\bm{v},i)= c_{i} ( \lambda_{i} \int_{0}^{s_{i}-1} P(X_{i} > t ) dt + v_{i} P(X_{i} > s_{i}-1)
+\end{align*}
+
+Using this reward function for selecting a node is an option instead of seeing the index as some benefit is an option.The patroller can use a look-ahead window of length, $l$, and sum all the rewards collected along the path and using the maximum path for our immediate action. We call this heuristic the Myopic Heuristic(MH) and similarly we can look at depth $d$ called the MH($d$) by comparing all look-ahead window choices of lengths $l=1,...,d$ and using the same path selection as IBH($d$).
+
+\begin{note}
+Due to the path selection method used for the depth heuristics, we cannot guarantee that increasing the depth increases the overall optimal answer provided by the heuristics.
+\end{note}
 
 \subsection{Numerical experiments}
 We now Look at using our heuristic, at certain depths to see how good it is against optimal. To do this we generate 500 scenario's on the complete graph, $K_{4}$ with attack times, $X_{i}$, on the 4 nodes picked uniformly from $[1,3]$, we lock $b_{i}=1 \; \forall i$ and allow each arrival rates, $\lambda_{i}$, to be picked uniformly from $[0,1]$ and use $c_{i}=1 \; \forall i$ so that the cost incurred can be interpreted as the probability of missing an attack.
@@ -1428,8 +1637,87 @@ As we can see from Figure \ref{Figure:BH and PH for new plain index} the change 
 
 \section{Future Work}
 \subsection{Proof completions}
+
 \subsection{Extending Discrete Attack time to generic distributions}
+We want to look at removing the restriction placed on the attack time to be deterministic, as in section \ref{Section:Deterministic attack time assumption}. This will allow us to deal with any generic distribution, to do so we will focus on the single node problem with a generic distribution.
+
+As before if we start in states $(B+1,v)$ we will renew if $g \leq c \lambda$ and by the neglecting strategy we know this to guaranteed. So the optimal strategy will have all states with $s=B+1$ renew immediately.
+
+No we will work backwards, aiming to use backwards recursion to work through to some multi-stage threshold policy, $\pi^{\text{TH}}(\bm{v}_{\text{crit}})$ where $(\bm{v}_{\text{crit}})_{i}$ is the threshold on the state space row of $s=i$. We expect this threshold to be triangular on the state space, that is that $\bm{v}_{\text{crit}}$ is a non-decreasing vector.
+
+\begin{definition}[Multi-stage threshold policy]
+
+\end{definition}
+
+As an example we will now start to work out what to  do in states $s=B$ and how to work out the threshold. Well the same process as in Section \ref{Section:Single node solution} holds and we will renew if $g \leq c (\lambda R + v)$ otherwise we will wait and renew later. 
+
+Now to decide if in $(B-1,v)$ we should renew or not we need to consider waiting zero,one or two periods before renewing (renew in $s=B-1,B,B+1$).
+
+We could split ourself into cases, of $v$ such that $g \leq c (\lambda R +v)$ (so if we wait we renew in $s=B$) or otherwise we wait till $s=B+1$.
+
+\subsubsection{Plan}
+\textbf{Time Estimate:} 3 Months
+
+\textbf{Plan:} 
+
 \subsection{Strategic Patroller with Random Attackers on Edges}
+We want to look at considering similar work to that in section, \ref{Section:Patrolling games with random attackers} but instead of attackers arriving at nodes, we could consider attackers arriving on edges. We provide a brief introduction to this idea now focusing on directed graphs.
+
+We use an directed graph, $Q=(N,E)$, with nodes $N=\{1,...,n \}$ and edges $E= \subset E_{\text{Comp}}= \{(i,j) \, | (i,j) \in N  \}$. We have our adjacency matrix, $A$, where $A_{i,j}$ means that a transition from node $i$ to node $j$ is possible.
+
+Attackers arrive at each edge according to a Poisson process of rate, $\lambda_{i,j}$ and pick a position along the unit length edge according to a distribution function, $f_{i,j}(x)$ (with support, $x \in [0,1]$, and c.d.f, $F_{i,j}(x)$). The attack lasts, $X_{i,j}$ time units before completion and a cost is incurred to the patroller of $c_{i,j}$.
+
+The patrollers strategy is some walk (with possible waiting), we will assume as before that they walk along the edges at unit speed. The decision are which edge to traverse (which is equivalent to which node to walk to).
+
+Our state space is $\Omega= \{ \bm{s}=(s_{i,j})_{(i,j) \in E} \, | \, s_{i,j}=1,2,... \; \forall (i,j) \in E \}$, where $s_{i,j}$ is the number of time periods since the edge $(i,j)$ was last traversed.
+
+From a state, $\bm{s}$, we can identify the current node by $l(\bm{s}) = (\argmin_{(i,j)} \bm{s})_{2} $ the patroller can choose to move to $\mathcal{A}(\bm{s})= \{ j' \, | (A)_{l(\bm{s}),j'}=1 \}$  and choosing node, $j'$,is equivalent to choosing to traverse edge $(j,j')$. When node, $j'$ is chosen to be moved to we transition to state, $\phi(\bm{s},j')=\widetilde{\bm{s}}$ where $s_{l(\bm{s}),j}=1$ and $s_{i,j}=s_{i,j}+1 \; \forall (i,j) \in E \\ \{(l(\bm{s}),j') \}$. 
+
+Again the future of the process is independent of its past, we can formulate its  movement as a MC and the patroller's problem is a MDP.
+
+The patroller incurs a cost at each edge for the next time period I.e $C(\bm{s},j')=\sum\limits_{(i,j) \in E} C_{i,j}(\bm{s},j')$ where $C_{i,j}(\bm{s},j')$ is the cost at the edge $(i,j)$ choosing to move to node $j'$ in the next time period. Hence
+
+\begin{align*}
+C_{i,j}(\bm{s})&= c_{i,j} \lambda_{i,j} \int_{0}^{1} f_{i,j}(y) \int_{0}^{s_{i,j}} P(t-1 < X_{i,j} \leq t) dt dy \\
+&= c_{i,j} \lambda_{i,j} \int_{0}^{s_{i,j}} P(t-1 < X_{i,j} \leq t) dt \\
+\end{align*}
+
+\begin{note}
+We note due to all edges being traversed at the same speed, the last time a point $x$ (from node $i$) along the edge $(i,j)$ was seen was $s_{i,j}-x$, so when it returned to it is seen in $x$ time, so is seen again in $s_{i,j}$ time.
+\end{note}
+
+As before we bound the attack times by, using $B_{i,j} \equiv \min \{ k \, | k \in \mathbb{Z}^{+} P(X_{i,j} \leq k)=1 \}$ to create a finite state space, $\Omega= \{\bm{s} \, | s_{i,j}=1,2,...,B_{i,j} \; \forall (i,j) \in E \}$ and our transition is modified to $\widetilde{s}_{i,j}=\min\{s_{i,j}+1,B_{i,j}+1 \} \; \forall (i,j) \in E \\ \{(l(\bm{s}),j') \}$.
+
+The objective again is to minimize the long-run average cost among all edges and as we have a finite state space as before, we can focus on the class of stationary, deterministic policies, $\Pi = \{ \pi: \Omega \rightarrow E \, | \pi(\bm{s}) \in  \{(l(\bm{s}),j') \, | \, j \in \mathcal{A}(\bm{s}) \} \}$ and we wish to solve
+
+\begin{align*}
+C^{\text{OPT}}(\bm{s}_{0}) \equiv \min\limits_{\pi \in \Pi} \sum\limits_{(i,j) \in E} V_{i,j}(\pi,\bm{s}_{0})
+\end{align*}
+Where $V_{i,j}(\pi,\bm{s}_{0})$ is the long-run average cost incurred at edge $(i,j)$ under the policy, $\pi$, starting from state, $\bm{s}_{0}$, defined by,
+\begin{align*}
+V_{i,j}(\pi,\bm{s}_{0}) \equiv \lim\limits_{N \rightarrow \infty} \frac{1}{N} \sum\limits_{(i,j) \in E} C_{i,j}(\phi^{k}_{\pi}(\bm{s}_{0}),\pi(\phi^{k}_{\pi}(\bm{s}_{0})))
+\end{align*}
+Where $\phi^{k}_{\pi}(\bm{s}_{0})$ is the state after $k$ transitions starting from $\bm{s}_{0}$ under the policy $\pi$.
+
+
+We now notice and extreme similarity to the `solved' problem in \ref{Section:Patrolling games with random attackers} and in-fact we can see a link between the edges here and the nodes in the original proble. To seek some correspondence between the two problems by using the edge-vertex dual for a directed graphs (as in ).
+
+\begin{note}
+The resultant edge-vertex dual graph is directed, but the original problem has no issue with this.
+\end{note}
+
+\begin{Huge}
+Do I need to show this 1-1 correspondence ?
+\end{Huge}
+
+This correspondence, allows us to use the heuristics and theory as in \ref{Section:Patrolling games with random attackers}.
+
+The idea now is does this still work with undirected graphs, we shall note that the cost function changes slightly and the way we traverse the graph matters due to the orientation of the arrivals at positions.
+
+\subsubsection{Plan}
+\textbf{Time Estimate:} 2 Months
+
+\textbf{Plan:} To extend the theory to deal with the undirected graph, which  will include modifying the cost function and state space for the opposite traversal's . Then to isolate particular examples which can be `solved' with the previous reduction tools; such as acyclic graphs, which remove the dependency on which way the edges are traversed. The study of the class of  acyclic graphs will be important as all walks which consider using the same edge always traverse it in the opposite direction to as before. Then to see if there is a way to convert an undirected problem to a directed problem and hence use the correspondence for the solution. Finally we wish to try to solve it from first principals without any intuitive understanding.
 
 %End of main part of document
 \bibliography{mybib}
@@ -1747,6 +2035,62 @@ The reverse process is called \textit{Smoothing} of a graph, $G$, is a new graph
 \end{tikzpicture}
 \caption{Subdivision and Smoothing of the edge $\{1,2\}$}
 \end{center}
+\end{myfigure}
+
+\begin{definition}[Edge-vertex dual]
+A \textit{edge-vertex dual} of a directed graph $G$, called $EV(G)$, is made of a vertex set $V_{EV(G)}=E_{G}$ and whose edge set is made up of a directed edge between $e_{1},e_{2} \in V_{EV(G)}$ if in $G$ the edge $e_{1}$'s head meets the tail of $e_{2}$ at some node.
+\end{definition}
+
+\begin{myfigure}
+\begin{center}
+\begin{tikzpicture}[baseline=(current bounding box.north),-,auto,node distance=2cm,
+                    main node/.style={circle,draw,fill=black,font=\sffamily\bfseries}]
+
+  \node[main node] (1) {};
+  \node[main node] (2) [right of=1] {};
+  \node[main node] (3) [below of=1] {};
+  \node[main node] (4) [below of=2] {};
+  
+
+  \path[thick,->]
+  (1) edge (2);
+  
+  \path[thick,->,bend right=80]
+  (2) edge (1);
+  
+  \path[thick,->]
+  (2) edge (4)
+  (4) edge (3)
+  (1) edge (3)
+  (3) edge (2);
+  
+  \node[main node,fill=red] (1a) [shift={(6,0)}] at (1) {};
+  \node[main node,fill=red] (2a) [shift={(0,0.75)}] at (1a) {};
+  \node[main node,fill=red] (3a) [shift={(1,-1)}] at (1a) {};
+  \node[main node,fill=red] (4a) [shift={(0,-2)}] at (1a) {};
+  \node[main node,fill=red] (5a) [shift={(-1,-1)}] at (1a) {};
+  \node[main node,fill=red] (6a) [shift={(0,-1)}] at (1a) {};
+  
+  \path[thick,->,bend right=30,red]
+  (1a) edge (2a);
+  
+   \path[thick,->,bend right=30,red]
+  (2a) edge (1a)
+  (2a) edge (5a);
+  
+   \path[thick,->,red]
+   (1a) edge (3a)
+   (3a) edge (4a)
+   (4a) edge (6a)
+   (5a) edge (6a)
+   (6a) edge (3a);
+   
+   \path[thick,->,bend right=80,red]
+   (6a) edge (2a); 
+ 
+\end{tikzpicture}
+\end{center}
+\caption{A graph $G$ and its directed edge-vertex dual, $EV(G)$}
 \end{myfigure}
 
 \section{Optimal Solution for a Random Attacker}
