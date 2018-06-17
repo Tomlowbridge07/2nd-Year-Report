@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.19 (MiKTeX 2.9.6630 64-bit) (preloaded format=pdflatex 2018.6.1)  13 JUN 2018 23:36
+This is pdfTeX, Version 3.14159265-2.6-1.40.19 (MiKTeX 2.9.6630 64-bit) (preloaded format=pdflatex 2018.6.1)  15 JUN 2018 10:29
 entering extended mode
 **"./Second Year Report.tex"
 ("Second Year Report.tex"
@@ -1321,34 +1321,34 @@ File: tikzlibrarybackgrounds.code.tex 2013/07/18 v3.0.1a (rcs-revision 1.3)
 \c@theorem=\count317
 Package newfloat Info: New float `examplefigure' with options `fileext=los, lis
 tname={List of Example Figures}, name=Example Figure, placement=tbhp, within=se
-ction,' on input line 71.
+ction,' on input line 73.
 \c@examplefigure=\count318
-Package newfloat Info: float type `examplefigure'=4 on input line 71.
+Package newfloat Info: float type `examplefigure'=4 on input line 73.
 \c@subexamplefigure=\count319
 Package newfloat Info: New float `myfigure' with options `fileext=los, listname
 ={List of myFigures}, name=Figure, placement=tbhp, within=section,' on input li
-ne 77.
+ne 79.
 \c@myfigure=\count320
-Package newfloat Info: float type `myfigure'=8 on input line 77.
-Package newfloat Info: \newfloat@ext@los is already defined on input line 77.
+Package newfloat Info: float type `myfigure'=8 on input line 79.
+Package newfloat Info: \newfloat@ext@los is already defined on input line 79.
 \c@submyfigure=\count321
  ("Second Year Report.aux")
 \openout1 = `"Second Year Report.aux"'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 87.
-LaTeX Font Info:    ... okay on input line 87.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 87.
-LaTeX Font Info:    ... okay on input line 87.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 87.
-LaTeX Font Info:    ... okay on input line 87.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 87.
-LaTeX Font Info:    ... okay on input line 87.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 87.
-LaTeX Font Info:    ... okay on input line 87.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 87.
-LaTeX Font Info:    ... okay on input line 87.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 87.
-LaTeX Font Info:    ... okay on input line 87.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 89.
+LaTeX Font Info:    ... okay on input line 89.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 89.
+LaTeX Font Info:    ... okay on input line 89.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 89.
+LaTeX Font Info:    ... okay on input line 89.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 89.
+LaTeX Font Info:    ... okay on input line 89.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 89.
+LaTeX Font Info:    ... okay on input line 89.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 89.
+LaTeX Font Info:    ... okay on input line 89.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 89.
+LaTeX Font Info:    ... okay on input line 89.
 
 ("C:\Program Files\MiKTeX 2.9\tex\context\base\supp-pdf.mkii"
 [Loading MPS to PDF converter (version 2006.09.02).]
@@ -1384,7 +1384,7 @@ Package caption Info: floatrow package is loaded.
 Package caption Info: hyperref package is loaded.
 Package caption Info: End \AtBeginDocument code.
 \AtBeginShipoutBox=\box71
-Package hyperref Info: Link coloring OFF on input line 87.
+Package hyperref Info: Link coloring OFF on input line 89.
 
 ("C:\Program Files\MiKTeX 2.9\tex\latex\hyperref\nameref.sty"
 Package: nameref 2016/05/21 v2.44 Cross-referencing by name of section
@@ -1394,20 +1394,20 @@ Package: gettitlestring 2016/05/16 v1.5 Cleanup title references (HO)
 )
 \c@section@level=\count328
 )
-LaTeX Info: Redefining \ref on input line 87.
-LaTeX Info: Redefining \pageref on input line 87.
-LaTeX Info: Redefining \nameref on input line 87.
+LaTeX Info: Redefining \ref on input line 89.
+LaTeX Info: Redefining \pageref on input line 89.
+LaTeX Info: Redefining \nameref on input line 89.
 
 ("Second Year Report.out") ("Second Year Report.out")
 \@outlinefile=\write7
 \openout7 = `"Second Year Report.out"'.
 
-LaTeX Font Info:    Try loading font information for U+msa on input line 93.
+LaTeX Font Info:    Try loading font information for U+msa on input line 95.
 
 ("C:\Program Files\MiKTeX 2.9\tex\latex\amsfonts\umsa.fd"
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
-LaTeX Font Info:    Try loading font information for U+msb on input line 93.
+LaTeX Font Info:    Try loading font information for U+msb on input line 95.
 
 ("C:\Program Files\MiKTeX 2.9\tex\latex\amsfonts\umsb.fd"
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
@@ -1421,7 +1421,7 @@ l-observations[] []
 [1
 
 {C:/Users/Thomas/AppData/Local/MiKTeX/2.9/pdftex/config/pdftex.map}]
-Overfull \hbox (3.54123pt too wide) in paragraph at lines 36--36
+Overfull \hbox (3.54123pt too wide) in paragraph at lines 41--41
  [] [][]\OT1/cmr/bx/n/10 Optimal So-lu-tion for Ran-dom At-tacker with Local-Ob
 servations[] []  
  []
@@ -1431,15 +1431,15 @@ servations[] []
 \openout8 = `"Second Year Report.toc"'.
 
  [2]
-LaTeX Font Info:    Try loading font information for OMS+cmr on input line 114.
+LaTeX Font Info:    Try loading font information for OMS+cmr on input line 116.
 
  ("C:\Program Files\MiKTeX 2.9\tex\latex\base\omscmr.fd"
 File: omscmr.fd 2014/09/29 v2.5h Standard LaTeX font definitions
 )
 LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <10> not available
-(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 114.
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 116.
 
-Overfull \hbox (5.87195pt too wide) in paragraph at lines 125--126
+Overfull \hbox (5.87195pt too wide) in paragraph at lines 127--128
 []\OT1/cmr/m/n/10 A pa-trol, $\OML/cmm/m/it/10 W$\OT1/cmr/m/n/10 , in-ter-cepts
  the at-tack, $[\OML/cmm/m/it/10 i; I\OT1/cmr/m/n/10 ]$, if $\OML/cmm/m/it/10 i
  \OMS/cmsy/m/n/10 2 \OML/cmm/m/it/10 W\OT1/cmr/m/n/10 (\OML/cmm/m/it/10 I\OT1/c
@@ -1453,116 +1453,255 @@ pdfTeX warning (ext4): destination with the same identifier (name{page.1}) has
 been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.131 
+l.133 
        [1
 
 ]pdfTeX warning (ext4): destination with the same identifier (name{page.2}) has
  been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.167 
+l.169 
        [2]
 
-LaTeX Warning: Reference `fig: Q' on page 3 undefined on input line 187.
+LaTeX Warning: Reference `fig: Q' on page 3 undefined on input line 189.
 
 Package hyperref Info: bookmark level for unknown myfigure defaults to 0 on inp
-ut line 219.
+ut line 221.
 [3]
 
-LaTeX Warning: Reference `fig: Q' on page 4 undefined on input line 241.
+LaTeX Warning: Reference `fig: Q' on page 4 undefined on input line 243.
 
 [4] [5]
-Overfull \hbox (6.69936pt too wide) in paragraph at lines 358--359
+Overfull \hbox (6.69936pt too wide) in paragraph at lines 360--361
 [][]\OT1/cmr/bx/n/10 Definition 1.16 \OT1/cmr/m/n/10 (Bi-par-tite At-tack)\OT1/
 cmr/bx/n/10 . []\OT1/cmr/m/n/10 The \OT1/cmr/m/it/10 Bi-par-tite At-tack \OT1/c
 mr/m/n/10 se-lects nodes equiprob-
  []
 
 [6] [7] [8] [9] [10] [11] [12] [13]
-Overfull \hbox (31.98245pt too wide) detected at line 703
+Overfull \hbox (31.98245pt too wide) detected at line 705
 []
  []
 
 
 LaTeX Warning: Reference `Condition on T for old diametric proof' on page 14 un
-defined on input line 711.
+defined on input line 713.
 
 (Images/DiametricAttack(m_45,d_30).tex)
 
 LaTeX Warning: Reference `Time-limited diametric attack proof' on page 14 undef
-ined on input line 736.
+ined on input line 738.
 
 [14]
 Package hyperref Info: bookmark level for unknown examplefigure defaults to 0 o
-n input line 776.
+n input line 778.
  [15]
 
 LaTeX Warning: Reference `appendix:Hamiltonian Graph' on page 16 undefined on i
-nput line 797.
+nput line 799.
 
 [16]
-Overfull \hbox (1.61987pt too wide) in paragraph at lines 822--824
+Overfull \hbox (1.39311pt too wide) in paragraph at lines 948--948
+[][][][]$\OML/cmm/m/it/10 C[]$  
+ []
+
+[17] [18] (Images/ElongatedStarRegions(S_10_5).tex)
+(Images/BaseInterceptionOnS_4^5(m=4).tex)
+Overfull \hbox (16.35pt too wide) in paragraph at lines 175--1048
+ [] 
+ []
+
+[19] [20]
+Overfull \hbox (18.46703pt too wide) in paragraph at lines 1085--1086
+\OT1/cmr/m/n/10 prob-a-bil-ity of cap-ture un-der $\OML/cmm/b/it/10 $ \OT1/cmr
+/m/n/10 and $\OML/cmm/m/it/10 C[]\OT1/cmr/m/n/10 (\OML/cmm/b/it/10 \OT1/cmr/m/
+n/10 ) \OMS/cmsy/m/n/10  \OML/cmm/m/it/10 C[] \OT1/cmr/m/n/10 = [] []$.
+ []
+
+
+LaTeX Warning: Reference `appendix:Naiveanalysis' on page 21 undefined on input
+ line 1174.
+
+[21] (Images/NavieInterceptionOnS_4^5(m=4).tex)
+Overfull \hbox (16.35pt too wide) in paragraph at lines 213--1180
+ [] 
+ []
+
+[22]
+
+LaTeX Warning: Reference `Appendix:Combinatorial improvement analysis' on page 
+23 undefined on input line 1197.
+
+(Images/CombinatorialInterceptionOnS_4^5(m=8).tex)
+Overfull \hbox (16.35pt too wide) in paragraph at lines 221--1208
+ [] 
+ []
+
+(Images/CombinatorialInterceptionOnS_4^5(m=4).tex)
+Overfull \hbox (16.35pt too wide) in paragraph at lines 240--1215
+ [] 
+ []
+
+[23]
+
+LaTeX Warning: Reference `Appendix:Further Combinatorial extension analysis' on
+ page 24 undefined on input line 1245.
+
+[24] [25]
+Overfull \hbox (7.15182pt too wide) in paragraph at lines 1313--1314
+[]\OT1/cmr/m/n/10 The $\OML/cmm/m/it/10 j$$[]$ \OT1/cmr/m/n/10 branch is iden-t
+i-fied from nodes be-tween $2([](\OML/cmm/m/it/10 k[] \OT1/cmr/m/n/10 + 1)))$ a
+nd $2([](\OML/cmm/m/it/10 k[] \OT1/cmr/m/n/10 +
+ []
+
+
+Overfull \hbox (7.59453pt too wide) in paragraph at lines 1319--1320
+\OT1/cmr/m/it/10 ran-dom os-cil-la-tion \OT1/cmr/m/n/10 on $\OML/cmm/m/it/10 S[
+]$ \OT1/cmr/m/n/10 is the em-bed-ded ran-dom Hamil-to-nian pa-trol on $\OML/cmm
+/m/it/10 C[]$
+ []
+
+
+Overfull \hbox (128.79584pt too wide) in paragraph at lines 1461--1462
+ [] 
+ []
+
+[26] [27]
+
+LaTeX Warning: Reference `Type-delayed attack proof' on page 28 undefined on in
+put line 1470.
+
+(Images/GeneralStarRegions(S_10_5,3,2,1).tex)
+Overfull \hbox (35.36191pt too wide) in paragraph at lines 1549--1550
+ [] 
+ []
+
+
+Overfull \hbox (4.14853pt too wide) in paragraph at lines 1556--1557
+[]\OT1/cmr/bx/n/10 Note. []\OT1/cmr/m/n/10 For ease of no-ta-tion we will use $
+\OML/cmm/b/it/10 K \OT1/cmr/m/n/10 = (\OML/cmm/b/it/10 k[]\OML/cmm/m/it/10 ; ::
+:; \OML/cmm/b/it/10 k[]\OT1/cmr/m/n/10 )$ and $\OML/cmm/m/it/10 K[] \OT1/cmr/m/
+n/10 = [] \OML/cmm/m/it/10 k[]$ 
+ []
+
+[28] [29]
+Overfull \hbox (42.82784pt too wide) in paragraph at lines 1631--1632
+ [] 
+ []
+
+[30] [31]
+Overfull \hbox (1.61987pt too wide) in paragraph at lines 1732--1734
 []\OT1/cmr/m/n/24.88 This nu-mer-i-cal ex-per-i-ment needs to
  []
 
 
-Overfull \hbox (7.5396pt too wide) in paragraph at lines 826--826
+Overfull \hbox (7.5396pt too wide) in paragraph at lines 1736--1736
 []\OT1/cmr/bx/n/14.4 Strategic Pa-troller with Ran-dom At-tack-ers and
  []
 
-[17]
-Overfull \hbox (1.93898pt too wide) in paragraph at lines 922--922
+[32]
+Overfull \hbox (1.93898pt too wide) in paragraph at lines 1832--1832
 []\OT1/cmr/bx/n/12 Numerical re-sults for in-stan-ta-neously mov-ing pa-troller
  
  []
 
-[18] [19] [20] [21] [22] [23] [24] [25] [26] [27] [28]
+[33] [34] [35] [36] [37] [38] [39] [40] [41] [42] [43]
 (Images/BHvsPHInitialPlainComplete.tex)
-Overfull \hbox (16.35pt too wide) in paragraph at lines 896--1612
+Overfull \hbox (16.35pt too wide) in paragraph at lines 896--2522
 [][]
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 896--1612
+Underfull \hbox (badness 10000) in paragraph at lines 896--2522
 
  []
 
 
-Package caption Warning: \label without proper reference on input line 1610.
+Package caption Warning: \label without proper reference on input line 2512.
 See the caption package documentation for explanation.
 
 
-LaTeX Warning: Reference `Figure:Initial BH and PH for plain index' on page 29 
-undefined on input line 1615.
+LaTeX Warning: Reference `Figure:Initial BH and PH for plain index' on page 44 
+undefined on input line 2525.
 
 (Images/BHvsPHNewPlainComplete.tex)
-Overfull \hbox (16.35pt too wide) in paragraph at lines 907--1633
+Overfull \hbox (16.35pt too wide) in paragraph at lines 907--2543
 [][]
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 907--1633
+Underfull \hbox (badness 10000) in paragraph at lines 907--2543
 
  []
 
 
-Package caption Warning: \label without proper reference on input line 1631.
+Package caption Warning: \label without proper reference on input line 2533.
 See the caption package documentation for explanation.
 
 
-LaTeX Warning: Reference `Figure:BH and PH for new plain index' on page 29 unde
-fined on input line 1636.
+LaTeX Warning: Reference `Figure:BH and PH for new plain index' on page 44 unde
+fined on input line 2546.
 
-[29] [30] [31] [32] ("Second Year Report.bbl" [33]) [34] [1] [2] [3]
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 2101.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 2101.
+[44] [45]
+Overfull \hbox (98.20393pt too wide) detected at line 2666
+[]
+ []
 
-("Second Year Report.aux")
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 2101.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 2101.
+[46] [47] [48] [49] ("Second Year Report.bbl") [50] [1] [2] [3]
+Overfull \hbox (20.23497pt too wide) detected at line 3143
+[]
+ []
+
+
+Overfull \hbox (23.26817pt too wide) in paragraph at lines 3146--3148
+[]\OT1/cmr/m/n/10 If $\OML/cmm/m/it/10 M \OMS/cmsy/m/n/10 6\OT1/cmr/m/n/10 = \O
+MS/cmsy/m/n/10 ;\OML/cmm/m/it/10 ; R \OMS/cmsy/m/n/10 6\OT1/cmr/m/n/10 = \OMS/c
+msy/m/n/10 ;$ \OT1/cmr/m/n/10 then $\OML/cmm/m/it/10 C[]\OT1/cmr/m/n/10 (\OML/c
+mm/m/it/10 \OT1/cmr/m/n/10 ) = []\OMS/cmsy/m/n/10 f\OML/cmm/m/it/10 C[]; C[]; 
+C[]; C[]\OMS/cmsy/m/n/10 g \OT1/cmr/m/n/10 = []\OMS/cmsy/m/n/10 f\OML/cmm/m/it/
+10 Pw\OT1/cmr/m/n/10 (1) +
+ []
+
+
+Overfull \hbox (25.40729pt too wide) in paragraph at lines 3146--3148
+\OML/cmm/m/it/10 q[]; Pw\OT1/cmr/m/n/10 ([])\OML/cmm/m/it/10 ; Pw\OT1/cmr/m/n/1
+0 (\OML/cmm/m/it/10 k \OT1/cmr/m/n/10 + 1) + \OML/cmm/m/it/10 q[]; Pw\OT1/cmr/m
+/n/10 (\OMS/cmsy/m/n/10 \OT1/cmr/m/n/10 ) + \OML/cmm/m/it/10 q[]\OMS/cmsy/m/n/
+10 g \OT1/cmr/m/n/10 = \OML/cmm/m/it/10 P[] \OT1/cmr/m/n/10 + []\OMS/cmsy/m/n/1
+0 f\OML/cmm/m/it/10 q[]; P[]; q[]\OMS/cmsy/m/n/10 g$\OT1/cmr/m/n/10 .
+ []
+
+[4]
+Overfull \hbox (51.23727pt too wide) detected at line 3152
+[]
+ []
+
+
+Overfull \hbox (28.89069pt too wide) detected at line 3173
+[]
+ []
+
+
+Overfull \hbox (31.41985pt too wide) in paragraph at lines 3173--3175
+\OT1/cmr/m/n/10 creas-ing in $\OML/cmm/m/it/10 q[]$ \OT1/cmr/m/n/10 and one is 
+de-creas-ing in $\OML/cmm/m/it/10 q[]$\OT1/cmr/m/n/10 ). Mean-ing $\OML/cmm/m/i
+t/10 P \OT1/cmr/m/n/10 = []\OML/cmm/m/it/10 ; Q[] \OT1/cmr/m/n/10 =
+ []
+
+[5]
+Overfull \hbox (11.59256pt too wide) detected at line 3195
+[]
+ []
+
+[6] [7]
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 3212.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 3212.
+ ("Second Year Report.aux")
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 3212.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 3212.
 
 Package rerunfilecheck Info: File `"Second Year Report".out' has not changed.
-(rerunfilecheck)             Checksum: 85ACEE470F8CBD671018A28147313C5E;2852.
+(rerunfilecheck)             Checksum: 3FB37D8EFA8838B14384A61722FA3407;3277.
 
 
 LaTeX Warning: There were undefined references.
@@ -1570,48 +1709,49 @@ LaTeX Warning: There were undefined references.
 
 LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
 
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 2101.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 3212.
  ) 
 Here is how much of TeX's memory you used:
- 33342 strings out of 493305
- 645206 string characters out of 3138872
- 872713 words of memory out of 3000000
- 36295 multiletter control sequences out of 15000+200000
- 552364 words of font info for 97 fonts, out of 3000000 for 9000
+ 33680 strings out of 493305
+ 651098 string characters out of 3138872
+ 873399 words of memory out of 3000000
+ 36545 multiletter control sequences out of 15000+200000
+ 552894 words of font info for 98 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
- 55i,22n,105p,962b,1045s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 55i,22n,105p,962b,1046s stack positions out of 5000i,500n,10000p,200000b,50000s
 pdfTeX warning (dest): name{theorem.1.19} has been referenced but does not ex
 ist, replaced by a fixed one
 
 <C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmbx10.pfb><C:/Prog
 ram Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmbx12.pfb><C:/Program File
 s/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmex10.pfb><C:/Program Files/MiKTeX
- 2.9/fonts/type1/public/amsfonts/cm/cmmi10.pfb><C:/Program Files/MiKTeX 2.9/fon
-ts/type1/public/amsfonts/cm/cmmi12.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1
-/public/amsfonts/cm/cmmi5.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/a
-msfonts/cm/cmmi6.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/c
-m/cmmi7.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmmi8.p
-fb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmmi9.pfb><C:/Pr
-ogram Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmmib10.pfb><C:/Program F
-iles/MiKTeX 2.9/fonts/type1/public/amsfonts/cmextra/cmmib7.pfb><C:/Program File
-s/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr10.pfb><C:/Program Files/MiKTeX 
-2.9/fonts/type1/public/amsfonts/cm/cmr12.pfb><C:/Program Files/MiKTeX 2.9/fonts
-/type1/public/amsfonts/cm/cmr17.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/pu
-blic/amsfonts/cm/cmr5.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfo
-nts/cm/cmr6.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr
-7.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr9.pfb><C:/
-Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmss10.pfb><C:/Program 
-Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmss12.pfb><C:/Program Files/Mi
-KTeX 2.9/fonts/type1/public/amsfonts/cm/cmssbx10.pfb><C:/Program Files/MiKTeX 2
-.9/fonts/type1/public/amsfonts/cm/cmsy10.pfb><C:/Program Files/MiKTeX 2.9/fonts
-/type1/public/amsfonts/cm/cmsy5.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/pu
-blic/amsfonts/cm/cmsy7.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsf
-onts/cm/cmti10.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/
-cmtt10.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/symbols/msb
-m10.pfb>
-Output written on "Second Year Report.pdf" (39 pages, 584794 bytes).
+ 2.9/fonts/type1/public/amsfonts/cmextra/cmex7.pfb><C:/Program Files/MiKTeX 2.9
+/fonts/type1/public/amsfonts/cm/cmmi10.pfb><C:/Program Files/MiKTeX 2.9/fonts/t
+ype1/public/amsfonts/cm/cmmi12.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/pub
+lic/amsfonts/cm/cmmi5.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfo
+nts/cm/cmmi6.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cm
+mi7.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmmi8.pfb><
+C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmmi9.pfb><C:/Progra
+m Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmmib10.pfb><C:/Program Files
+/MiKTeX 2.9/fonts/type1/public/amsfonts/cmextra/cmmib7.pfb><C:/Program Files/Mi
+KTeX 2.9/fonts/type1/public/amsfonts/cm/cmr10.pfb><C:/Program Files/MiKTeX 2.9/
+fonts/type1/public/amsfonts/cm/cmr12.pfb><C:/Program Files/MiKTeX 2.9/fonts/typ
+e1/public/amsfonts/cm/cmr17.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public
+/amsfonts/cm/cmr5.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/
+cm/cmr6.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr7.pf
+b><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr9.pfb><C:/Prog
+ram Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmss10.pfb><C:/Program File
+s/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmss12.pfb><C:/Program Files/MiKTeX
+ 2.9/fonts/type1/public/amsfonts/cm/cmssbx10.pfb><C:/Program Files/MiKTeX 2.9/f
+onts/type1/public/amsfonts/cm/cmsy10.pfb><C:/Program Files/MiKTeX 2.9/fonts/typ
+e1/public/amsfonts/cm/cmsy5.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public
+/amsfonts/cm/cmsy7.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts
+/cm/cmti10.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmti
+7.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/symbols/msbm10.p
+fb>
+Output written on "Second Year Report.pdf" (59 pages, 713521 bytes).
 PDF statistics:
- 610 PDF objects out of 1000 (max. 8388607)
- 141 named destinations out of 1000 (max. 500000)
- 301 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 772 PDF objects out of 1000 (max. 8388607)
+ 211 named destinations out of 1000 (max. 500000)
+ 341 words of extra memory for PDF output out of 10000 (max. 10000000)
 

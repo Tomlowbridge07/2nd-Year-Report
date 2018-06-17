@@ -51,12 +51,14 @@ cross/.default={1pt}}
 \newtheorem{theorem}{Theorem}[section]
 \newtheorem{corollary}[theorem]{Corollary}
 \newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{conjecture}[theorem]{Conjecture}
 
 \theoremstyle{definition}
 \newtheorem{definition}[theorem]{Definition}
 
 \theoremstyle{definition}
 \newtheorem{example}[theorem]{Example}
+
  
 \theoremstyle{remark}
 \newtheorem*{remark}{Remark}
@@ -78,11 +80,11 @@ cross/.default={1pt}}
     
 %\counterwithin{figure}{section}
 
+\bibliographystyle{plain}
+
 \title{Second Year Report}
 \date{\today}
 \author{Thomas Lowbridge \\ School of Mathematical Sciences \\ University of Nottingham}
-
-\bibliographystyle{unsrtnat}
 
 \begin{document}
 
@@ -795,10 +797,918 @@ Hence $V \geq \frac{m}{n}$ .
 If $m$ is odd, say $m=2m'+1$ then in the above we get two possibilities for each node depending on the interval choice either $p+\frac{m-1}{n}$ or $\frac{m+1}{n}-p$. So choosing anything other than $p=\frac{1}{n}$ (which is the Random Hamiltonian Patrol strategy) gives a worse result for the patroller.
 
 While not getting a better lower bound, the ARHP does give some control on how to perform optimally in a Hamiltonian graph. The idea of distributing the probability $\frac{2}{n}$ between two types of nodes can be extended to the idea of distributing the probability $\frac{k}{n}$ between $k$ types of nodes (as seen in appendix \ref{appendix:Hamiltonian Graph}).
+
+
+We now look at extending the idea of the diametric attack. First we notice that we are not forced to use the graphs diameter, $\bar{d}$, we can use any distance between two selected nodes, $d$. We replacing $\bar{d}$ with $d$ we will get a two node distance attack, giving us a bound of $V \leq \max \{\frac{1}{2} ,\frac{m}{2d} \}$. However this is only possibly worse than using the graphs diameter, so this is not useful.
+
+A useful extension, would be not using two nodes but using multiple points each the same distance apart from each other mutually.
+
+\begin{definition}[Polygonal attack]
+A \textit{$d$-polygonal attack} is an attack at a set of nodes $D= \set{i \in N}{ d(i,i')=d}$ at the time intervals $I,I+1,...,I+d-1$ (for a chosen initial $I$)
+\end{definition}
+
+We can also consider having the points \textit{at least} the same distance apart
+
+\begin{definition}[Uneven polygonal attack]
+A \textit{$d$-Uneven polygonal attack} is an attack at a set of nodes $D= \set{i \in N}{ d(i,i') \geq d}$ at the time intervals $I,I+1,...,I+d-1$ (for a chosen initial $I$)
+\end{definition}
+
+\begin{note}
+Just like the time-limited diametric attack, the (uneven) polygonal attack is only feasible if $T \geq m+d-1$.
+\end{note}
+
+The idea behind this attack is very similar to the timed diametric attack.
+
+\begin{lemma}
+When $T \geq m+d-1$ and a set $D$ as in the $d$- (uneven) polygonal attack, the bound $V \leq \max \{ \frac{1}{|D|} , \frac{m}{|D|d} \}$ is valid
+\end{lemma}
+
+
 \subsection{Star graph solution}
 As a special case of Complete bipartite we have the star graph, $S_{n}=K_{1,n}$, that is a tree with one internal node (the centre) and $n$ leaf nodes (the external nodes). Hence $V(S_{n})=V(K_{1,n})=\frac{m}{2n}$ for $m<2n$ (by the Complete bipartite corollary(\ref{Corollary:Complete Bipartite})). This is achieved by the patroller forming a patrol which alternates between different  external nodes and the centre, and the attacker attacking at all the external nodes with equal probability (for a fixed time interval).
+
+
 \subsection{Extending the star graph}
+The line and star graphs provided a good starting point for attempting to solving the problem with a general tree graph. If a more general version of the star graph can be solved, it may provide better bounds on a general tree. 
+
+The idea is to extend the star graph to a more general graph which is a mix between the line and the star, by extending the length of the branches (at first just one branch). This may better model a tightly packed region to search and another that is far away, consider the example of a small town and larger city connected by a road. 
+
+\begin{definition}[Elongated Star Graph]
+The \textit{Elongated Star Graph}, $S_{n}^{k}$ is made from $S_{n}$, by performing subdivision on one of the edges repeatedly $k$ times, so that one of the external nodes is now $k+1$ away from the centre.
+\end{definition}
+
+The labelling will be done as in Example Figure \ref{myfigure: Example of elongated labelling} and we will from now assume that $n \geq 3$, as otherwise we are just dealing with the line.
+
+
+\begin{myfigure}
+\begin{center}
+\begin{tikzpicture}[-,auto,node distance=1.5cm,
+                    thick,main node/.style={circle,draw,font=\sffamily\Large\bfseries}]
+
+  \node[main node] (1) {$1$};
+  \node[main node] (2) [right of=1] {$2$};
+  \node[main node] (3) [right of=2] {$3$};
+  \node[main node] (4) [right of=3] {$4$};
+  \node[main node] (5) [right of=4] {$5$};
+  \node[main node] (6) [right of=5]  {$6$};
+  \node[main node] (7) [right of=6]  {$c$};
+  \node[main node] (8) [right of=7]  {$*$};
+  \node[main node] (9) [above of=7]  {$*$};
+  \node[main node] (10) [below of=7]  {$*$};
+  
+
+  \path[every node/.style={font=\sffamily}]
+    (1) edge  (2)
+    (2) edge (3)
+    (3) edge (4)
+    (4) edge (5)
+    (5) edge (6)
+    (6) edge (7)
+    (7) edge (8)
+     edge (9)
+     edge (10);
+\end{tikzpicture}
+\end{center}
+\caption{Labeling on the graph $S_{4}^5$.}
+\label{myfigure: Example of elongated labelling}
+\end{myfigure}
+
+To start our analysis of this graph, we can look at an expanded graph which can simplify down to our extended star graph. Consider the cyclic graph $C_{(2k+1)+(2n-1)}=C_{2(n+k)}$, we can simplify this graph by node identifying. The identifying map is one such that we identify nodes $i$ to $2k+2-i$ for $i=1,..,k$ and identify nodes $2k+2,2k+4,..,2k+2n$.
+
+
+\begin{myfigure}
+\begin{center}
+\resizebox{\textwidth}{!}{
+\begin{tikzpicture}[baseline=(current bounding box.north),-,auto,node distance=1cm,
+                    thick,main node/.style={circle,draw,font=\sffamily\bfseries}]
+
+  \node[main node] (1) {$3$};
+  \node[main node] (2) [above right of=1] {$4$};
+  \node[main node] (3) [right of=2] {$5$};
+  \node[main node] (4) [right of=3] {$6$};
+  \node[main node] (5) [right of=4] {$7$};
+  \node[main node] (6) [below right of=5] {$8$};
+  \node[main node] (7) [below right of=1] {$2$};
+  \node[main node] (8) [right of=7] {$1$};
+  \node[main node] (9) [right of=8] {$10$};
+  \node[main node] (10) [right of=9] {$9$};
+  
+  \node (P1) [right of=6] {};
+  \node (P2) [right of=P1] {};
+  
+  \node[main node] (a) [right of=P2] {$1$};
+  \node[main node] (b) [right of=a] {$2$};
+  \node[main node] (c) [right of=b] {$3$};
+  \node[main node] (d) [right of=c] {$c$};
+  \node[main node] (e) [right of=d] {$*$};
+  \node[main node] (f) [above of=d] {$*$};
+  
+  \draw[->] (P1) edge (P2);
+  
+
+  \path[every node/.style={font=\sffamily}]
+    (1) edge  (2)
+    edge (7)
+    (2) edge (3)
+    (3) edge (4)
+    (4) edge (5)
+    (5) edge (6)
+    (6) edge (10)
+    (7) edge (8)
+    (8) edge (9)
+    (9) edge (10)
+    (a) edge (b)
+    (b) edge (c)
+    (c) edge (d)
+    (d) edge (e)
+    edge (f);
+    
+     \path[dashed,red,every node/.style={font=\sffamily}]
+    (2) edge  (7)
+    (3) edge (8);
+    
+    \path[dashed,blue,every node/.style={font=\sffamily}]
+    (4) edge  (9);
+    
+    \path[dashed,blue,out=-60,in=180,every node/.style={font=\sffamily}]
+    (4) edge (6);
+    
+    \path[dashed,blue,out=60,in=180,every node/.style={font=\sffamily}]
+    (9) edge (6);
+  
+  \node (Box1) [draw,thick,fit=(1) (2) (3) (7) (8),fill,red,opacity=0.2] {};
+  \node (Box2) [draw,thick,fit=(4) (5) (6)  (10),fill,blue,opacity=0.2] {};
+  
+  \node (Box3) [draw,thick,fit=(a) (b) (c),fill,red,opacity=0.2] {}; 
+  \node (Box4) [draw,thick,fit=(d) (e) (f),fill,blue,opacity=0.2] {};   
+  
+\node [left=0.5cm,above=0.5cm,text width=0.5cm] at (2) {$C_{10}$};
+\node [left=0.5cm,above=0.5cm,text width=0.5cm] at (a) {$S_{3}^{2}$};   
+\end{tikzpicture}
+}
+\end{center}
+\caption{$C_{10}$ can be simplified to $S_{3}^{2}$ by node identifying.}
+\end{myfigure}
+
+
+\begin{definition}[Random Oscillation]
+The \textit{Oscillation} on $S_{n}^{k}$ is any embedded Hamiltonian Patrol on $C_{2(n+k)}$ under the simplification above.
+The \textit{Random Oscillation} on $S_{n}^{k}$ is the embedded Random Hamiltonian Patrol on $C_{2(n+k)}$ under the simplification above.
+\end{definition}
+
+\begin{lemma}
+For $m < 2(n+k)$ following the Random Oscillation,
+$$V(S_{n}^{k}) \geq V(C_{2(n+k)})=\frac{m}{2(n+k)}$$
+and if $m \geq 2(n+k)$ then $V(S_{n}^{k})=1$, achieved by any Oscillation.
+\end{lemma}
+
+Hence we have the solution in $m \geq 2(n+k)$ , so we can now restrict ourselves to $m < 2(n+k)$.
+
+We could now consider applying the time-limited diametric attack to get bounds on the problem, $\bar{d}=n-1$ gives the bound $V \leq \max \{\frac{1}{2} , \frac{m}{2(n-1)}  \}$, however this bound is not tight and this is because we are not utilising all $*$ type nodes.
+
+We suggest using all $*$ type nodes and node $1$, and assign some probability of attacking a node equivalent to the distance from the centre, $c$. However it turns out that the timing must also change if we wish to attack nodes with uneven probabilities. We create the time-delayed attack.
+
+\begin{definition}[Time-delayed attack]
+Let the \textit{time-delayed attack}, be the attack that attacks at the extended node labeled $1$ with probability $\frac{k+1}{n+k}$ and a particular normal node labeled $*$ with probability $\frac{1}{n+k}$.
+
+If node $1$ is chosen have the attack choose probability intervals with equal probability at the times $I,I+1,...,I+2k+1$ for some $I$ (i.e starting attacks at $\tau, \tau+1,...,\tau+2k+1$). If a $*$ node is chosen start the attacks at the times $I+k,I+k+1$ with equal probability.
+\end{definition}
+
+\begin{myfigure}
+\begin{center}
+\begin{tikzpicture}
+ %Drawing Bottom Axis
+ \draw[->] (-4,0) -- (4,0);
+ \node (timelabel) [shift={(0.2,0)}] at (4,0) {$t$};
+ \draw (-3.5,0.2) -- (-3.5,-0.2);
+ \draw (3.5,0.2) -- (3.5,-0.2);
+ 
+ %Drawing Cross and lines 
+ \node (labelc1) at (-3.5,-0.5) {$\tau$};
+ \node (labelc2) at (3.5,-0.5) {$\tau+2k+1$};
+ 
+ \node[cross=5pt,red] (c1) at (-3.5,0.5) {};
+ \node[cross=5pt,red] (c2) at (3.5,0.5) {};
+ \draw[dashed] (c1) -- (c2);
+ \node (linelabel1) at (-4.4,0.5) {Type $1$};
+ 
+ 
+ \draw (-1,0.2) -- (-1,-0.2);
+ \draw (1,0.2) -- (1,-0.2);
+ 
+  \node (labelc3) at (-1,-0.5) {$\tau+k$};
+ \node (labelc4) at (1,-0.5) {$\tau+k+1$};
+ 
+ \node[cross=5pt,red] (c3) at (-1,1) {};
+ \node[cross=5pt,red] (c4) at (1,1) {};
+ \draw[dashed] (c3) -- (c4);
+ \node (linelabel1) at (-1.9,1) {Type $*$}; 
+
+\end{tikzpicture}
+\end{center}
+\end{myfigure}
+
+\begin{lemma}
+When $T \geq m+2k$, the analogous `diametric' bound $V \leq \max \{ \frac{k+1}{n+k} , \frac{m}{2(n+k)}   \}$ holds
+\end{lemma}
+
+With this analogous `diametric' we have a solution as long as we are in the range where $m \geq 2(k+1)$ so the lemma gives $V \leq \frac{m}{2(n+k)}$.
+
+\begin{lemma}[Solution in $m \geq 2(k+1)$]
+By the attacker using the stage-delayed attack and the patroller using a random oscillation patrol, we achieve the value, when $2(k+1) \leq m \leq 2(n+k)$
+$$V=\frac{m}{2(n+k)}$$
+\end{lemma}
+
+Hence we have a solution for 2 regions $m > 2(n+k)$ and $2(k+1) \leq m \leq 2(n+k)$.
+
+\begin{myfigure}
+\resizebox{0.95\linewidth}{!}{
+\input{Images/ElongatedStarRegions(S_10_5).tex}}
+\caption{Value of the Star Graph, $S_{10}^{5}$}
+\end{myfigure}
+
+We then seek solutions in the region $m < 2(k+1)$. However in this region we are below the Random Oscillation bound for the patroller and we can suggest some improvement as in \cite{Papadaki2016} from the embedded Hamiltonian bound. To see the issue and why the Random Oscillation can be improved we will look at the probability of interception under the strategy.
+
+If the patroller is performing a Random Oscillation, then for a pure attack at node $i$ the probability of capture is given by (derivation in appednix \ref{appednixsection: Reason for probability of interception}),
+\begin{equation}
+\label{eq:Prob of Interception}
+w(i)= \left\{\begin{array}{l}
+ \frac{\min(m+2(i-1),2m)}{2(n+k)} \text{  , for } i \leq \frac{n+k}{2} +1, \\
+ \frac{\min(m+2(n+k+1-i),2m)}{2(n+k)} \text{  , for } i > \frac{n+k}{2} +1, \\
+ \frac{\min(m+2(n-1),nm)}{2(n+k)} \text{  , for } i=c, \\
+ \frac{m}{2(n+k)} \text{  , for } i=*. 
+\end{array} \right.
+\end{equation}
+We will call $w(i)$ the probability of \textit{interception} at node $i$.
+
+
+\begin{examplefigure}
+\begin{center}
+\input{Images/BaseInterceptionOnS_4^5(m=4).tex}
+\end{center}
+\caption{Interception probabilities of $S^5_{4}$ when $m=4$.}
+\end{examplefigure}
+
+It is very clear that the issues are towards the end of the graph, where the returns, under the Random Oscillation do not provide adequate coverage, hence we may wish to improve these end points of the graph. To do so we will introduce the idea of cycles which are played with guarantee capture of all attacks at noes within their cycle.
+
+\begin{definition}[End-ensuring cycle]
+Define a cycle of length $m$ (if even) or $m-1$ (if odd) to be \textit{End-ensuring} if one of the points along the cycle is a leaf node. Define the \textit{Half-length} of such cycles to be $\hat{m}=\floor{\frac{m}{2}}$.
+\end{definition}
+
+In \cite{Papadaki2016} the authors improved nodes with poor interception probabilities by introducing two end-ensuring cycles. We shall do the same, though now more consideration needs to be taken on how to place these End-ensuring cycles. 
+
+We first classify nodes into types, we partition the node set, $N$, into 
+\begin{itemize}
+\item Left nodes, $L=\left\{ i \, | \, i \leq \floor{\frac{m}{2}}+1 , i \leq k+1 \right\}$ 
+\item Middle nodes, $M=\left\{ i \, | \, \floor{\frac{m}{2}}+2 \leq i \leq n+k-\floor{\frac{m}{2}} , i \leq k+1 \right\}$
+\item Right nodes, $R=\left\{ i \, | \, i \geq n+k+1-\floor{\frac{m}{2}} , i \leq k+1 \right\}$
+\item Star node, $S=\{ c,* \}$
+\end{itemize}
+
+\begin{note}
+The set $R$ is empty if $\floor{\frac{m}{2}} \leq n-1$. The set $M$ is empty if $\floor{\frac{m}{2}} \geq k-1$ or $\floor{\frac{m}{2}} \geq n+k-2$.
+\end{note}
+
+Then $ V \geq w_{\min} \equiv w_{\min}^{N}=\min \left\{ w_{\min}^{L},w_{\min}^{M},w_{\min}^{R},w_{\min}^{S} \right\}$ , where $w_{\min}^{X}=\min\limits_{i \in X} w(i)$. We aim to use end-ensuring cycles to improve $w_{\min}$, which means improving the worst node sets, and hence improving the random oscillation bound.
+
+
+Now from equation \ref{eq:Prob of Interception} we not some properties of each node set.
+\begin{itemize}
+\item $w_{min}^{L}=w(1)$, as for $i \in L$ we have that $w(i)$ is increasing in $i$.
+\item $w_{min}^{M}=w(\floor{\frac{m}{2}}+2)=\frac{2m}{2(n+k)}$ , as for $i \in M $ we have that $w(i)=\frac{2m}{2(n+k)}$ $\forall i \in M$.
+\item $w_{min}^{R}=w(k+1)$, as for $i \in R$ we have that $w(i)$ is decreasing in $i$.
+\item $w_{min}^{S}=w(*)$, as $w(c) > w(*)$.
+\end{itemize}
+
+So as long as the improvement made on $L$ and $M$ is non-decreasing then only the nodes $1$ and $\floor{\frac{m}{2}}+2$ need be considered. Similarly if in $R$, the improvement is non-increasing then we only need to consider the node $k+1$.Finally if in $S$, the improvement improves node $c$ as good as $*$ then we only need to consider $*$. Therefore we shall only consider such improvement strategies.
+
+Similarly let $C_{\min}^{X} (\bm{\pi}) = \min\limits_{i \in X} P(\bm{\pi},i)$, where $P(\bm{\pi},i)=\max\limits_{ I \subset \mathcal{T}} P(\bm{\pi},[i,I])$, is the probability of capture under $\bm{\pi}$ and $C_{\min} (\bm{\pi}) \equiv C_{\min}^{N} = \min \left\{ C_{\min}^{L},  C_{\min}^{M},  C_{\min}^{R},  C_{\min}^{S} \right\}$. Then we seek to select $\bm{\pi}$ to get $C_{\min} (\bm{\pi}) > W_{\min} \equiv C_{\min}(\bm{\pi}_{0})$ , where $\bm{\pi}_{0}$ is the Random Oscillation strategy.
+
+We will use $P$ to be the probability the Random Oscillation is played and $Q=1-P$. We split, $Q$, the improvement chance into node classes, $Q=Q_{L}+Q_{M}+Q_{R}+Q_{S}$, where $Q_{X}$ is the amount of probability used to improve the probability of intersection for the set $X$. We use $q_{X}$ to be probability that the minimum of the set is improved by, so $C_{\min}^{X}=PW_{\min}^{X}+q_{X}$.
+
+Multiple choices for improvement could be picked, we present first a Naive improvement, which improves it by imagining the $S$ nodes are the ends of $|S|-1$ lines and improve as in \citep{Papadaki2016}. Later we will improve this, by using combinations of these line ends.
+
+\textbf{A Naive Improvement}
+Let $\bm{\pi}=\alpha(Q_{L},Q_{S})$ denote the Naive Improvement Policy.
+We will play the end-ensuring cycle, $\{1,...,\floor{\frac{m}{2}}+1,...,1\}$, with probability $Q_{L}$ (a non-decreasing improvement), giving $q_{L}=Q_{L}$. We will play,  with probability $Q_{S}$, an end-ensuring cycle for each $*$ node, $\{*,c,....,k+3-\floor{\frac{m}{2}},....,c,* \}$,(a non-decreasing improvement), giving $q_{S}=\frac{Q_{S}}{n-1}$.
+ 
+Now we may also have improved some of the nodes in $R$, possibly up to node $k+3-\floor{\frac{m}{2}} \leq n+k+1-\floor{\frac{m}{2}}$ (as $n \geq 3$), meaning that all nodes in $R$ are in the end-ensuring cycle $\{*,c,...,k+3-\floor{\frac{m}{2}} \}$, so $q_{R}=q_{S}$. If $M \neq \emptyset$ nodes in $M$ may be improved, but the node $\halflength +2$ will not be improved as  $\halflength +2 > \halflength +1$ and $\halflength +2 < k+3- \halflength$ (as $\halflength < k-1$ when $M \neq \emptyset$), so $q_{M}=0$.
+
+
+\begin{examplefigure}
+\begin{center}
+\resizebox{\textwidth}{!}{
+\begin{tikzpicture}[-,auto,node distance=1.5cm,
+                    thick,main node/.style={circle,fill=white,draw,font=\sffamily\Large\bfseries}]
+
+  \node[main node] (1) {$1$};
+  \node[main node] (2) [right of=1] {$2$};
+  \node[main node] (3) [right of=2] {$3$};
+  \node[main node] (4) [right of=3] {$4$};
+  \node[main node] (5) [right of=4] {$5$};
+  \node[main node] (6) [right of=5]  {$6$};
+  \node[main node] (7) [right of=6] {$7$};
+  \node[main node] (8) [right of=7] {$8$};
+  \node[main node] (9) [right of=8] {$9$};
+  \node[main node] (10) [right of=9]  {$10$};
+  \node[main node] (11) [right of=10]  {$c$};
+  \node[main node] (12) [right of=11]  {$*$};
+  \node[main node] (13) [above of=11]  {$*$};
+  \node[main node] (14) [below of=11]  {$*$};
+  
+
+  \path[every node/.style={font=\sffamily}]
+    (1) edge  (2)
+    (2) edge (3)
+    (3) edge (4)
+    (4) edge (5)
+    (5) edge (6)
+    (6) edge (7)
+    (7) edge (8)
+    (8) edge (9)
+    (9) edge (10)
+    (10) edge (11)
+    (11) edge (12)
+    edge (13)
+    edge (14);
+      
+     
+   \draw[line width=1mm,color=red] (1) to (2) to (3) to (4) to (5);
+   
+   \draw [line width=1mm,color=blue] (11) to (12);
+   \draw [line width=1mm,color=green] (11) to (13);
+   \draw [line width=1mm,color=yellow] (11) to (14);
+   \draw [line width=1mm,color=blue] (8) to (9) to (10) to (11);
+   
+   \node (LBox) [draw,rounded corners, fit= (1) (2) (3) (4) (5)] {};
+   \node (MBox) [draw,rounded corners, fit= (6) (7) (8) (9)] {};
+   \node (RBox) [draw,rounded corners, fit= (10)] {};
+   \node (SBox) [draw,rounded corners, fit= (11) (12) (13) (14)] {};
+   
+   \node [above=0.5cm,text width=0.5cm] at (LBox) {$L$};
+   \node [above=0.5cm,text width=0.5cm] at (MBox) {$M$};
+   \node [above=0.5cm,text width=0.5cm] at (RBox) {$R$};
+   \node [,above=2cm,text width=0.5cm] at (SBox) {$S$}; 
+   
+\begin{scope}[on background layer]
+   \node[style={circle,,font=\sffamily\Large\bfseries}] (8H) at ($ (8) + (0,0.1) $) { };
+   \node[style={circle,,font=\sffamily\Large\bfseries}] (9H) at ($ (9) + (0,0.1) $) { };   
+   \node[style={circle,,font=\sffamily\Large\bfseries}] (10H) at ($ (10) + (0,0.1) $) { };
+   \node[style={circle,,font=\sffamily\Large\bfseries}] (11H) at ($ (11) + (0,0.1) $) { };
+   \draw [line width=1mm,color=green] (8H) to (9H) to (10H) to (11H);
+   \node[style={circle,,font=\sffamily\Large\bfseries}] (8L) at ($ (8) + (0,-0.1) $) { };
+   \node[style={circle,,font=\sffamily\Large\bfseries}] (9L) at ($ (9) + (0,-0.1) $) { };
+   \node[style={circle,,font=\sffamily\Large\bfseries}] (10L) at ($ (10) + (0,-0.1) $) { };
+   \node[style={circle,,font=\sffamily\Large\bfseries}] (11L) at ($ (11) + (0,-0.1) $) { };
+   \draw [line width=1mm,color=yellow] (8L) to (9L) to (10L) to (11L);
+\end{scope}
+    
+   
+\end{tikzpicture}
+}
+\end{center}
+\caption{The Naive Improvement on $S_{4}^{9}$ for $m=9$. The \textcolor{red}{red lines indicating the end-ensuring cycle $\{1,2,3,4,5,4,3,2,1 \}$} and the other coloured lines indicating the end-ensuring cycles, for each $*$, $\{*,c,10,9,8,9,10,c,* \}$ (as $\halflength=4$).}
+\end{examplefigure}
+
+
+Using the Naive Improvement Policy we can achieve an improvement over the Random Oscillation if $2(n+k) -nm \geq 0$ and get a bound of $V \geq \frac{2m}{2(n+k)+nm}$ (or $V \geq \frac{1}{n}$ if $M=\emptyset,R=\emptyset$), by choosing optimal $Q_{L}$ and $Q_{S}$ (See  appendix \ref{appendix:Naiveanalysis}).
+
+
+\begin{myfigure}
+\begin{center}
+\input{Images/NavieInterceptionOnS_4^5(m=4).tex}
+\end{center}
+\caption{Interception probabilities of $S^5_{4}$ when $m=4$, with the \textcolor{red}{red Probabilities showing the Naive Improvement Policy $\alpha \left(\frac{2}{17},\frac{6}{17} \right)$}.}
+\end{myfigure}
+
+\textbf{Combinatorial Improvement}
+
+\begin{definition}[Combinatorial Improvement]
+Let $\bm{\pi}=\beta(Q_{L},Q_{S})$ denote the Combinatorial Improvement Policy, which improves the sets, $L$ and $S$. An end-ensuring cycle, $\{ 1,...,\floor{\frac{m}{2}}+1,...,1 \}$ is played with probability $Q_{L}$, so $q_{L}=Q_{L}$. Also;
+
+\begin{enumerate}
+\item[Case i)] If $R \neq \emptyset$ then $\floor{\frac{m}{2}}=n+r$, for some excess $r$. Then form an end-ensuring cycle on the nodes $\{ n+k+1-\floor{\frac{m}{2}},...,k+1,c,*,c,*,...,c,*,c,k+1,...,n+k+1-\floor{\frac{m}{2}} \}$, this is of length $2(n-\floor{\frac{m}{2}}+1)+2(n-1)=4n-2 \frac{m}{2}=4n-2(n+r)=2n+2r=2 \floor{\frac{m}{2}} \leq m$ (so are end-ensuring). This cycle will be played with probability $Q_{S}$ and improves all the nodes in $R$ (non-increasing) and $S$($c$ is better than $*$) so $q_{R}=Q_{R}$ and $q_{S}=Q_{S}$.
+
+\item[Case ii)] If $R = \emptyset$ then an end-ensuring cycle is formed by choosing $\halflength$ $*$ nodes each equally likely. This construction is performed with probability $Q_{S}$ and nodes in $S$ ($c$ is better than $*$). The actually improvement made is $$q_{S}=Q_{S} \times \mathbb{P}(\text{A particular } * \text{ node is picked})=Q_{S} \times \frac{\floor{\frac{m}{2}}}{n-1} $$
+\end{enumerate}
+To distinguish between the cases we will subscript, $\beta$, case i) $\beta_{1}$ and case ii) $\beta_{2}$.
+\end{definition}
+
+We leave the exact analysis to Appendix \ref{Appendix:Combinatorial improvement analysis}  but note the cases bounds
+
+\begin{itemize}
+\item If $M=\emptyset$,$R=\emptyset$ then $V \geq \frac{\hat{m}}{\hat{m}+n-1}$
+\item If $M \neq \emptyset$,$R=\emptyset$ then $V \geq \frac{2m}{2(n+k)+m(1+\frac{n-1}{\hat{m}})}$
+\item If $M \neq \emptyset$,$R \neq \emptyset$ then $V \geq \frac{2m}{2(n+k+m)}$
+\end{itemize}
+
+\begin{myfigure}
+\begin{center}
+\input{Images/CombinatorialInterceptionOnS_4^5(m=8).tex}
+\end{center}
+\caption{Interception probabilities of $S^5_{4}$ when $m=8$, with the \textcolor{blue}{blue Probabilities showing the Choosing Improvement Policy $\beta_{1} \left(\frac{2}{13},\frac{2}{13} \right)$}.}
+\end{myfigure}
+
+\begin{myfigure}
+\begin{center}
+\input{Images/CombinatorialInterceptionOnS_4^5(m=4).tex}
+\end{center}
+\caption{Interception probabilities of $S^5_{4}$ when $m=4$, with the \textcolor{red}{red Probabilities showing the Naive Improvement Policy $\alpha \left(\frac{2}{17},\frac{6}{17} \right)$} and the \textcolor{blue}{blue Probabilities showing the Choosing Improvement Policy $\beta_{2} \left(\frac{1}{7},\frac{3}{14} \right)$}.}
+\end{myfigure}
+
+It turns out this bound can further improved in a particular scenario, but do so we stop using end-ensuring cycles.
+
+\textbf{Combinatorial improvement extension}
+We alter the idea of using end-ensuring cycles on the set of $S$ (please note we will deal with only the case of $R \neq \emptyset$ (as that is what we need this for odd $m$). We will now improve the $n-1$ nodes by using a cycle of length $m+1$ (note we will be covering the case where $m$ is odd), then when played this cycle has a probability of catching the attacker of $\frac{m}{m+1} \equiv \frac{m}{m'}$.
+
+Now just like before we will need to play a collection of all combinations of such cycles, each cycle has a choice of $\frac{m'}{2}$ end points to visit. So we have a total of $\left( \begin{array}{c}
+n-1 \\
+\frac{m'}{2} \\
+\end{array} \right)
+$
+and  $\left( \begin{array}{c}
+n-2 \\
+\frac{m'}{2}-1 \\
+\end{array} \right)
+$
+contain any given end point. Hence we have $\frac{\left( \begin{array}{c}
+n-1 \\
+\frac{m'}{2} \\
+\end{array} \right)}{\left( \begin{array}{c}
+n-2 \\
+\frac{m'}{2}-1 \\
+\end{array} \right)}=
+\frac{m'}{2(n-1)}
+$
+Hence when we play this strategy with probability $q$, we improve each end with a probability of $q \times \frac{m'}{2(n-1)}$.
+
+We will give the details and the bounds in the appendix \ref{Appendix:Further Combinatorial extension analysis} but the bound found is $V \geq \frac{2m}{2(n+k)+m+2(n-1)}$. Meaning the bound for $M \neq \emptyset$,$R=\emptyset$ is $V \geq \frac{2m}{2(n+k)+m+2(n-1)}$.
+
+We will now deal with the case of $m \leq 2(n-1)$, so that all $*$'s nodes cannot be covered in one end-ensuring cycle. First we look at the $m=2k+1,2k$ and we note that by simplification of $S^{k}_{n}$ into $L_{k+1}$ and $S_{n-1}$ we get the bound $V \geq \frac{1}{1+\frac{2(n-1)}{m}}=\frac{m}{m+2(n-1)}$.
+
+When $m=2k+1$ we can propose an attack that `augments' the time-delayed which simply removes one attack placed at $1$. That is to place attacks at node $1$ starting at times, $\tau,...,\tau+2k$, with equal probability and $*$ nodes starting at times $\tau+k,\tau+k+1$ (equally we could use $\tau+k-1,\tau+k$). Similarlly if $m=2k$ we augment it to node $1$ at times $\tau,...,\tau+2k-1$ and $*$ nodes at times $\tau+k-1,\tau+k$ all equiprobable.
+
+\begin{conjecture}
+Using the `augmented' time-delayed we propose the attacker can get a bound of $V \leq \frac{m}{m+2(n-1)}$ and hence $V(S_{n}^{k})=\frac{m}{m+2(n-1)}$ for $m=2k+1,2k$
+\end{conjecture}
+
+The idea of the proof for the `augmented' time-delayed attack is the same as the time-delayed attack , but with a reduced number of attacks at node $1$, to make sure the patroller can only get $m$ by waiting here.
+
+We leave the idea of the rest of the solution, which follows a similar idea, to be introduced in Section [Need a reference]
+
+For now we move to a more generalised star graph, where all external nodes can be any distance from the centre node.
+
+\begin{definition}[General star graph]
+The \textit{General star graph}, $S^{\bm{k}}_{n}$ ($\bm{k} \in \mathbb{N}^{h}$) is made from $S_{n}$, by performing subdivision on $h$ of the  initial edges each repeated $k_{i}$ for $i=1,...,h$ . 
+\end{definition}
+
+\begin{note}
+For ease of notation we will use the above format, but will understand that using $k_{i}=0$ is a valid construction, so we can image that $\bm{k} \in \mathbb{N}^n$.
+For ease of notation we will define $ |k| \equiv \sum\limits_{i=0}^{i=h} k_{i}$ and $ k_{\max} \equiv \max\limits_{i=1,2,..,h} k_{i}$.
+\end{note}
+
+\begin{myfigure}
+\begin{center}
+\begin{tikzpicture}[-,auto,node distance=2cm,
+                    thick,main node/.style={circle,draw,font=\sffamily\Large\bfseries}]
+
+  \node[main node] (1) {$c$};
+  \node[main node] (2) [below left of=1] {$e_{1}$};
+  \node[main node] (3) [below right of=1] {$p_{3,1}$};
+  \node[main node] (4) [above left of=1] {$p_{1,1}$};
+  \node[main node] (5) [above right of=1] {$p_{2,1}$};
+  \node[main node] (6) [right of=5]  {$p_{2,2}$};
+  \node[main node] (7) [right of=6]  {$p_{2,3}$};
+  \node[main node] (8) [right of=7]  {$e^{2,3}$};
+  \node[main node] (9) [left of=4] {$e^{1,2}$};
+  \node[main node] (10) [right of=3] {$e^{3,2}$};
+  
+  \path[every node/.style={font=\sffamily}]
+    (1) edge  (2)
+    edge(3)
+    edge(4)
+    edge(5)
+    (5) edge (6)
+    (6) edge (7)
+    (7) edge (8)
+    (9) edge (4)
+    (10) edge (3);
+    
+\end{tikzpicture}
+\end{center}
+\caption{Labelling of $S^{1,3,1}_{4}$}
+\end{myfigure}
+
+
+To start our analysis of this graph, we will look at an expanded graph which can be simplified down to our general star graph. Consider the cyclic graph $C_{2(n+|k|)}$ , we can simplify this graph by node identification to $S^{\bm{k}}_{n}$. The identification mapping is harder to visual from a cycle graph.
+
+For ease of understanding look at an example as in Figure \ref{myfigure: Example of simplification to general star graph}
+
+The mapping is done as such:
+\begin{itemize}
+\item The centre is identified form nodes $1,1+2(k_{1}+1),1+2(\sum\limits_{i=1}^{2} (k_{i}+1)),...,1+2(\sum\limits_{i=1}^{h}(k_{i}+1),1+2(|k|+h)+2),...,1+2(|k|+h)+2(n-h)$
+
+\item The first branch is identified from the nodes between $2$ and $2(k_{1}+1)$ (Inclusive). $n_{1,i}$ for $i=1,...,k_{1}$ are identified by the two nodes $i+1$ and $2k_{1}+3-i$ , the node $n_{1,k_{1}+1}$ is identified by the one node $k_{1}+2$.
+
+\item The $j$\textsuperscript{th} branch is identified from nodes between $2(\sum\limits_{i=1}^{j-1} (k_{i}+1)))$ and $2(\sum\limits_{i=1}^{j} (k_{i}+1)))$ (Inclusive). $n_{j,i}$ for $i=1,....,k_{j}$ are identified by the two nodes $2(\sum\limits_{i=1}^{j-1} (k_{i}+1)))+(i-1)$ and $2(\sum\limits_{i=1}^{j} (k_{i}+1)))-(i-1)$ , the node $n_{j,k_{j}+1}$ is identified by the one node $2(\sum\limits_{i=1}^{j-1} (k_{i}+1)))+k_{j}$.
+\end{itemize}
+
+This mapping gives rise to the general Oscillation
+
+\begin{definition}[General Random Oscillation]
+The \textit{oscillation} on $S^{\bm{k}}_{n}$ is any embedded Hamiltonian patrol on $C_{2(n+|k|)}$ under the simplification above. The \textit{random oscillation} on $S^{\bm{k}}_{n}$ is the embedded random Hamiltonian patrol on $C_{2(n+|k|)}$ under the simplification above.
+\end{definition}
+
+\begin{lemma}
+For $m < 2(n+|k|)$ following the random oscillation
+$$V(S^{\bm{k}}_{n}) \geq V(C_{2(n+|k|)})=\frac{m}{2(n+|k|)}$$
+and if $m \geq 2(n+|k|)$ then $V(S^{\bm{k}}_{n})=1$, achieved by any oscillation. 
+\end{lemma}
+
+
+\begin{myfigure}
+\begin{tikzpicture}[-,auto,node distance=2cm,
+                    thick,main node/.style={circle,draw,font=\sffamily\Large\bfseries}]
+
+  \node[main node,color=blue] (1) {$a_{1}$};
+  \node[main node,color=blue] (2) [below of=1] {$a_{2}$};
+  \node[main node,color=blue] (3) [below of=2] {$a_{3}$};
+  \node[main node,color=red] (4) [right of=1] {$b_{1}$};
+  \node[main node,color=red] (5) [right of=2]  {$b_{2}$};
+  \node[main node,color=green] (6) [right of=3]  {$b_{3}$};
+  \node[main node,color=green] (7) [below of=6]  {$b_{4}$};
+  \node[main node] (13) [below of=7] {$b_{5}$};
+  \node[main node,color=cyan] (8) [right of=4]  {$n_{1,1}$};
+  \node[main node,color=purple] (9) [right of=8]  {$n_{1,2}$};
+  \node[main node,color=cyan] (10) [right of=5]  {$n_{1,5}$};
+  \node[main node,color=purple] (11) [right of=10]  {$n_{1,4}$};
+  \node[main node] at (8,-1) (12)  {$n_{1,3}$};
+  \node[main node,color=orange] (14) [right of=6] {$n_{2,1}$};
+  \node[main node,color=orange] (15) [right of=7] {$n_{2,3}$};
+  \node[main node] at (6,-5) (16) {$n_{2,2}$};
+
+  \path[every node/.style={font=\sffamily}]
+    (1) edge  (4)
+    (2) edge  (5)
+        edge  (6)
+    (3) edge  (7)
+    
+    (4) edge (8)
+    (13) edge (3)
+    (13) edge (1)
+    (8) edge (9)
+    (9) edge (12)
+    (12) edge (11)
+    (11) edge (10)
+    (10) edge (5)
+    (6) edge (14)
+    (7) edge (15)
+    (14) edge (16)
+    (15) edge (16);
+  
+  \node[main node,color=blue] (13) [below of=3,node distance=6cm] {$a$};
+  \node[main node,color=red] (14) [right of=13] {$b_{1}$};
+  \node[main node,color=green] (15) [below of=14] {$b_{2}$};
+  \node[main node] (16) [below of=15] {$b_{3}$};
+  \node[main node,color=cyan] (17) [right of=14] {$n_{1,1}$};
+  \node[main node,color=purple] (18) [right of=17] {$n_{1,2}$};
+  \node[main node] at (8,-9) (19) {$n_{1,3}$};      
+  \node[main node,color=orange] (20) [right of=15] {$n_{2,1}$};
+  \node[main node] (21) [right of=20] {$n_{2,2}$}; 
+   
+   \path[every node/.style={font=\sffamily}]
+   (13) edge (14)
+   edge (15)
+   edge (16)
+   (14) edge (17)
+   (17) edge (18)
+   (18) edge (19)
+   (15) edge (20)
+   (20) edge (21);
+  
+\end{tikzpicture}
+\caption{Simplification of $C_{16}$ to $S^{3,2}_{3}$}
+\label{myfigure: Example of simplification to general star graph}
+\end{myfigure}
+
+We will match the oscillation bound of $\frac{m}{2(n+|k|)}$, by further extending time-limited attack and time-delayed attack into the type-delayed attack.
+
+\begin{definition}[Node types]
+A \textit{type} $i$ node, is an external node which has been extended $i$ times. Let $k_{max} \equiv \max\limits_{i=1,...,h} k_{i}$ be the maximum node type on the general extended star graph, $S_{n}^{\bm{k}}$.
+\end{definition}
+
+\begin{definition}[Type-delayed attack]
+Let  the \textit{Type-delayed attack}, be the attack that attacks at a type $i$ node with probability $\frac{i+1}{\denominator}$ $\forall \, i$. Choosing an attack interval $I$, the attack at a type $i$ node chooses a interval from the following with equal probability: $I+(k_{max}-i),I+(k_{max}-i)+1,...,I+k_{max}+i+1$ $\forall \, i$ (i.e statring attacks at a type $i$ node at times $\tau+(k_{max}-i)+1,...,\tau+(k_{max}+i)+1$).
+\end{definition}
+
+\begin{myfigure}
+\begin{center}
+\begin{tikzpicture}
+ %Drawing Bottom Axis
+ \draw[->] (-7,0) -- (7,0);
+ \node (timelabel) [shift={(0.2,0)}] at (7,0) {$t$};
+ 
+ 
+ \draw (-6.5,0.2) -- (-6.5,-0.2);
+ \draw (6.5,0.2) -- (6.5,-0.2);
+ 
+ \node (labelc1) at (-6.5,-0.5) {$\tau$};
+ \node (labelc2) at (6.5,-0.5) {$\tau+2k_{max}+1$};
+ 
+ \node[cross=5pt,red] (c1) at (-6.5,0.5) {};
+ \node[cross=5pt,red] (c2) at (6.5,0.5) {};
+ \draw[dashed] (c1) -- (c2);
+ \node (linelabel1) at (-8,0.5) {Type $k_{max}$};
+ 
+ 
+  \draw (-6,0.2) -- (-6,-0.2);
+ \draw (6,0.2) -- (6,-0.2);
+ 
+ %\node (labelc1) at (-5.5,-0.5) {$\tau+1$};
+ %\node (labelc2) at (5.5,-0.5) {$\tau+2k_{max}-1$};
+ 
+ \node[cross=5pt,red] (c1) at (-6,1.5) {};
+ \node[cross=5pt,red] (c2) at (6,1.5) {};
+ \draw[dashed] (c1) -- (c2);
+ \node (linelabel1) at (-7.5,1.5) {Type $k_{max}-1$};
+ 
+ 
+ 
+ \draw[decorate sep={2mm}{4mm},fill] (0,3.5) -- (0,2);
+
+  \draw (-1.5,0.2) -- (-1.5,-0.2);
+ \draw (1.5,0.2) -- (1.5,-0.2);
+ 
+ %\node (labelc1) at (-5.5,-0.5) {$\tau+1$};
+ %\node (labelc2) at (5.5,-0.5) {$\tau+2k_{max}-1$};
+ 
+ \node[cross=5pt,red] (c1) at (-1.5,4) {};
+ \node[cross=5pt,red] (c2) at (1.5,4) {};
+ \draw[dashed] (c1) -- (c2);
+ \node (linelabel1) at (-2.3,4) {Type $1$};
+ 
+ \draw (-1,0.2) -- (-1,-0.2);
+ \draw (1,0.2) -- (1,-0.2);
+ 
+  \node (labelc3) at (-1,-0.5) {$\tau+k_{max}$};
+ \node (labelc4) at (1,-0.5) {$\tau+k_{max}+1$};
+ 
+ \node[cross=5pt,red] (c3) at (-1,5) {};
+ \node[cross=5pt,red] (c4) at (1,5) {};
+ \draw[dashed] (c3) -- (c4);
+ \node (linelabel1) at (-1.9,5) {Type $0$}; 
+
+\end{tikzpicture}
+\end{center}
+\end{myfigure}
+
+\begin{theorem}
+When $T \geq m+2k_{max}$, the analogous `diametric' bound is given by
+$$V(S_{n}^{\bm{k}}) \leq \max \left\{ \frac{k_{max}+1}{\denominator} , \frac{m}{2 \left( \denominator \right)} \right\}$$
+\end{theorem}
+
+Proof: \ref{Type-delayed attack proof}
+
+
+\begin{corollary}[Solution in $m \geq 2(k_{max}+1)$]
+By the attack using the type-delayed attack and the patroller using the random oscillation we achieve the value, when $2(k_{max}+1) \leq m \leq 2(n+|k|)$,
+$$V= \frac{m}{2(n+|k|)} $$
+and when $m > 2(n+|k|)$ then $V=1$.
+\end{corollary}
+
+\begin{myfigure}
+\resizebox{0.95\linewidth}{!}{
+\input{Images/GeneralStarRegions(S_10_5,3,2,1).tex}
+}
+\caption{The value of the star graph, $S_{10}^{5,3,2,1}$}
+\end{myfigure}
+
 \subsection{Joining star graphs by centralised connections}
+
+We now look at connecting by their centres the generalised star (with branches)
+
+\begin{definition}
+We define the \textit{multi general p-star graph}, $(s_{n_{1}}^{\bm{k}_{p}},...,S_{n_{}}^{\bm{k}_{p}}) \equiv \bigodot\limits_{i=1}^{p} S_{n_{i}}^{\bm{k}_{i}}$, to be the p star graphs, $S_{n_{i}}^{\bm{k}_{i}}$ initially with disconnected centres which are now made adjacent by the introduction of connections between each combination of centres (i.e the complete graph of centres)
+\end{definition}
+
+\begin{myfigure}
+\begin{center}
+\begin{tikzpicture}[-,auto,node distance=2cm,
+                    thick,main node/.style={circle,draw,font=\sffamily\Large\bfseries}]
+
+ \node[main node] (c1) {$C_{1}$};
+ \node[main node] (1) [above of=c1] {$*_{1}$};
+ \node[main node] (2) [above left of=c1] {$p_{1,1,1}$};
+ \node[main node] (3) [left of=c1] {$p_{1,2,1}$};
+ \node[main node] (4) [above left of=2] {$e_{1,1,2}$};
+ \node[main node] (5) [left of=3] {$e_{1,2,2}$};
+  
+ \path
+ (c1) edge (1)
+      edge (2)
+      edge (3)
+  (2) edge (4)
+  (3) edge (5);
+ 
+ \node[main node] (c2) [right of=c1] {$C_{2}$};
+ \node[main node] (6) [above of=c2] {$*_{2}$};
+ \node[main node] (7) [right of=c2] {$p_{2,1,1}$};
+ \node[main node] (8) [right of=7] {$p_{2,1,2}$};
+ \node[main node] (9) [right of=8] {$e_{2,1,3}$};
+ 
+  \path
+ (c2) edge (6)
+      edge (7)
+  (7) edge (8)
+  (8) edge (9);
+      
+ \node[main node] (c3) [below of=c1] {$C_{3}$};
+ \node[main node] (10) [below of=c3] {$*_{3}$};
+ \node[main node] (11) [left of=c3] {$*_{3}$};
+ 
+  \path
+ (c3) edge (10)
+      edge (11);
+      
+ \node[main node] (c4) [below of=c2] {$C_{4}$};
+ \node[main node] (12) [below right of=c4] {$*_{4}$};
+ 
+  \path
+ (c4) edge (12);            
+  
+ \path
+ (c1) edge (c2)
+      edge (c3)
+      edge (c4)
+ (c2) edge (c3)
+      edge (c4)
+ (c3) edge (c4);
+ 
+        
+  
+\end{tikzpicture}
+\end{center}
+\caption{Example of labelling on $(S_{3}^{1,1},S_{2}^{2},S_{2},S_{1})$}
+\label{myfigure: Example of labeling on multi general star graph}
+\end{myfigure}
+
+\begin{note}
+For ease of notation we will use $\bm{K}=(\bm{k}_{1},...,\bm{k}_{p})$ and $K_{\text{max}} = \max\limits_{i=1,...,p} k_{i,\text{max}}$
+\end{note}
+
+Because we have just joined graphs we know some solutions to, we can consider decomposition for the patrollers decision and simplifiation for the attackers decision.
+
+\begin{theorem}
+For $m \geq 2(K_{\text{max}}+1)$
+\end{theorem}
+
+Under decomposition with the Hamiltonian bound (so we are not limited by any values of $m$ as long as no part of the denominator sum is $1$ i.e $m \leq \min\limits_{i=1,...,p} \{ 2(n_{i}+|\bm{k}_{i}|) \}$
+ 
+$$V \geq \frac{1}{\sum\limits_{i=1}^{k} \frac{2(n_{i}+|\bm{k}_{i}|)}{m}}=\frac{m}{2 \sum\limits_{i=1}^{k} (n_{i}+|\bm{k}_{i}|)}$$
+
+\begin{myfigure}
+\begin{center}
+\begin{tikzpicture}[-,auto,node distance=2cm,
+                    thick,main node/.style={circle,draw,font=\sffamily\Large\bfseries}]
+
+ \node[main node] (c1) {$C_{1}$};
+ \node[main node] (1) [above of=c1] {$*_{1}$};
+ \node[main node] (2) [above left of=c1] {$p_{1,1,1}$};
+ \node[main node] (3) [left of=c1] {$p_{1,2,1}$};
+ \node[main node] (4) [above left of=2] {$e_{1,1,2}$};
+ \node[main node] (5) [left of=3] {$e_{1,2,2}$};
+  
+ \path
+ (c1) edge (1)
+      edge (2)
+      edge (3)
+  (2) edge (4)
+  (3) edge (5);
+ 
+ \node[main node] (c2) [right of=c1] {$C_{2}$};
+ \node[main node] (6) [above of=c2] {$*_{2}$};
+ \node[main node] (7) [right of=c2] {$p_{2,1,1}$};
+ \node[main node] (8) [right of=7] {$p_{2,1,2}$};
+ \node[main node] (9) [right of=8] {$e_{2,1,3}$};
+ 
+  \path
+ (c2) edge (6)
+      edge (7)
+  (7) edge (8)
+  (8) edge (9);
+      
+ \node[main node] (c3) [below of=c1] {$C_{3}$};
+ \node[main node] (10) [below of=c3] {$*_{3}$};
+ \node[main node] (11) [left of=c3] {$*_{3}$};
+ 
+  \path
+ (c3) edge (10)
+      edge (11);
+      
+ \node[main node] (c4) [below of=c2] {$C_{4}$};
+ \node[main node] (12) [below right of=c4] {$*_{4}$};
+ 
+  \path
+ (c4) edge (12);            
+  
+ \path
+ (c1) edge (c2)
+      edge (c3)
+      edge (c4)
+ (c2) edge (c3)
+      edge (c4)
+ (c3) edge (c4);  
+ 
+   \node (Box1) [draw,thick,fit=(1) (2) (3) (4) (5),fill,gray,opacity=0.2] {};
+   
+      \node (Box2) [draw,thick,fit=(6) (7) (8) (9),fill,gray,opacity=0.2] {};
+      
+         \node (Box3) [draw,thick,fit=(10) (11),fill,gray,opacity=0.2] {};
+         
+            \node (Box4) [draw,thick,fit=(c4) (12),fill,gray,opacity=0.2] {};
+        
+  
+\end{tikzpicture}
+\end{center}
+\caption{Example of decomposition on $(S_{3}^{1,1},S_{2}^{2},S_{2},S_{1})$}
+\label{myfigure: Example of decomposition on multi general star graph}
+\end{myfigure}
+
+Now under simplification of the centre's, i.e $\bigodot\limits_{i=1}^{p} S_{n_{i}}^{\bm{k}_{i}}$ to $S_{\sum\limits_{i=1}^{p} n_{i}}^{\bm{K}}$, where $\bm{K}$ is the concatenation of all the $\bm{k}_{i}$ vectors for $i=1,...,p$.
+
+
+\begin{myfigure}
+\begin{center}
+\begin{tikzpicture}[-,auto,node distance=2cm,
+                    thick,main node/.style={circle,draw,font=\sffamily\Large\bfseries}]
+
+ \node[main node] (c1) {$C_{1}$};
+ \node[main node] (1) [above of=c1] {$*_{1}$};
+ \node[main node] (2) [above left of=c1] {$p_{1,1,1}$};
+ \node[main node] (3) [left of=c1] {$p_{1,2,1}$};
+ \node[main node] (4) [above left of=2] {$e_{1,1,2}$};
+ \node[main node] (5) [left of=3] {$e_{1,2,2}$};
+  
+ \path
+ (c1) edge (1)
+      edge (2)
+      edge (3)
+  (2) edge (4)
+  (3) edge (5);
+ 
+ \node[main node] (6) [above right of=c1] {$*_{2}$};
+ \node[main node] (7) [right of=c1] {$p_{2,1,1}$};
+ \node[main node] (8) [right of=7] {$p_{2,1,2}$};
+ \node[main node] (9) [right of=8] {$e_{2,1,3}$};
+ 
+  \path
+ (c1) edge (6)
+      edge (7)
+  (7) edge (8)
+  (8) edge (9);
+      
+ \node[main node] (10) [below of=c1] {$*_{3}$};
+ \node[main node] (11) [below left of=c1] {$*_{3}$};
+ 
+  \path
+ (c1) edge (10)
+      edge (11);
+      
+ \node[main node] (12) [below right of=c1] {$*_{4}$};
+ 
+  \path
+ (c1) edge (12);            
+ 
+  
+\end{tikzpicture}
+\end{center}
+\caption{Example of simplification on $(S_{3}^{1,1},S_{2}^{2},S_{2},S_{1})$ to $S_{8}^{2,1,1}$}
+\label{myfigure: Example of simplification on multi general star graph}
+\end{myfigure}
+
+Then we get as long as $m \geq 2(\bm{K}_{\max}+1)=2(\max\limits_{i=1,...,p} \{\bm{k}_{max} \} +1 )$ then we get that
+
+$$V \leq \frac{m}{2( \sum\limits_{i=1}^{p} n_{i} + |\bm{K}|)}=\frac{m}{2( \sum\limits_{i=1}^{p} n_{i} + \sum\limits_{i=1}^{p} |\bm{k}|_{i})}=\frac{m}{2 \sum\limits_{i=1}^{p} (n_{i} + |\bm{k}|_{i})}$$
+
+Hence for $2(\max\limits_{i=1,...,p} \{\bm{k}_{max} \} +1 ) \leq m \leq 2 \min\limits_{i=1,...,p} \{ n_{i}+|\bm{k}_{i}| \} $ we have
+
+$$V=\frac{m}{2 \sum\limits_{i=1}^{p} (n_{i} + |\bm{k}|_{i})}$$
+
+\begin{remark}
+This solution may not be applicable if there is an long branch and a `small' general star graph. The upper limit on $m$ is due to wanting each general star not being winnable, while the lower limit on $m$ is due to the general star's solution.
+\end{remark}
+
+\begin{note}
+We note that this is not the Hamiltonian bound for such a graph and the Hamiltonian bound would be,
+$$V=\frac{m}{2 \sum\limits_{i=1}^{p} (n_{i} + |\bm{k}|_{i}) + p}$$
+\end{note}
+
+\begin{note}
+Again the idea that all the centre's are connected in all combinations to each other centre is irrelevant to the decomposition and simplification.
+\end{note}
+
+
+
 
 \section{Strategic Patroller with Random Attackers}
 In this section we provide further work developed from the literature review in Section \ref{Section:Patrolling games with random attackers}.
@@ -1129,9 +2039,9 @@ Again the future of the process is independent of its past, so we can formulate 
 The patroller incurs cost $c_{j}$ for all successful attacks at node $j$. A successful attack will fall into two categories; an observed attack or an attacker who arrived. We simply sum the expected costs of both types of attacker to work out the cost at a node for the next unit time, given we choose to move to node $i$.
 
 \begin{align*}
-C_{j}(\bm{s},i) &= \begin{cases}
+C_{j}(\bm{s},\bm{v},i) &= \begin{cases}
 0  \text{ if } j=i \\
-\underbrace{c_{j} P(s_{j}-1 < X_{j} \leq s_{j})}_{\text{Observed finishing}} + \underbrace{c_{j} \lambda_{j} \int_{s_{j}-1}^{s_{j}} P(X_{j} \leq t) dt}_{\text{Arrivals finishing}} \text{ if } j \neq i \\
+\underbrace{c_{j} v_{j} P(s_{j}-1 < X_{j} \leq s_{j})}_{\text{Observed finishing}} + \underbrace{c_{j} \lambda_{j} \int_{s_{j}-1}^{s_{j}} P(X_{j} \leq t) dt}_{\text{Arrivals finishing}} \text{ if } j \neq i \\
 \end{cases}
 \end{align*}
 
@@ -1395,11 +2305,11 @@ Now we introduce a policy, $\pi_{\text{Neg}}(s,v)=0 \; \forall (s,v) \in \Omega$
 Because either side of our states with $s=B$ we know the decision, we can see in states $(B,v)$ whether we should renew now or wait one period and then renew. Using a similar argument to the two previously, we shall consider a policy, $\pi^{\text{R}}$ a policy which renews immediately and a policy $\pi^{\text{NR}}$ which does not renew immediately, but renews in one time period, which both after these decisions follow some optimal policy, $\sigma$ from the renewed state, $\theta$. Using Such policies will get us
 
 \begin{align*}
-&V_{n}^{\pi_{\text{R}}}(s,v)= \omega + E[V_{n-1}^{\sigma}(\theta)] //
-&V_{n}^{\pi_{\text{NR}}}(s,v)= c (\lambda R +v) \omega + E[V_{n-1}^{\sigma}(\theta)] //
+&V_{n}^{\pi_{\text{R}}}(s,v)= \omega + E[V_{n-1}^{\sigma}(\theta)] \\
+&V_{n}^{\pi_{\text{NR}}}(s,v)= c (\lambda R +v) \omega + E[V_{n-1}^{\sigma}(\theta)] \\
 \end{align*}
 
-We will pick policy, $\pi^{\text{R}}$ over $\pi^{\text{NR}}$
+We will pick policy, $\pi^{\text{R}}$ over $\pi^{\text{NR}}$ (or be indifferent) if
 \begin{align*}
 &\lim\limits_{n \rightarrow \infty} V_{n}^{\pi_{NR}} (B,v) - V_{n}^{\pi_{R}}(B,v) \geq 0 \\
 & \iff \lim\limits_{n \rightarrow \infty} c (\lambda R + v) + E[V_{n-1}^{\sigma}(B+1,0)] - (\omega + E[V_{n-1}^{\sigma}(\theta)]) \geq 0 \\
@@ -1643,22 +2553,129 @@ We want to look at removing the restriction placed on the attack time to be dete
 
 As before if we start in states $(B+1,v)$ we will renew if $g \leq c \lambda$ and by the neglecting strategy we know this to guaranteed. So the optimal strategy will have all states with $s=B+1$ renew immediately.
 
-No we will work backwards, aiming to use backwards recursion to work through to some multi-stage threshold policy, $\pi^{\text{TH}}(\bm{v}_{\text{crit}})$ where $(\bm{v}_{\text{crit}})_{i}$ is the threshold on the state space row of $s=i$. We expect this threshold to be triangular on the state space, that is that $\bm{v}_{\text{crit}}$ is a non-decreasing vector.
+No we will work backwards, aiming to use backwards recursion to work through to some multi-stage threshold policy, $\pi^{\text{TH}}(\bm{v}_{\text{crit}})$ where $(\bm{v}_{\text{crit}})_{i}$ is the threshold on the state space row of $s=i$. We expect this threshold to be triangular on the state space, that is that $\bm{v}_{\text{crit}}$ is a non-increasing vector.
 
 \begin{definition}[Multi-stage threshold policy]
 
 \end{definition}
 
-As an example we will now start to work out what to  do in states $s=B$ and how to work out the threshold. Well the same process as in Section \ref{Section:Single node solution} holds and we will renew if $g \leq c (\lambda R + v)$ otherwise we will wait and renew later. 
+\begin{myfigure}
+\begin{center}
+\resizebox{0.9\linewidth}{!}{
+\begin{tikzpicture}[-,auto,node distance=1cm,
+                    thick,main node/.style={circle,fill=white,draw,font=\sffamily\large,minimum size=0.5cm}]
+ \foreach \x in {0,...,5}
+    \foreach \y in {0,...,4} 
+       {\pgfmathtruncatemacro{\label}{\x - 5 *  \y +21}
+        \pgfmathtruncatemacro{\v}{\x}
+        \pgfmathtruncatemacro{\s}{5-\y}
+       \node [main node]  (\x\y) at (1.5*\x,1.5*\y) {\s,\v};}
+       
+       \node[main node] (Renewal) at (1.5*6,1.5*4) {$\theta$};
+
+ \foreach \x in {0,...,1}
+    \foreach \y in {2,...,5} 
+       {\pgfmathtruncatemacro{\label}{\x - 5 *  \y +21}
+        \pgfmathtruncatemacro{\v}{\x}
+        \pgfmathtruncatemacro{\s}{5-\y}
+        \pgfmathtruncatemacro{\nv}{\v}
+        \pgfmathtruncatemacro{\ns}{5-\y+1}
+       \draw[->] (\nv\ns)--(\v\s);}
+       
+  \foreach \x in {2,...,5}
+    \foreach \y in {2,...,2} 
+       {\pgfmathtruncatemacro{\label}{\x - 5 *  \y +21}
+        \pgfmathtruncatemacro{\v}{\x}
+        \pgfmathtruncatemacro{\s}{5-\y}
+        \pgfmathtruncatemacro{\nv}{\v}
+        \pgfmathtruncatemacro{\ns}{5-\y+1}
+       \draw[->] (\nv\ns)--(\v\s);}
+       
+    \foreach \x in {2,...,3}
+    \foreach \y in {3,...,3} 
+       {\pgfmathtruncatemacro{\label}{\x - 5 *  \y +21}
+        \pgfmathtruncatemacro{\v}{\x}
+        \pgfmathtruncatemacro{\s}{5-\y}
+        \pgfmathtruncatemacro{\nv}{\v}
+        \pgfmathtruncatemacro{\ns}{5-\y+1}
+       \draw[->] (\nv\ns)--(\v\s);}
+
+    \foreach \x in {4,...,5}
+       {\draw[-] (\x3) to (1.5*\x,1.5 *2.4);}
+                 
+        \draw[-] (1.5*4,1.5*2.4) to (1.5*6,1.5*2.4);
+
+
+    \foreach \x in {2,...,5}
+       {\draw[-] (\x2) to (1.5*\x,1.5 *1.4);}
+                 
+        \draw[-] (1.5*2,1.5*1.4) to (1.5*6,1.5*1.4);
+       
+    \foreach \x in {2,...,5}
+       {\draw[-] (\x1) to (1.5*\x,1.5 *0.4);}
+                 
+        \draw[-] (1.5*2,1.5*0.4) to (1.5*6,1.5*0.4);
+        \draw[->] (1.5*6,1.5*0.4) to (Renewal);                          
+
+    \foreach \x in {0,...,5}
+       {\draw[-] (\x0) to (1.5*\x,-1.5*0.6);}
+       
+       \draw[-] (1.5*0,-1.5*0.6) to (1.5*6,-1.5*0.6);                                            
+       \draw[-] (1.5*6,-1.5*0.6) to (1.5*6,1.5*0.4);                                 
+       
+    \foreach \x in {0,...,5}
+    { 
+     \draw[->,bend right,dashed] (Renewal) to (\x4);    
+    }   
+        
+
+\node (XaxisLeft) [shift={(-0.5,0.5)}] at (05) {};
+\node (XaxisRight) [shift={(1,0.5)}] at (55) {};
+
+\node (YaxisBottom) [shift={(-1,-0.5)}] at (00) {};
+\node (YaxisTop) [shift={(-1,1)}] at (05) {};
+
+\draw[->,line width=1mm] (XaxisLeft)--(XaxisRight);
+\draw[->,line width=1mm] (YaxisTop)--(YaxisBottom);
+
+\node[font=\sffamily\large] (OLabel) [shift={(0.5,1)}] at (25) {Observation, $v_{j}$};
+\node[font=\sffamily\large] (SLabel) [shift={(-1.5,0.5)}] at (02) {\rotatebox{90}{Time since last visit, $s_{j}$}};
+
+\node[main node] (Example) [shift={(-1,0.5)}] at (05) {$(s_{j},v_{j})$};
+   
+
+\end{tikzpicture}
+}
+\end{center}
+\caption{Threshold policy, $\pi_{\text{Th}}(6,4,2,2,0)$, with \textcolor{blue}{$b_{j}=5$} and \textcolor{red}{$B_{j}=4$} (e.g. $X_{j} \leq 3.7$)}
+\end{myfigure}
+
+As an example we will now start to work out what to  do in states $s=B$ and how to work out the threshold. We can do the same process in these states, either choosing to wait $0$ or $1$ time period and then renew, which are the policies $\pi^{\text{R}}$ and $\pi^{\text{NR}}$ respectively. Then
+
+\begin{align*}
+&V_{n}^{\pi_{\text{R}}}(s,v)= \omega + E[V_{n-1}^{\sigma}(\theta)] \\
+&V_{n}^{\pi_{\text{NR}}}(s,v)= c (vP(B-1 < X \leq B) + \lambda \int_{B-1}^{B} P(X \leq t ) dt) \omega + E[V_{n-1}^{\sigma}(\theta)] \\
+\end{align*}
+
+And the policy $\pi^{\text{R}}$ is picked over $\pi^{\text{NR}}$ (or be indifferent) if
+
+\begin{align*}
+&\lim\limits_{n \rightarrow \infty} V_{n}^{\pi_{NR}} (B,v) - V_{n}^{\pi_{R}}(B,v) \geq 0 \\
+& \iff \lim\limits_{n \rightarrow \infty} c (\lambda \int_{B-1}^{B} P(X \leq t ) dt + v P(B-1 < X \leq B)) + E[V_{n-1}^{\sigma}(B+1,0)] - (\omega + E[V_{n-1}^{\sigma}(\theta)]) \geq 0 \\
+& \iff g \leq c (\lambda \int_{B-1}^{B} P(X \leq t ) dt +v P(B-1 < X \leq B)) = c( \lambda R_{B} + v p_{B})
+\end{align*}
+Where $R_{x} \equiv \int_{x-1}^{x} P(X \leq t ) dt = \int_{x-1}^{x} F(t) dt$ and $p_{x} \equiv P(x-1 < X \leq x) = F(x)-F(x-1)$ (For our generic distributions c.d.f $F$)
+
+This means the bound for renewing now is almost the same as before, $g \leq c (\lambda R_{B} + v p_{B}) \equiv g_{B}$.
 
 Now to decide if in $(B-1,v)$ we should renew or not we need to consider waiting zero,one or two periods before renewing (renew in $s=B-1,B,B+1$).
 
-We could split ourself into cases, of $v$ such that $g \leq c (\lambda R +v)$ (so if we wait we renew in $s=B$) or otherwise we wait till $s=B+1$.
+We could split ourself into cases, of $v$ such that $g \leq g_{B}$ (so if we wait we renew in $s=B$) or otherwise if we wait, we wait again and renew in $s=B+1$.
 
 \subsubsection{Plan}
 \textbf{Time Estimate:} 3 Months
 
-\textbf{Plan:} 
+\textbf{Plan:} To complete the backwards recursion case by cases to get the optimal policy to be that of a multi-stage threshold policy. Then to develop an index using the fair price for renewal in each state to allow us to form an index. Implement the index for numerical studies with some simple distributions e.g. uniform and triangular. We also want to investigate whether on two nodes that the IH performs optimally. We want to extend the theory further to have attackers wait until the patroller leaves before beginning their attack. 
 
 \subsection{Strategic Patroller with Random Attackers on Edges}
 We want to look at considering similar work to that in section, \ref{Section:Patrolling games with random attackers} but instead of attackers arriving at nodes, we could consider attackers arriving on edges. We provide a brief introduction to this idea now focusing on directed graphs.
@@ -2092,6 +3109,100 @@ A \textit{edge-vertex dual} of a directed graph $G$, called $EV(G)$, is made of 
 \end{center}
 \caption{A graph $G$ and its directed edge-vertex dual, $EV(G)$}
 \end{myfigure}
+
+\section{Improving random oscillations}
+\label{Appendix:Improving random oscillations}
+
+\subsection{Reason For Probability of Interception formula}
+\label{appednixsection: Reason for probability of interception}
+To argue why this is consider looking at just the integer points on the graph first,
+then by looking whether it is best to return via the ``left return'' or a ``right return'', that is the shortest time to the next return along the oscillation. The time/distance to return via the left motion, i.e through $1$, is $2(i-1)$ and the time/distance to return via the right motion, i.e through $c$ and the set of $*$'s, is $2(n+k-(i-1))=2(n+k+1-i)$. So the categories fall when $2(i-1) < 2(n+k+i-1) , 2(i-1)=2(n+k+1-i) , \text{ and } 2(i-1) > 2(n+k+1-i)$. These decide the boundaries and they return with these distances.
+
+Therefore the patroller catches the $m$ initially and then either another $t$ or $m$ attacks on the return, where $t$ is the time to next return (either $2(i-1)$ or $2(n+k+1-i)$). This means that the patroller catches $\min(m+t,2m)$ attacks and hence the probability of interception is $\frac{\min(m+t,2m)}{2(n+k)}$ as they cycle is of length $2(n+k)$ and the number lies in $\min(m+t,2m)$ of these.
+
+For $c$ consider that it catches $m$ attacks initially and is returned to $n-1$ times each at a distance/time of $2$ apart, meaning it gains $t=2$ or $m$ attacks $n-1$ attacks. Hence it intercepts $\min(m+2(n-1),nm)$ out the cycle length of $2(n+k)$.
+
+Finally $*$ nodes are easy as they are they are not returned to in a single cycle, hence they intersect $m$ out the possible $2(n+k)$.
+
+\subsection{Naive Improvement Complete analysis}
+\label{Appendix:Naiveanalysis}
+\begin{enumerate}
+\item If $M= \emptyset, R= \emptyset$ then $C_{min} (\alpha)=\min \{ C_{min}^{L} , C_{min}^{S} \}=\min \{ Pw(1)+q_{L} , Pw(*)+q_{S} \}=P\frac{m}{2(n+k)} + \min \{ q_{L}, q_{S} \}$. As the Patroller wishes to select $q_{L},q_{S}$ to maximize this probability, the problem becomes 
+$$\begin{array}{cc}
+\text{Maximize} &(1-q_{L}-(n-1)q_{S}) \frac{m}{2(n+k)}+\min \{ q_{L}, q_{S}  \} \\
+\text{Subject to } & q_{L}+(n-1)q_{S} \leq 1 \text{  (Probability sum constraint)} \\
+     & q_{L},q_{S} \geq 0 \\
+\end{array} $$
+Meaning that as due to the symmetry of $q_{L},q_{S}$ we must have that $q_{L}=q_{S}$ which means improvement is only possible if $2(n+k)-nm \geq 0$ , then set $q_{L}=q_{S}=\frac{1}{n}$. Meaning $P=0,Q_{L}=\frac{1}{n},Q_{R}=\frac{n-1}{n}$ and giving a lower bound $V \geq \frac{1}{n}$.
+
+\item If $M \neq \emptyset,R=\emptyset$ then $C_{min} (\alpha)=\min \{ C_{min}^{L} ,C_{min}^{M}, C_{min}^{S} \}=\min \{ Pw(1)+q_{L} ,Pw(\floor{\frac{m}{2}+2}), Pw(*)+q_{S} \}=P\frac{m}{2(n+k)} + \min \{ q_{L}, P \frac{m}{2(n+k)} , q_{S} \}$. As the Patroller wishes to select $q_{L},q_{S}$ to maximize this probability, the problem becomes
+$$\begin{array}{cc}
+\text{Maximize} &(1-q_{L}-q_{S}) \frac{m}{2(n+k)}+\min \{ q_{L},(1-q_{L}-(n-1)q_{S})\frac{m}{2(n+k)}, q_{S}  \} \\
+\text{Subject to } & q_{L}+(n-1)q_{S} \leq 1 \text{  (Probability sum constraint)} \\
+     & q_{L},q_{S} \geq 0 \\
+\end{array} $$ 
+Meaning that as due to the symmetry of $q_{L},q_{S}$ we must have that $q_{L}=q_{S}$, with improvement only possible if $2(n+k)-nm \geq 0$ , which means we seek to maximize $(1-nq_{L}) \frac{m}{2(n+k)}+\min \{ q_{L},(1-nq_{L})\frac{m}{2(n+k)} \}$ giving $q_{L}=\frac{m}{2(n+k)+nm}$ (as one is then decreasing in $q_{L}$ and one is increasing in $q_{L}$). Meaning $P=\frac{2(n+k)}{2(n+k)+mn},Q_{L}=\frac{m}{2(n+k)+mn},Q_{S}=\frac{m(n-1)}{2(n+k)+mn}$ and giving a lower bound $V \geq \frac{2m}{2(n+k)+mn}$
+
+\item If $M \neq \emptyset,R \neq \emptyset$ then $C_{min} (\alpha)=\min \{ C_{min}^{L} ,C_{min}^{M}, C_{min}^{R}, C_{min}^{S} \}=\min \{ Pw(1)+q_{L} ,Pw(\floor{\frac{m}{2}+2}), Pw(k+1)+q_{S}, Pw(*)+q_{S} \}=P\frac{m}{2(n+k)} + \min \{ q_{L}, P \frac{m}{2(n+k)} , q_{S} \}$. Now was $Pw(k+1) +q_{S} \geq PW(*)+q_{S}$, we can ignore this element (meaning here it does not matter if $R$ is empty or not).
+As the Patroller wishes to select $q_{L},q_{S}$ to maximize this probability, the problem becomes
+$$\begin{array}{cc}
+\text{Maximize} &(1-q_{L}-(n-1)q_{S}) \frac{m}{2(n+k)}+\min \{ q_{L},(1-q_{L}-(n-1)q_{S})\frac{m}{2(n+k)}, q_{S}  \} \\
+\text{Subject to } & q_{L}+(n-1)q_{S} \leq 1 \text{  (Probability sum constraint)} \\
+     & q_{L},q_{S} \geq 0 \\
+\end{array} $$
+Meaning that as due to the symmetry of $q_{L},q_{S}$ we must have that $q_{L}=q_{S}$, with improvement only possible if $2(n+k)-nm \geq 0$ , which means we seek to maximize $(1-nq_{L}) \frac{m}{2(n+k)}+\min \{ q_{L},(1-nq_{L})\frac{m}{2(n+k)} \}$ giving $q_{L}=\frac{m}{2(n+k)+nm}$ (as one is then decreasing in $q_{L}$ and one is increasing in $q_{L}$). Meaning $P=\frac{2(n+k)}{2(n+k)+mn},Q_{L}=\frac{m}{2(n+k)+mn},Q_{S}=\frac{m(n-1)}{2(n+k)+mn}$ and giving a lower bound $V \geq \frac{2m}{2(n+k)+mn}$
+
+\end{enumerate}
+
+\subsection{Combinatorial Improvement analysis}
+\label{Appendix:Combinatorial analysis}
+\begin{enumerate}
+\item If $M= \emptyset , R= \emptyset$ then $C_{min} (\beta_{2})=\min \{ C_{min}^{L} , C_{min}^{S} \}= \min \{ Pw(1)+q_{L} , Pw(*)+q_{S} \}=P\frac{m}{2(n+k)} + \min \{ q_{L} , q_{S} \} $. As the patroller wishes to select $q_{L},q_{S}$ to maximize this probability the problem becomes
+$$\begin{array}{cc}
+\text{Maximize} &(1-q_{L}-\frac{n-1}{\floor{\frac{m}{2}}}q_{S}) \frac{m}{2(n+k)}+\min \{ q_{L}, q_{S}  \} \\
+\text{Subject to } & q_{L}+\frac{n-1}{\floor{\frac{m}{2}}}q_{S} \leq 1 \text{  (Probability sum constraint)} \\
+     & q_{L},q_{S} \geq 0 \\
+\end{array} $$
+Meaning that due to the symmetry of $q_{L},q_{S}$ we must have that $q_{L}=q_{S}$, which means that improvement is only possible if $2(n+k)- m(1+\frac{n-1}{\floor{\frac{m}{2}}}) \geq 0$. Then setting $q_{L}=q_{S}=\frac{\floor{\frac{m}{2}}}{\floor{\frac{m}{2}} +n-1}$. Meaning $P=0, Q_{L}=\frac{\floor{\frac{m}{2}}}{\floor{\frac{m}{2}} +n-1} , Q_{S}=\frac{n-1}{\floor{\frac{m}{2}} +n-1}$ and giving a lower bound of $V \geq \frac{\floor{\frac{m}{2}}}{\floor{\frac{m}{2}} +n-1}$
+
+\item If $M \neq \emptyset , R= \emptyset$ then $C_{min} (\beta_{2})=\min \{ C_{min}^{L} , C_{min}^{M} , C_{min}^{S} \}=\min \{Pw(1)+q_{L}, Pw(\floor{\frac{m}{2}}+2) , Pw(*)+q_{S} \}=P \frac{m}{2(n+k)} + \min \{q_{L}, P \frac{m}{2(n+k) , q_{S}} $. As the patroller wishes to select $q_{L},q_{S}$ to maximize this probability the problem becomes
+$$\begin{array}{cc}
+\text{Maximize} & (1-q_{L}-\frac{n-1}{\floor{\frac{m}{2}}}q_{S}) \frac{m}{2(n+k)} + \min \{q_{L}, (1-q_{L}-\frac{n-1}{\floor{\frac{m}{2}}}q_{S}) \frac{m}{2(n+k)} , q_{S} \}\\
+\text{Subject to } & q_{L}+\frac{n-1}{\floor{\frac{m}{2}}}q_{S} \leq 1 \text{  (Probability sum constraint)} \\
+     & q_{L},q_{S} \geq 0 \\
+\end{array} $$
+Meaning that due to symmetry of $q_{L},q_{S}$ we must have that $q_{L}=q_{S}$, which means that the improvement is only possible if $2(n+k)- m(1+\frac{n-1}{\floor{\frac{m}{2}}}) \geq 0$. Then setting $q_{L}=q_{S}$ means we must maximize $(1-(1+\frac{n-1}{\floor{\frac{m}{2}}}q_{L}) \frac{m}{2(n+k)} + \min \{q_{L}, 1-(1+\frac{n-1}{\floor{\frac{m}{2}}}q_{L}) \frac{m}{2(n+k)}\}$ giving $q_{L}=\frac{m}{2(n+k)+m(1+\frac{n-1}{\floor{\frac{m}{2}}}}$ (as one is increasing in $q_{L}$ and one is decreasing in $q_{L}$). Meaning $P=\frac{2(n+k)}{2(n+k)+m(1+\frac{n-1}{\floor{\frac{m}{2}}})}, Q_{L}=\frac{m}{2(n+k)+m(1+\frac{n-1}{\floor{\frac{m}{2}}})}, Q_{S}=\frac{m(n-1)}{\floor{\frac{m}{2}}(2(n+k)+m(1+\frac{n-1}{\floor{\frac{m}{2}}}))}$ and giving a lower bound of $V \geq \frac{2m}{2(n+k)+m(1+\frac{n-1}{\floor{\frac{m}{2}}})}$
+
+\item If $M \neq \emptyset , R \neq \emptyset$ then $C_{min} (\beta_{1})=\min \{ C_{min}^{L} , C_{min}^{M} , C_{min}^{R}, C_{min}^{S} \}=\min \{ Pw(1)+q_{L}, Pw(\floor{\frac{m}{2}}+2), Pw(k+1)+q_{S}, Pw(*)+q_{S} \}=\min \{ Pw(1)+q_{L}, Pw(\floor{\frac{m}{2}}+2), Pw(*)+q_{S} \}=P \frac{m}{2(n+k)} + \min \{ q_{L}, P \frac{m}{2(n+k)} , q_{S}  \}$ As $Pw(k+1)+q_{S} \geq Pw(1)+q_{S}$, we can ignore the element (meaning here it does not matter if $R$ is empty or not).As the patroller wishes to select $q_{L},q_{S}$ to maximize this probability the problem becomes
+$$\begin{array}{cc}
+\text{Maximize} & (1-q_{L}-q_{S}) \frac{m}{2(n+k)} + \min \{ q_{L}, (1-q_{L}-q_{S}) \frac{m}{2(n+k)} , q_{S} \}\\
+\text{Subject to } & q_{L}+q_{S} \leq 1 \text{  (Probability sum constraint)} \\
+     & q_{L},q_{S} \geq 0 \\
+\end{array} $$
+Meaning that due to symmetry of $q_{L},q_{S}$ we must have that $q_{L}=q_{S}$, which means that the improvement is only possible if $n+k-m \geq 0$. Then setting $q_{L}=q_{S}$ means we must maximize $(1-2q_{L})\frac{m}{2(n+k)} + \min \{ q_{L} , (1-2q_{L}) \frac{m}{2(n+k)} \}$ giving $q_{L}=\frac{m}{2(n+k+m)}$ (as one is increasing in $q_{L}$ and one is decreasing in $q_{S}$). Meaning $P=\frac{2(n+k)}{2(n+k+m)},Q_{L}=\frac{m}{2(n+k+m)},Q_{S}=\frac{m}{2(n+k+m)}$ and giving a lower bound of $V \geq \frac{2m}{2(n+k+m)}$.
+\end{enumerate}
+
+\subsection{Combinatorial improvement extension}
+\label{Appendix:Combinatorial extension analysis}
+We are only dealing with $m$ odd so $m'=m+1$ even and $M \neq \emptyset$ $R = \emptyset$. We will play the hamiltonian bound with probability $P$, the left end-ensuring improvement with probability $q_{L}$ and the a particular right loop with probability $q_{S}$ (so $Q_{S}=\frac{n-1}{\frac{m'}{2}}q_{S}$.
+
+$C_{min}(C_{min}^{L},C_{min}^M,C_{min}^S)=\min\{Pw(1)+q_{L},Pw(\floor{\frac{m}{2}}+2) Pw(*)+\frac{m}{m'}q_{s}\}=P\frac{m}{2(n+k)}+\min\{q_{L},P\frac{m}{2(n+k)},\frac{m}{m'}q_{S} \}$ As the patroller wishes to select $q_{L},q_{S}$ to maximise the probability the problem becomes
+
+$$\begin{array}{cc}
+\text{Maximize} & (1-q_{L}-\frac{n-1}{ \frac{m'}{2}}q_{S}) \frac{m}{2(n+k)} + \min \{ q_{L}, (1-q_{L}-\frac{n-1}{\frac{m'}{2}}q_{S}) \frac{m}{2(n+k)} , \frac{m}{m'}q_{S} \}\\
+\text{Subject to } & q_{L}+\frac{n-1}{\frac{m'}{2}}q_{S} \leq 1 \text{  (Probability sum constraint)} \\
+     & q_{L},q_{S} \geq 0 \\
+\end{array} $$
+
+Meaning that we must have $q_{L}=\frac{m}{m'}q_{S}$ which means the improvement is only possible if $m+2(n-1) \leq 2(n+k)$ (for similarity to even normal combinatorial improvement $\iff m(1+\frac{n-1}{\frac{m}{2}}) \leq 2(n+k)$). 
+
+Then setting $q_{L}=\frac{m}{m'}q_{S}$ means we must maximize $(1-\frac{m+2(n-1)}{m}q_{L})\frac{m}{2(n+k)}+\min\{ q_{L}, (1-\frac{m+2(n-1)q_{L}}{m})\frac{m}{2(n+k)} \}$ giving $q_{L}=\frac{m}{2(n+k)+m+2(n-1)}$. Meaning $P=\frac{2(n+k)}{2(n+k)+m+2(n-1)}$ , $Q_{L}=q_{L}=\frac{m}{2(n+k)+m+2(n-1)}$ and $Q_{S}=\frac{n-1}{\frac{m'}{2}}q_{S}=\frac{2(n-1)}{m}q_{L}=\frac{2(n-1)}{2(n+k)+m+2(n-1)}$. Giving a lower bound of $V \geq \frac{2m}{2(n+k)+m+2(n-1)}$
+
+\begin{note}
+It is worth noting that this is analogous to the result found by the usual combinatorial improvement when $m$ is even.
+\end{note}
+
+
 
 \section{Optimal Solution for a Random Attacker}
 \label{Appendix:Optimal Solution for a Random Attacker}

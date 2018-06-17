@@ -30,7 +30,12 @@
 \BOOKMARK [3][-]{subsubsection.5.2.1}{Plan}{subsection.5.2}% 30
 \BOOKMARK [2][-]{subsection.5.3}{Strategic Patroller with Random Attackers on Edges}{section.5}% 31
 \BOOKMARK [3][-]{subsubsection.5.3.1}{Plan}{subsection.5.3}% 32
-\BOOKMARK [1][-]{section*.18}{Appendices}{}% 33
+\BOOKMARK [1][-]{section*.35}{Appendices}{}% 33
 \BOOKMARK [1][-]{appendix.A}{Graph Definitions}{}% 34
-\BOOKMARK [1][-]{appendix.B}{Optimal Solution for a Random Attacker}{}% 35
-\BOOKMARK [1][-]{appendix.C}{Optimal Solution for Random Attacker with Local-Observations}{}% 36
+\BOOKMARK [1][-]{appendix.B}{Improving random oscillations}{}% 35
+\BOOKMARK [2][-]{subsection.B.1}{Reason For Probability of Interception formula}{appendix.B}% 36
+\BOOKMARK [2][-]{subsection.B.2}{Naive Improvement Complete analysis}{appendix.B}% 37
+\BOOKMARK [2][-]{subsection.B.3}{Combinatorial Improvement analysis}{appendix.B}% 38
+\BOOKMARK [2][-]{subsection.B.4}{Combinatorial improvement extension}{appendix.B}% 39
+\BOOKMARK [1][-]{appendix.C}{Optimal Solution for a Random Attacker}{}% 40
+\BOOKMARK [1][-]{appendix.D}{Optimal Solution for Random Attacker with Local-Observations}{}% 41
