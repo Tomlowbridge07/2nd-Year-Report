@@ -104,11 +104,26 @@ cross/.default={1pt}}
 \newpage
 \pagenumbering{arabic}
 
+\section{Summary of Report}
+In section \ref{Section:Literature Reviews} we will provide an overview of the work done on security problems which focus on a patroller attempting to find an attacker. We will also provide an indepth review of \cite{Alpern2011} and \cite{Lin2013} upon which our work is closely based.
 
-\section{Literature Review}
-\subsection{Overview of Search games}
+In section \ref{Section:Strategic Patroller and Strategic Attacker} we will provide some new patrols and attacks developed to solve a small issue with Lemma 9 in \cite{Alpern2011}. We further develop this correction to allow us to solve a wider class of graph.
 
-Due to the high dependency on graphical structure, we provide a comprehensive guide to graph definitions in Appendix \ref{Appendix:Graph Definitions}.
+In Section \ref{Section:Strategic Patroller with Random Attackers} we analysis the work done in \cite{Alpern2011} more closely, particularly looking at the issue with only deterministic attack times. This is in an aim to provide evidence that our work following this paper that uses deterministic attack times exhibits the same issues.
+
+In Section \ref{Section:Patrolling games with random attackers and local-observations} we build on the work of \cite{Lin2013} by introducing the concept of observations made by the patroller at nodes and try to incorporate this information in an effort to optimally patrol the graph.
+
+Finally in Section \ref{Section:Future Work} we provide an explanation of what work still needs to completed on the work discussed in this report and a brief introduction to ideas for extensions. 
+
+We leave to the Appendix most proofs, as well as providing graph definitions in Appendix \ref{Appendix:Graph Definitions} to help with the ease of reading for those unfamiliar with common graph terminology.
+
+\section{Literature Reviews}
+\label{Section:Literature Reviews}
+\subsection{Overview of Security Problems}
+
+
+
+
 
 \subsection{Review of Strategic Patrolling games}
 A patrolling game $G=G(Q,T,m)$ is a win-lose, zero-sum game between a maximizing patroller (often referred to as she) and a minimizing attacker (often referred to as he). The parameters of the game are:
@@ -666,7 +681,7 @@ IRH($1$) $\equiv$ IPH($1$)
 The numerical results of these heuristics can be found in Section 3.4 in \citep{Lin2013}. A key result of the study, that we will look at later is that IPH seems to outform IRH on the Complete and Line graph.
 
 \section{Strategic Patroller and Strategic Attacker}
-
+\label{Section:Strategic Patroller and Strategic Attacker}
 \subsection{Problem and correction to line graph strategy}
 \label{Subsection:Problem and correction to line graph strategy}
 Consider the patroller's strategy against a diametric attack, that simply oscillates between the two diametric points.
@@ -1403,6 +1418,7 @@ Let  the \textit{Type-delayed attack}, be the attack that attacks at a type $i$ 
 
 \begin{myfigure}
 \begin{center}
+\resizebox{\linewidth}{!}{
 \begin{tikzpicture}
  %Drawing Bottom Axis
  \draw[->] (-7,0) -- (7,0);
@@ -1459,6 +1475,7 @@ Let  the \textit{Type-delayed attack}, be the attack that attacks at a type $i$ 
  \node (linelabel1) at (-1.9,5) {Type $0$}; 
 
 \end{tikzpicture}
+}
 \end{center}
 \end{myfigure}
 
@@ -1471,9 +1488,9 @@ Proof: \ref{Type-delayed attack proof}
 
 
 \begin{corollary}[Solution in $m \geq 2(k_{max}+1)$]
-By the attack using the type-delayed attack and the patroller using the random oscillation we achieve the value, when $2(k_{max}+1) \leq m \leq 2(n+|k|)$,
-$$V= \frac{m}{2(n+|k|)} $$
-and when $m > 2(n+|k|)$ then $V=1$.
+By the attack using the type-delayed attack and the patroller using the random oscillation we achieve the value, when $2(k_{max}+1) \leq m \leq 2(n+|\bm{k}|)$,
+$$V= \frac{m}{2(n+|\bm{k}|)} $$
+and when $m > 2(n+|\bm{k}|)$ then $V=1$.
 \end{corollary}
 
 \begin{myfigure}
@@ -1552,19 +1569,31 @@ We define the \textit{multi general p-star graph}, $(s_{n_{1}}^{\bm{k}_{p}},...,
 \label{myfigure: Example of labeling on multi general star graph}
 \end{myfigure}
 
-\begin{note}
-For ease of notation we will use $\bm{K}=(\bm{k}_{1},...,\bm{k}_{p})$ and $K_{\text{max}} = \max\limits_{i=1,...,p} k_{i,\text{max}}$
-\end{note}
-
 Because we have just joined graphs we know some solutions to, we can consider decomposition for the patrollers decision and simplifiation for the attackers decision.
 
-\begin{theorem}
-For $m \geq 2(K_{\text{max}}+1)$
+\begin{theorem}[Separable solution]
+For $ 2(K_{\text{max}}+1) \leq m \leq 2 \min\limits_{i=1,...,p} \{n_{i}+\sum\limits_{j=1}^{h_{i}} (\bm{k}_{i})_{j} \}$,
+
+\begin{align*}
+V = \frac{m}{2 \sum\limits_{i=1}^{p} \left(n_{i}+\sum\limits_{j=1}^{h_{i}} (\bm{k}_{i})_{j}\right)}
+\equiv \frac{m}{2(|\bm{n}|+|\bm{K}|)}
+\end{align*}
+where $\bm{K}$ is the concatenation of all the $\bm{k}_{i}$ vectors for $i=1,...,p$, with $K_{\text{max}}=\max{\bm{K}}$ and $\bm{n}=(n_{1},...,n_{p})$.
 \end{theorem}
 
-Under decomposition with the Hamiltonian bound (so we are not limited by any values of $m$ as long as no part of the denominator sum is $1$ i.e $m \leq \min\limits_{i=1,...,p} \{ 2(n_{i}+|\bm{k}_{i}|) \}$
+\begin{proof}
+Under decomposition with the Hamiltonian bound for the general star graphs, as $m \leq 2 \min\limits_{i=1,...,p} \{n_{i}+\sum\limits_{j=1}^{h_{i}} (\bm{k}_{i})_{j} \}$
  
 $$V \geq \frac{1}{\sum\limits_{i=1}^{k} \frac{2(n_{i}+|\bm{k}_{i}|)}{m}}=\frac{m}{2 \sum\limits_{i=1}^{k} (n_{i}+|\bm{k}_{i}|)}$$
+
+Now under simplification of the centre's, i.e $\bigodot\limits_{i=1}^{p} S_{n_{i}}^{\bm{k}_{i}}$ to $S_{|\bm{n}|}^{\bm{K}}$, as $m \geq 2(K_{\text{max}}+1)$
+
+$$V \leq \frac{m}{2( |\bm{n}| + |\bm{K}|)}$$
+
+So we have a tight upper and lower bound.
+\end{proof}
+
+
 
 \begin{myfigure}
 \begin{center}
@@ -1634,8 +1663,6 @@ $$V \geq \frac{1}{\sum\limits_{i=1}^{k} \frac{2(n_{i}+|\bm{k}_{i}|)}{m}}=\frac{m
 \label{myfigure: Example of decomposition on multi general star graph}
 \end{myfigure}
 
-Now under simplification of the centre's, i.e $\bigodot\limits_{i=1}^{p} S_{n_{i}}^{\bm{k}_{i}}$ to $S_{\sum\limits_{i=1}^{p} n_{i}}^{\bm{K}}$, where $\bm{K}$ is the concatenation of all the $\bm{k}_{i}$ vectors for $i=1,...,p$.
-
 
 \begin{myfigure}
 \begin{center}
@@ -1686,39 +1713,36 @@ Now under simplification of the centre's, i.e $\bigodot\limits_{i=1}^{p} S_{n_{i
 \label{myfigure: Example of simplification on multi general star graph}
 \end{myfigure}
 
-Then we get as long as $m \geq 2(\bm{K}_{\max}+1)=2(\max\limits_{i=1,...,p} \{\bm{k}_{max} \} +1 )$ then we get that
-
-$$V \leq \frac{m}{2( \sum\limits_{i=1}^{p} n_{i} + |\bm{K}|)}=\frac{m}{2( \sum\limits_{i=1}^{p} n_{i} + \sum\limits_{i=1}^{p} |\bm{k}|_{i})}=\frac{m}{2 \sum\limits_{i=1}^{p} (n_{i} + |\bm{k}|_{i})}$$
-
-Hence for $2(\max\limits_{i=1,...,p} \{\bm{k}_{max} \} +1 ) \leq m \leq 2 \min\limits_{i=1,...,p} \{ n_{i}+|\bm{k}_{i}| \} $ we have
-
-$$V=\frac{m}{2 \sum\limits_{i=1}^{p} (n_{i} + |\bm{k}|_{i})}$$
-
-\begin{remark}
-This solution may not be applicable if there is an long branch and a `small' general star graph. The upper limit on $m$ is due to wanting each general star not being winnable, while the lower limit on $m$ is due to the general star's solution.
-\end{remark}
-
 \begin{note}
 We note that this is not the Hamiltonian bound for such a graph and the Hamiltonian bound would be,
-$$V=\frac{m}{2 \sum\limits_{i=1}^{p} (n_{i} + |\bm{k}|_{i}) + p}$$
+$$V=\frac{m}{2(|\bm{n}|+|\bm{K}|) + p}$$
 \end{note}
 
 \begin{note}
-Again the idea that all the centre's are connected in all combinations to each other centre is irrelevant to the decomposition and simplification.
+The idea of requiring the complete graph of connection between centres is not needed for the separable solution.
 \end{note}
-
-
 
 
 \section{Strategic Patroller with Random Attackers}
+\label{Section:Strategic Patroller with Random Attackers}
 In this section we provide further work developed from the literature review in Section \ref{Section:Patrolling games with random attackers}.
 
 \subsection{Deterministic Attack time experiments}
 As the theory  works for all bounded attack time distributions, we shall look at the deterministic attack time, using $P(X_{j}=x_{j})=1$, we can note that this does some level of reduction on the state space as costs are only incurred at states with $s_{j}=B_{j}$ or $B_{j}+1$. The cost function reduces to
 
 \begin{align*}
-C_{j}(\bm{s},\bm{v},i)=\begin{cases}
-c_{j} \lambda_{j} R_{j} + c_{j} v_{j}  \text{ for } s_{j}=B_{j},i \neq j \\ 
+C_{j}(\bm{s},i)=\begin{cases}
+c_{j} \lambda_{j} R_{j}  \text{ for } s_{j}=B_{j},i \neq j \\ 
+c_{j} \lambda_{j} \text{ for } s_{j}=B_{j}+1,i \neq j  \\
+0 \text{ Otherwise} \\
+\end{cases}
+\end{align*}
+
+and the index reflects this, only wanting the patroller to visit in state, $s=B$, initially and in $s=B+1$ for a higher cost.
+
+\begin{align*}
+W_{j}(\bm{s},i)=\begin{cases}
+c_{j} \lambda_{j} R_{j}  \text{ for } s_{j}=B_{j},i \neq j \\ 
 c_{j} \lambda_{j} \text{ for } s_{j}=B_{j}+1,i \neq j  \\
 0 \text{ Otherwise} \\
 \end{cases}
@@ -2546,6 +2570,7 @@ We run the same scenarios with our changed index
 As we can see from Figure \ref{Figure:BH and PH for new plain index} the change to index, significantly. We can also note that on the complete the penalty heuristic seems to outperform the benefit heuristic. This agrees with the findings in \cite{Lin2013}.
 
 \section{Future Work}
+\label{Section:Future Work}
 \subsection{Proof completions}
 
 \subsection{Extending Discrete Attack time to generic distributions}
@@ -2703,7 +2728,7 @@ C_{i,j}(\bm{s})&= c_{i,j} \lambda_{i,j} \int_{0}^{1} f_{i,j}(y) \int_{0}^{s_{i,j
 We note due to all edges being traversed at the same speed, the last time a point $x$ (from node $i$) along the edge $(i,j)$ was seen was $s_{i,j}-x$, so when it returned to it is seen in $x$ time, so is seen again in $s_{i,j}$ time.
 \end{note}
 
-As before we bound the attack times by, using $B_{i,j} \equiv \min \{ k \, | k \in \mathbb{Z}^{+} P(X_{i,j} \leq k)=1 \}$ to create a finite state space, $\Omega= \{\bm{s} \, | s_{i,j}=1,2,...,B_{i,j} \; \forall (i,j) \in E \}$ and our transition is modified to $\widetilde{s}_{i,j}=\min\{s_{i,j}+1,B_{i,j}+1 \} \; \forall (i,j) \in E \\ \{(l(\bm{s}),j') \}$.
+As before we bound the attack times by, using $B_{i,j} \equiv \min \{ k \, | k \in \mathbb{Z}^{+} P(X_{i,j} \leq k)=1 \}$ to create a finite state space, $\Omega= \{\bm{s} \, | s_{i,j}=1,2,...,B_{i,j} \; \forall (i,j) \in E \}$ and our transition is modified to $\widetilde{s}_{i,j}=\min\{s_{i,j}+1,B_{i,j}+1 \} \; \forall (i,j) \in E \setminus \{(l(\bm{s}),j') \}$.
 
 The objective again is to minimize the long-run average cost among all edges and as we have a finite state space as before, we can focus on the class of stationary, deterministic policies, $\Pi = \{ \pi: \Omega \rightarrow E \, | \pi(\bm{s}) \in  \{(l(\bm{s}),j') \, | \, j \in \mathcal{A}(\bm{s}) \} \}$ and we wish to solve
 
