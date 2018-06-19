@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017) (preloaded format=pdflatex 2017.6.5)  18 JUN 2018 12:47
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017) (preloaded format=pdflatex 2017.6.5)  19 JUN 2018 17:56
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1458,7 +1458,7 @@ l-observations[] []
 
 {/maths/linuxlocal/AMD64/texlive/2017/texmf-var/fonts/map/pdftex/updmap/pdftex.
 map}]
-Overfull \hbox (3.54123pt too wide) in paragraph at lines 42--42
+Overfull \hbox (3.54123pt too wide) in paragraph at lines 47--47
  [] [][]\OT1/cmr/bx/n/10 Optimal So-lu-tion for Ran-dom At-tacker with Local-Ob
 servations[] []  
  []
@@ -1499,56 +1499,36 @@ been already used, duplicate ignored
                    \relax 
 l.173 
        [2] [3]
-
-LaTeX Warning: Reference `fig: Q' on page 4 undefined on input line 204.
-
 Package hyperref Info: bookmark level for unknown myfigure defaults to 0 on inp
-ut line 236.
-
-LaTeX Warning: Reference `fig: Q' on page 4 undefined on input line 258.
-
-[4] [5] [6]
-Overfull \hbox (6.69936pt too wide) in paragraph at lines 375--376
+ut line 243.
+ [4] [5] [6] (./Images/LineRegions(L_10).tex)
+Overfull \hbox (6.69936pt too wide) in paragraph at lines 391--392
 [][]\OT1/cmr/bx/n/10 Definition 2.16 \OT1/cmr/m/n/10 (Bi-par-tite At-tack)\OT1/
 cmr/bx/n/10 . []\OT1/cmr/m/n/10 The \OT1/cmr/m/it/10 Bi-par-tite At-tack \OT1/c
 mr/m/n/10 se-lects nodes equiprob-
  []
 
 [7] [8] [9] [10] [11] [12] [13]
-Overfull \hbox (31.98245pt too wide) in paragraph at lines 720--720
+Overfull \hbox (70.35101pt too wide) in paragraph at lines 718--718
 [] 
  []
 
-
-LaTeX Warning: Reference `Condition on T for old diametric proof' on page 14 un
-defined on input line 728.
-
 (./Images/DiametricAttack(m_45,d_30).tex) [14]
-
-LaTeX Warning: Reference `Time-limited diametric attack proof' on page 15 undef
-ined on input line 753.
-
-[15]
 Package hyperref Info: bookmark level for unknown examplefigure defaults to 0 o
-n input line 793.
-
-
-LaTeX Warning: Reference `appendix:Hamiltonian Graph' on page 16 undefined on i
-nput line 814.
-
-[16] [17]
-Overfull \hbox (1.39311pt too wide) in paragraph at lines 963--963
+n input line 794.
+ [15] [16] [17]
+Overfull \hbox (1.39311pt too wide) in paragraph at lines 964--964
 [][][][]$\OML/cmm/m/it/10 C[]$  
  []
 
-[18] (./Images/ElongatedStarRegions(S_10_5).tex) [19]
+[18] (./Images/ElongatedStarRegions(S_10_5).tex)
 (./Images/BaseInterceptionOnS_4^5(m=4).tex)
-Overfull \hbox (16.35pt too wide) in paragraph at lines 175--1063
+Overfull \hbox (16.35pt too wide) in paragraph at lines 175--1064
  [] 
  []
 
-[20]
-Overfull \hbox (18.46703pt too wide) in paragraph at lines 1100--1101
+[19] [20]
+Overfull \hbox (18.46703pt too wide) in paragraph at lines 1101--1102
 \OT1/cmr/m/n/10 prob-a-bil-ity of cap-ture un-der $\OML/cmm/b/it/10 ^^Y$ \OT1/c
 mr/m/n/10 and $\OML/cmm/m/it/10 C[]\OT1/cmr/m/n/10 (\OML/cmm/b/it/10 ^^Y\OT1/cm
 r/m/n/10 ) \OMS/cmsy/m/n/10 ^^Q \OML/cmm/m/it/10 C[] \OT1/cmr/m/n/10 = [] []$.
@@ -1557,41 +1537,41 @@ r/m/n/10 ) \OMS/cmsy/m/n/10 ^^Q \OML/cmm/m/it/10 C[] \OT1/cmr/m/n/10 = [] []$.
 [21]
 
 LaTeX Warning: Reference `appendix:Naiveanalysis' on page 22 undefined on input
- line 1189.
+ line 1190.
 
 (./Images/NavieInterceptionOnS_4^5(m=4).tex)
-Overfull \hbox (16.35pt too wide) in paragraph at lines 213--1195
+Overfull \hbox (16.35pt too wide) in paragraph at lines 213--1196
  [] 
  []
 
 [22]
 
 LaTeX Warning: Reference `Appendix:Combinatorial improvement analysis' on page 
-23 undefined on input line 1212.
+23 undefined on input line 1213.
 
 [23] (./Images/CombinatorialInterceptionOnS_4^5(m=8).tex)
-Overfull \hbox (16.35pt too wide) in paragraph at lines 221--1223
+Overfull \hbox (16.35pt too wide) in paragraph at lines 221--1224
  [] 
  []
 
 (./Images/CombinatorialInterceptionOnS_4^5(m=4).tex)
-Overfull \hbox (16.35pt too wide) in paragraph at lines 240--1230
+Overfull \hbox (16.35pt too wide) in paragraph at lines 240--1231
  [] 
  []
 
 
 LaTeX Warning: Reference `Appendix:Further Combinatorial extension analysis' on
- page 24 undefined on input line 1260.
+ page 24 undefined on input line 1261.
 
 [24] [25]
-Overfull \hbox (7.15182pt too wide) in paragraph at lines 1328--1329
+Overfull \hbox (7.15182pt too wide) in paragraph at lines 1329--1330
 []\OT1/cmr/m/n/10 The $\OML/cmm/m/it/10 j$$[]$ \OT1/cmr/m/n/10 branch is iden-t
 i-fied from nodes be-tween $2([](\OML/cmm/m/it/10 k[] \OT1/cmr/m/n/10 + 1)))$ a
 nd $2([](\OML/cmm/m/it/10 k[] \OT1/cmr/m/n/10 +
  []
 
 
-Overfull \hbox (7.59453pt too wide) in paragraph at lines 1334--1335
+Overfull \hbox (7.59453pt too wide) in paragraph at lines 1335--1336
 \OT1/cmr/m/it/10 ran-dom os-cil-la-tion \OT1/cmr/m/n/10 on $\OML/cmm/m/it/10 S[
 ]$ \OT1/cmr/m/n/10 is the em-bed-ded ran-dom Hamil-to-nian pa-trol on $\OML/cmm
 /m/it/10 C[]$
@@ -1600,83 +1580,92 @@ Overfull \hbox (7.59453pt too wide) in paragraph at lines 1334--1335
 [26] [27]
 
 LaTeX Warning: Reference `Type-delayed attack proof' on page 28 undefined on in
-put line 1487.
+put line 1488.
 
 (./Images/GeneralStarRegions(S_10_5,3,2,1).tex) [28]
-Overfull \hbox (35.36191pt too wide) in paragraph at lines 1566--1567
+Overfull \hbox (35.36191pt too wide) in paragraph at lines 1567--1568
  [] 
  []
 
 [29]
-Overfull \hbox (42.82784pt too wide) in paragraph at lines 1660--1661
+Overfull \hbox (42.82784pt too wide) in paragraph at lines 1661--1662
  [] 
  []
 
 [30] [31]
-Overfull \hbox (1.61987pt too wide) in paragraph at lines 1756--1758
-[]\OT1/cmr/m/n/24.88 This nu-mer-i-cal ex-per-i-ment needs to
+
+Package caption Warning: \label without proper reference on input line 1757.
+See the caption package documentation for explanation.
+
+
+LaTeX Warning: Reference `Figure:Deterministic attack times' on page 32 undefin
+ed on input line 1754.
+
+(./Images/OldDeterministicOnly.tex)
+Overfull \hbox (16.35pt too wide) in paragraph at lines 899--1760
+ [] 
  []
 
 
-Overfull \hbox (7.5396pt too wide) in paragraph at lines 1760--1760
+Overfull \hbox (7.5396pt too wide) in paragraph at lines 1765--1765
 []\OT1/cmr/bx/n/14.4 Strategic Pa-troller with Ran-dom At-tack-ers and
  []
 
-[32]
-Overfull \hbox (1.93898pt too wide) in paragraph at lines 1856--1856
+[32] [33]
+Overfull \hbox (1.93898pt too wide) in paragraph at lines 1861--1861
 []\OT1/cmr/bx/n/12 Numerical re-sults for in-stan-ta-neously mov-ing pa-troller
  
  []
 
-[33] [34] [35] [36] [37] [38] [39] [40] [41] [42] [43]
+[34] [35] [36] [37] [38] [39] [40] [41] [42] [43] [44]
 (./Images/BHvsPHInitialPlainComplete.tex)
-Overfull \hbox (16.35pt too wide) in paragraph at lines 896--2546
+Overfull \hbox (16.35pt too wide) in paragraph at lines 896--2551
 [][]
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 896--2546
+Underfull \hbox (badness 10000) in paragraph at lines 896--2551
 
  []
 
 
-Package caption Warning: \label without proper reference on input line 2544.
+Package caption Warning: \label without proper reference on input line 2549.
 See the caption package documentation for explanation.
 
 
-LaTeX Warning: Reference `Figure:Initial BH and PH for plain index' on page 44 
-undefined on input line 2549.
+LaTeX Warning: Reference `Figure:Initial BH and PH for plain index' on page 45 
+undefined on input line 2554.
 
 (./Images/BHvsPHNewPlainComplete.tex)
-Overfull \hbox (16.35pt too wide) in paragraph at lines 907--2567
+Overfull \hbox (16.35pt too wide) in paragraph at lines 907--2572
 [][]
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 907--2567
+Underfull \hbox (badness 10000) in paragraph at lines 907--2572
 
  []
 
 
-Package caption Warning: \label without proper reference on input line 2565.
+Package caption Warning: \label without proper reference on input line 2570.
 See the caption package documentation for explanation.
 
 
-LaTeX Warning: Reference `Figure:BH and PH for new plain index' on page 44 unde
-fined on input line 2570.
+LaTeX Warning: Reference `Figure:BH and PH for new plain index' on page 45 unde
+fined on input line 2575.
 
-[44] [45]
-Overfull \hbox (98.20393pt too wide) in paragraph at lines 2691--2691
+[45] [46]
+Overfull \hbox (98.20393pt too wide) in paragraph at lines 2696--2696
 [] 
  []
 
-[46] [47] [48] [49] (./Second Year Report.bbl) [50] [1] [2] [3]
-Overfull \hbox (20.23497pt too wide) detected at line 3168
+[47] [48] [49] [50] (./Second Year Report.bbl) [51] [1] [2] [3] [4] [5]
+Overfull \hbox (20.23497pt too wide) detected at line 3211
 []
  []
 
 
-Overfull \hbox (23.26817pt too wide) in paragraph at lines 3171--3173
+Overfull \hbox (23.26817pt too wide) in paragraph at lines 3214--3216
 []\OT1/cmr/m/n/10 If $\OML/cmm/m/it/10 M \OMS/cmsy/m/n/10 6\OT1/cmr/m/n/10 = \O
 MS/cmsy/m/n/10 ;\OML/cmm/m/it/10 ; R \OMS/cmsy/m/n/10 6\OT1/cmr/m/n/10 = \OMS/c
 msy/m/n/10 ;$ \OT1/cmr/m/n/10 then $\OML/cmm/m/it/10 C[]\OT1/cmr/m/n/10 (\OML/c
@@ -1686,7 +1675,7 @@ C[]; C[]\OMS/cmsy/m/n/10 g \OT1/cmr/m/n/10 = []\OMS/cmsy/m/n/10 f\OML/cmm/m/it/
  []
 
 
-Overfull \hbox (25.40729pt too wide) in paragraph at lines 3171--3173
+Overfull \hbox (25.40729pt too wide) in paragraph at lines 3214--3216
 \OML/cmm/m/it/10 q[]; Pw\OT1/cmr/m/n/10 ([])\OML/cmm/m/it/10 ; Pw\OT1/cmr/m/n/1
 0 (\OML/cmm/m/it/10 k \OT1/cmr/m/n/10 + 1) + \OML/cmm/m/it/10 q[]; Pw\OT1/cmr/m
 /n/10 (\OMS/cmsy/m/n/10 ^^C\OT1/cmr/m/n/10 ) + \OML/cmm/m/it/10 q[]\OMS/cmsy/m/
@@ -1694,48 +1683,48 @@ n/10 g \OT1/cmr/m/n/10 = \OML/cmm/m/it/10 P[] \OT1/cmr/m/n/10 + []\OMS/cmsy/m/n
 /10 f\OML/cmm/m/it/10 q[]; P[]; q[]\OMS/cmsy/m/n/10 g$\OT1/cmr/m/n/10 .
  []
 
-[4]
-Overfull \hbox (51.23727pt too wide) detected at line 3177
+
+Overfull \hbox (51.23727pt too wide) detected at line 3220
+[]
+ []
+
+[6]
+Overfull \hbox (28.89069pt too wide) detected at line 3241
 []
  []
 
 
-Overfull \hbox (28.89069pt too wide) detected at line 3198
-[]
- []
-
-
-Overfull \hbox (31.41985pt too wide) in paragraph at lines 3198--3200
+Overfull \hbox (31.41985pt too wide) in paragraph at lines 3241--3243
 \OT1/cmr/m/n/10 creas-ing in $\OML/cmm/m/it/10 q[]$ \OT1/cmr/m/n/10 and one is 
 de-creas-ing in $\OML/cmm/m/it/10 q[]$\OT1/cmr/m/n/10 ). Mean-ing $\OML/cmm/m/i
 t/10 P \OT1/cmr/m/n/10 = []\OML/cmm/m/it/10 ; Q[] \OT1/cmr/m/n/10 =
  []
 
-[5]
-Overfull \hbox (11.59256pt too wide) detected at line 3220
+[7]
+Overfull \hbox (11.59256pt too wide) detected at line 3263
 []
  []
 
-[6] [7]
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 3237.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 3237.
+[8]
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 3280.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 3280.
  (./Second Year Report.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 3237.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 3237.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 3280.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 3280.
 
 Package rerunfilecheck Info: File `"Second Year Report".out' has not changed.
-(rerunfilecheck)             Checksum: 1BD07A3FD12D77FD49AED4F5F90C5247;3295.
+(rerunfilecheck)             Checksum: 415B8D1BC56AD59D86311DF0452747F5;3708.
 
 
 LaTeX Warning: There were undefined references.
 
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 3237.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 3280.
  ) 
 Here is how much of TeX's memory you used:
- 32010 strings out of 492995
- 629462 string characters out of 6132690
- 847090 words of memory out of 5000000
- 34866 multiletter control sequences out of 15000+600000
+ 32034 strings out of 492995
+ 630046 string characters out of 6132690
+ 847678 words of memory out of 5000000
+ 34874 multiletter control sequences out of 15000+600000
  24196 words of font info for 88 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  55i,22n,103p,10490b,1046s stack positions out of 5000i,500n,10000p,200000b,80000s
@@ -1776,10 +1765,10 @@ nuxlocal/AMD64/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pf
 b></maths/linuxlocal/AMD64/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/
 cm/cmti7.pfb></maths/linuxlocal/AMD64/texlive/2017/texmf-dist/fonts/type1/publi
 c/amsfonts/symbols/msbm10.pfb>
-Output written on "Second Year Report.pdf" (59 pages, 630764 bytes).
+Output written on "Second Year Report.pdf" (61 pages, 646461 bytes).
 PDF statistics:
- 795 PDF objects out of 1000 (max. 8388607)
- 696 compressed objects within 7 object streams
- 212 named destinations out of 1000 (max. 500000)
- 349 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 848 PDF objects out of 1000 (max. 8388607)
+ 746 compressed objects within 8 object streams
+ 222 named destinations out of 1000 (max. 500000)
+ 389 words of extra memory for PDF output out of 10000 (max. 10000000)
 

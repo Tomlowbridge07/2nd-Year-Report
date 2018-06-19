@@ -105,36 +105,35 @@ cross/.default={1pt}}
 \pagenumbering{arabic}
 
 \section{Summary of Report}
-In section \ref{Section:Literature Reviews} we will provide an overview of the work done on security problems which focus on a patroller attempting to find an attacker. We will also provide an indepth review of \cite{Alpern2011} and \cite{Lin2013} upon which our work is closely based.
+In section \ref{Section:Literature Reviews} we will provide an overview of the current work done on security problems, which focus on a patroller attempting to stop some malicious entity. We will also provide an in-depth review of \cite{Alpern2011} and \cite{Lin2013} in upon which our contributions in Sections \ref{Section:Strategic Patroller and Strategic Attacker} and \ref{Section:Patrolling games with random attackers and local-observations} will be based upon.
 
-In section \ref{Section:Strategic Patroller and Strategic Attacker} we will provide some new patrols and attacks developed to solve a small issue with Lemma 9 in \cite{Alpern2011}. We further develop this correction to allow us to solve a wider class of graph.
+In section \ref{Section:Strategic Patroller and Strategic Attacker} we will provide some new optimal strategies for the patroller as well as correcting an optimal attack strategy which solves a small issue with Lemma 9 in \cite{Alpern2011}. We further develop the idea that led to this correction in order to allow us to solve a wider class of graphs.
 
-In Section \ref{Section:Strategic Patroller with Random Attackers} we analysis the work done in \cite{Lin2013} more closely, particularly looking at the issue with only deterministic attack times. This is in an aim to provide evidence that our work following this paper that uses deterministic attack times exhibits the same issues.
+In Section \ref{Section:Strategic Patroller with Random Attackers} we analyse the work done in \cite{Alpern2011} more closely, particularly looking at the issue with having only deterministic attack times. This is in an aim to provide evidence that the errors in our work in Section \ref{Section:Patrolling games with random attackers and local-observations} are exhibited in the original problem, and that it is a case of too much knowledge in the Lagrangian relaxation.
 
-In Section \ref{Section:Patrolling games with random attackers and local-observations} we build on the work of \cite{Lin2013} by introducing the concept of observations made by the patroller at nodes and try to incorporate this information in an effort to optimally patrol the graph.
+In Section \ref{Section:Patrolling games with random attackers and local-observations} we build on the work done in \cite{Lin2013} by introducing the concept of observations made by the patroller at nodes and try to incorporate this information in an effort to develop an optimal patrol strategy for any graph.
 
-Finally in Section \ref{Section:Future Work} we provide sections of work tha
+Finally in Section \ref{Section:Future Work} we provide a list of uncompleted work discussed throughout this report as well as a brief introduction to ideas for future work and extensions to our security problems. 
 
-
-Due to the problems we will focus on having a high dependency on graphical structures, we provide a guide to graph definitions in Appendix \ref{Appendix:Graph Definitions}.
+We leave most proofs to the Appendix, in which we also provide some graph definitions for those unfamiliar with common graph terminology.
 
 \section{Literature Reviews}
 \label{Section:Literature Reviews}
-\subsection{Overview of Problems}
+\subsection{Overview of Security Problems}
 
 
 
 
 
 \subsection{Review of Strategic Patrolling games}
-A patrolling game $G=G(Q,T,m)$ is a win-lose, zero-sum game between a maximizing patroller (often referred to as she) and a minimizing attacker (often referred to as he). The parameters of the game are:
+A patrolling game, $G=G(Q,T,m)$, is a win-lose, zero-sum game between a maximizing patroller (often referred to as she) and a minimizing attacker (often referred to as he). The parameters of the game are:
 \begin{itemize}
-\item The graph $Q=(N,E)$ made of nodes, $N$ ($|N|=n$), joined by edges, $E$, which can be represented by an adjacency matrix, $A$.
+\item The graph, $Q=(N,E)$,   made of nodes, $N$ ($|N|=n$), joined by edges, $E$, which can be represented by an adjacency matrix, $A$.
 \item The length of time over which the game takes place, the time-horizon $T$.
 \item The length of time the attack takes to complete, the attack-time $m$.
 \end{itemize}
 
-Two forms of the game exist: the one-off game, which is played in a finite time interval $\mathcal{T}=\{0,1,...,T-1\}$ denoted using $G^{o}$; and the periodic game, which is played on the time circle $\mathcal{T}^*=\{0,1,...,T-1\}$ (with the asterisk representing arithmetic on the time circle taking place modulo $T$) denoted using $G^p$. We will assume that $T \geq m$ , otherwise it clear that all attacks will fail.
+Two forms of the game exist: the one-off game, which is played in a finite time interval $\mathcal{T}=\{0,1,...,T-1\}$ denoted using $G^{o}$; and the periodic game, which is played on the time circle $\mathcal{T}^*=\{0,1,...,T-1\}$ (with the asterisk representing arithmetic on the time circle taking place modulo $T$) denoted using $G^p$. We will assume that $T \geq m$ , otherwise it clear that all attacks will always fail.
 
 The pure strategies available to the patroller are called patrols, choosing a starting position and how to walk along the graph Q, $W:\mathcal{T} \rightarrow N$. With no restrictions in the one-off game, but the restriction that the edge $(W(T-1),W(0)) \in E$ in the periodic game (so that $W(T)=W(0)$). Let $$\mathcal{W}=\{ W \, | \, W:\mathcal{T} \rightarrow N \text{ s.t } (W(t),W(t+1)) \in E \text{ for } t=0,...,T-2  \} $$ be the set of all pure patrols in the one-off game (and similarly $\mathcal{W}^*$ in the periodic game). Let there be some ordering to the strategies $W_{k} \in \mathcal{W}$ (or $W_{k} \in \mathcal{W}^{*}$) for $k=1,...,|\mathcal{W}|$ (or $k=1,...,|\mathcal{W}^*|$ in the periodic game).
 
@@ -170,11 +169,11 @@ $\bm{\phi}_{k}=\left\{\begin{array}{c}
 0 \text{ if } k \neq j. \\
 \end{array} \right.$ respectively
 
-The value of the game is denoted by $V=V(Q,T,m) \equiv \max\limits_{\bm{\pi} \in \Pi} \min\limits_{\bm{\phi} \in \Phi} P(\bm{\pi},\bm{\phi})=\min\limits_{\bm{\phi} \in \Phi} \max\limits_{\bm{\pi} \in \Pi} P(\bm{\pi},\bm{\phi})$ and when needed we distinguish between the one-off and period game by using the subscripts $V^{o}$ and $V^p$ respectively.
+The value of the game is denoted by $V=V(Q,T,m) \equiv \max\limits_{\bm{\pi} \in \Pi} \min\limits_{\bm{\phi} \in \Phi} P(\bm{\pi},\bm{\phi})=\min\limits_{\bm{\phi} \in \Phi} \max\limits_{\bm{\pi} \in \Pi} P(\bm{\pi},\bm{\phi})$, in which we say that $(\bm{pi},\bm{\phi})$ is a optimal \textit{Nash equilibrium}, and when needed we distinguish between the one-off and period game by using the subscripts $V^{o}$ and $V^p$ respectively.
 
 Many general properties for the game can be easily proven; such as that the one-off game is non-increasing in $T$ (as it simply increases the size of $\mathcal{I}$) and introducing more edges for the same node set doesn't lower the value (it only increases the choice in the set $\mathcal{W}$ and $\mathcal{W}^*$). Also as $\mathcal{W}^* \subset \mathcal{W}$, it is obvious that $V^{p} (Q,T,m) \leq V^{o} (Q,T,m)$ (see \cite{Alpern2011} for details). So solving the one-off game gives an upper bound for the periodic game.
 
-We shall now focus on the unrestricted, one-off game for the rest of this report.
+We shall now focus on the unrestricted, one-off game for the rest of this section.
 
 \subsubsection{Bounds and Tools}
 We shall provide a list of attacks and patrollers to give bounds on $V$ which can be applied to all graphs. The lower bounds are given in terms of the patroller's ``good'' strategy against all attacker options, similarly the upper bounds are given in terms of the attacker's ``good'' strategy against all the patroller options. When we reach tightness between the bound these ``good'' strategies become an optimal solution.
@@ -184,6 +183,7 @@ We shall provide a list of attacks and patrollers to give bounds on $V$ which ca
 By the patroller waiting a random node they can achieve $V \geq \frac{1}{n}$ and by the attacker picking a random node with a fixed time $I$ they can achieve $V \leq \frac{m}{n}$ (More generally $V \leq \frac{\omega}{n}$ for $\omega$, the maximum number of nodes any patrol can cover).
 
 \begin{lemma}[General bounds]
+\label{Lemma:General bounds}
 $$\frac{1}{n} \leq V \leq \frac{\omega}{n} \leq \frac{m}{n}$$
 Where $\omega$ is the maximum number of distinct nodes that can be visited in an attack interval.
 \end{lemma}
@@ -192,19 +192,25 @@ Where $\omega$ is the maximum number of distinct nodes that can be visited in an
 
 We can consider decomposing the graph so that we just operate on parts with some appropriate probability.
 
+\begin{definition}[Edge-preserving subgraph]
+A subgraph, $Q'=(N',E')$ of $Q$ is called edge-preserving if $n_{1},n_{2} \in Q \cap Q*$ then if $(n_{1},n_{2}) \in E \implies (n_{1},n_{2}) \in E'$ 
+\end{definition}
+
+Meaning for an edge-preserving subgraph,we only need to pick the nodes and the edges are mandated by the original graph.
+
 \begin{lemma}[Decomposition lower bound]
 Consider decomposing $Q$ into edge-preserving subgraphs $Q_{i}$ for $i=1,...,k$ with values $V_{i}=V(Q_{i})$ such that $Q=\bigcup\limits_{i=1}^{k} Q_{i}$ then
 $$V \geq \frac{1}{\sum\limits_{i=1}^{k} \frac{1}{V_{i}}} $$
 Furthermore in the case of a disjoint decomposition equality is reached
 \end{lemma}
 
-More explicitly an edge-preserving subgraph is a subgraph who has all possible connection between its nodes and disjoint means both edge and vertex disjoint. This means we are really only selecting nodes for the subgraph and the edges are mandated.The above provides a solution to build disjointly decomposable graphs, so it is only worth studying connected graphs.
+The above provides a solution to build disjointly decomposable graphs, so it is only worth studying connected graphs.
 
 
 \begin{example}
-For $Q$ as seen in Figure \ref{fig: Q}. Consider when $m=3$, the decomposition of $Q$ into the graphs $Q_{1}$ and $Q_{2}$ (as in Example Figure \ref{examplefig:Q Decompisition}). $V_{1}=V(Q_{1})=1$ as alternating between $1$ and $2$ can catch every attack. $V_{2}=V(L_{3})=\frac{3}{4}$ (as seen in \cite{Alpern2011} ). 
+For $Q$ as seen in Figure \ref{Figure:Q decompisition example}. Consider when $m=3$, the decomposition of $Q$ into the graphs $Q_{1} \equiv L_{2}$ and $Q_{2} \equiv L_{3}$. $V_{1}=V(L_{2})=1$ as alternating between $1$ and $2$ can catch every attack. $V_{2}=V(L_{3})=\frac{3}{4}$ (as seen in \cite{Alpern2011}). 
 
-Then we can get the bound $V \geq \frac{1}{(\frac{1}{1}+\frac{3}{4})}=\frac{4}{7}$.
+Then we can get the bound $V \geq \frac{1}{\frac{1}{V_{1}}+\frac{1}{V_{2}}} = \frac{1}{\frac{1}{1}+\frac{3}{4}}=\frac{4}{7}$.
 \end{example}
 
 \begin{myfigure}
@@ -235,14 +241,14 @@ $Q$
 \end{tikzpicture}
 \end{center}
 \caption{Decomposition of Q into \textcolor{blue}{$Q_{1}$} and \textcolor{red}{$Q_{2}$}.}
-\label{examplefig:Q Decompisition}
+\label{Figure:Q decompisition example}
 \end{myfigure}
 
 \textbf{Simplification(Patroller and Attacker):}
 
 \begin{definition}[Node Identification]
-The operation of Node identification on two nodes, $u$ and $v$, of a graph, $G=(N,E)$ into a single node $w$, is a mapping $f:N \rightarrow N'$ resulting in a new graph $G'=(N',E')$ where $N'=(N \setminus  \{u,v\}) \cup \{w\}$ with $E'=E \setminus \{(u,v)\}$ if $(u,v) \in E$ and under the condition that $\forall x \in N$, $f(x) \in N'$ is incident to $e' \in E'$ iff $e \in E$ is incident to $x \in N$.
-Furthermore if a graph, $Q$, undergoes repeated node identification to become $Q'$ then we say it has been simplified. 
+The operation of \textit{node identification} on two nodes, $u$ and $v$, of a graph, $G=(N,E)$ into a single node $w$, is a mapping $f:N \rightarrow N'$ resulting in a new graph $G'=(N',E')$ where $N'=(N \setminus  \{u,v\}) \cup \{w\}$ with $E'=E \setminus \{(u,v)\}$ if $(u,v) \in E$ and under the condition that $\forall x \in N$, $f(x) \in N'$ is incident to $e' \in E'$ iff $e \in E$ is incident to $x \in N$.
+Furthermore if a graph, $Q$, undergoes repeated node identification to become $Q'$ then we say it has been \textit{simplified}. 
 \end{definition}
 
 \begin{definition}[Embedded walk]
@@ -253,10 +259,10 @@ An \textit{Embedded walk}, $W'$, on $Q'$ is the walk, $W$, done on $Q$ under the
 If $Q'$ is a simplified version of $Q$ then $V(Q') \geq V(Q)$
 \end{lemma}
 
-This allows us to get bounds for both the patroller and attacker.
+Simplification allows us to get bounds for both the patroller and attacker, depending on whether $Q'$ or $Q$ is the graph we are working on.
 
 \begin{example}
-For $Q$ as seen in Figure \ref{fig: Q}. Consider when $m=3$, the Simplification of the graph by identifying $1,2$ from $Q$ to $Q'=L_{3}$ (as seen in Example Figure \ref{examplefig:Q Simplification}). Hence we can get the bound that $V(L_{3}) \geq  V(Q)$ hence $V(Q) \leq \frac{3}{4} $
+For $Q$ as seen in Figure \ref{Figure:Q simplification example}, when $m=3$, the simplification of the graph by identifying nodes $1$ and $2$ simplifies $Q$ to $Q'=L_{3}$. Hence we can get the bound that $V(L_{3}) \geq  V(Q)$ so $V(Q) \leq \frac{3}{4} $
 \end{example}
 
 \begin{myfigure}
@@ -295,7 +301,7 @@ For $Q$ as seen in Figure \ref{fig: Q}. Consider when $m=3$, the Simplification 
 \end{tikzpicture}
 \end{center}
 \caption{Simplifcation of $Q$ to $Q'$ by identification.}
-\label{examplefig:Q Simplification}
+\label{Figure:Q simplification example}
 \end{myfigure}
 
 
@@ -304,20 +310,14 @@ For $Q$ as seen in Figure \ref{fig: Q}. Consider when $m=3$, the Simplification 
 Let $d(i,i')$ is the distance between nodes $i$ and $i'$ with the distance measured by the minimum number of edges.
 
 \begin{definition}[Graph Diameter]
-The diameter of a graph $Q$ is definded by $\bar{d}=\max\limits_{i,i' \in N} d(i,i')$ . The node pairs satisfying this are called diametrical.
+The \textit{diameter} of a graph $Q$ is defined by $\bar{d}=\max\limits_{i,i' \in N} d(i,i')$ . The node pairs satisfying this are called \textit{diametrical}.
 \end{definition}
 
 \begin{lemma}
-By the attacker playing equally likely at a pair of diametrical at a random time interval, called the diametric attack, gives $V \leq \max\left\{\frac{m}{\raisebox{-0.5ex}{$\scriptstyle 2 \bar{d}$}} , \frac{1}{2} \right\}$
+The attacker playing equally likely at a pair of diametrical for a random time interval is called the \textit{diametric attack}, and gives $V \leq \max\left\{\frac{m}{\raisebox{-0.5ex}{$\scriptstyle 2 \bar{d}$}} , \frac{1}{2} \right\}$
 \end{lemma}
 
-However the bound presented in \citep{Alpern2011} seems to indicate for large $T,m$ the second is chosen. However a simple counter example will show the bound does not allows hold
-\begin{example}[Problem with diametric attack]
-\label{example:counterexamplediamater} 
-Consider the graph $L_{5}$ so $\bar{d}=4$ for $T=m=5$, then under the diametric attack, the patroller performing the patrol $\{ 1,2,3,4,5 \}$ allows her to catch the two attacks. Hence the bound of $V \leq \frac{5}{8}$ given by lemma does not seem to hold. 
-\end{example}
-
-
+In section \ref{Section:Strategic Patroller and Strategic Attacker} we will present an issue with this lemma from \cite{Alpern2011}
 
 \textbf{Covering(Patroller) and Independence(Attacker):}
 
@@ -328,14 +328,13 @@ A set of intercepting patrols forms a \textit{Covering set} if every node in $Q$
 \end{definition}
 
 \begin{definition}[Independence]
-Two nodes, $i$ and $i'$, are called independent (under attack time, $m$) if any patrol intercepting an attack at $i$ cannot also intercept an attack at $i'$.
-
-For the one-off game this is equivalent to $d(i,i') \geq m$.
-
-For the Periodic game this is equivalent to $d(i,i') \geq m$ and $2d(i,i') \leq T$(due to returning to start).
+Two nodes, $i$ and $i'$, are called \textit{independent} (for attack time, $m$) if any patrol intercepting an attack at $i$ cannot also intercept an attack at $i'$.
 
 A set of independent points forms a \textit{Independent set} if every element of the set is independent of every other element. Furthermore the independence number $\mathcal{I}$ is the maximum cardinality of all the independent sets.
 \end{definition}
+
+For the one-off game being independent is equivalent to $d(i,i') \geq m$ and for the Periodic game it is equivalent to $d(i,i') \geq m$ and $2d(i,i') \leq T$(due to returning to start).
+
 
 Clearly $\mathcal{I} \leq \mathcal{C}$ as to cover a collection of independent nodes, at least that many covering patrols are needed (Possibly more if they also don't get every node in $Q$)
 
@@ -348,7 +347,7 @@ We shall provide some information on graphs that have already been solved
 
 \textbf{Hamiltonian:}
 
-A Hamiltonian graph is a graph with a Hamiltonian cycle(See Appendix [Blank] for a formal definition). Two simple examples of such graphs are cyclic graphs, $C_{n}$ and the complete graph, $K_{n}$. While Hamiltonian graphs can exhibit more than one Hamiltonian cycle we shall assume that we have selected one. We shall also assume that the attack, $m < n$, as otherwise by following the Hamiltonian cycle we guarantee capture (i.e for $m \geq n \implies V=1$).
+A Hamiltonian graph is a graph with a Hamiltonian cycle, that is a walk which visits all nodes only once, returning to the start. Two classes of such graphs are cyclic graphs, $C_{n}$ and the complete graphs, $K_{n}$. While Hamiltonian graphs can exhibit more than one Hamiltonian cycle we shall assume that we have selected one arbitrarily. We shall also assume that the attack, $m < n$, as otherwise by following the Hamiltonian cycle we guarantee capture (i.e for $m \geq n \implies V=1$).
 
 \begin{definition}[Random Hamiltonian Patrol]
 A \textit{Random Hamiltonian Patrol} is a mixed strategy starting with equal probability at all nodes and following the Hamiltonian cycle.
@@ -358,17 +357,33 @@ A \textit{Random Hamiltonian Patrol} is a mixed strategy starting with equal pro
 If $Q$ is Hamiltonian, by following the Random Hamiltonian Patrol (if feasible), the patroller can achieve $V \geq \frac{m}{n}$.
 \end{theorem}
 
-This, along with a general upper bound from \citep{Alpern2011}, provides the solution $V=\frac{m}{n}$.
+This, along with a general bound (Lemma \ref{Lemma:General bounds}) , provides the solution $V=\frac{m}{n}$.
 
 \textbf{Line:}
 
-A Line Graph, $L_{n}$, is a graph consisting of $n$ nodes and $n-1$ edges connected in a straight line.  While the line graph is complicated it has been solved across; Patrolling Games \cite{Alpern2011} and Patrolling a Border \cite{Papadaki2016}. The cases in the solution require the division of the $(n,m)$ space into sub-regions (inside which different strategies are adopted by the attacker and patroller).
+A Line Graph, $L_{n}$, is a graph consisting of $n$ nodes with $n-1$ edges connecting the nodes in a straight line.  While the line graph is complicated to solve it has been done across two papers, \cite{Alpern2011} and \cite{Papadaki2016}. The solution required the division of the $(n,m)$ space into sub-regions (inside which different strategies are adopted by the attacker and patroller). We highlight the regions for comparison to solving our bigger class of graphs later.
 
-However upon investigation one of the sub-regions and strategies does not produce the correct bound as reported. We bring this up as in section \ref{Subsection:Problem and correction to line graph strategy} we will provide a counter-example to show the error and provide an altered strategy giving the required bound.
+\begin{itemize}
+\item $S_{1}= \{(n,m) \, | \, m > 2(n-1) \}$ for $V=1$
+\item $S_{2}= \{(n,m) \, | \,  n-1 < m \leq 2(n-1) \}$ for $V=\frac{m}{2(n-1)}$
+\item $S_{3}= \{(n,m) \, | \, m=2,n\geq 3 \}$ for $V=\frac{1}{\ceil{\frac{n}{2}}}$
+\item $S_{4}= \{(n,m) \, | \, m=n-1, \text{ or } m=n-2 \text{ and } m \geq 3 \text{ odd} \}$ for $V=\frac{1}{2}$
+\item $S_{5}= \{(n,m) \, | \, m \leq n-3, \text{ or } m=n-2 \text{ and } m \geq 3 \text{ even} \}$ for $V=\frac{m}{n-1+m}$
+\end{itemize}
+
+\begin{myfigure}
+\begin{center}
+\input{Images/LineRegions(L_10).tex}
+\end{center}
+\caption{Value of $L_{10}$ for \textcolor{yellow}{$S_{1}$},\textcolor{red}{$S_{2}$},\textcolor{purple}{$S_{4}$},\textcolor{blue}{$S_{5}$},\textcolor{green}{$S_{3}$}}
+\end{myfigure}
+
+
+However $S_{2}$ uses the diametric attack, so will exhibit the problem in Section \ref{Section:Strategic Patroller and Strategic Attacker} and will be corrected in this and extended to a wider class of graphs.
 
 \textbf{Bipartite:}
 
-A bipartite graph is a graph which can be partitioned into two sets, $A$ and $B$ (with $|A|=a,|B|=b$, assume WLOG that $b \geq a$) were edges only exist between these two sets. A special bipartite graph is the complete bipartite graph $K_{a,b}$.
+A bipartite graph is a graph which can be partitioned into two sets, $A$ and $B$ (with $|A|=a,|B|=b$, assume WLOG that $b \geq a$) were edges only exist between these two sets. A special bipartite graph is the complete bipartite graph $K_{a,b}$, in which all combinations of nodes in $A$ and $B$ are adjacent.
 
 Assume that $m < 2b$, as otherwise there exists a $2b$ period patrol which covers all nodes and guarantees capture (i.e if $m \geq 2b  \implies V=1$).
 
@@ -685,55 +700,39 @@ The numerical results of these heuristics can be found in Section 3.4 in \citep{
 \label{Section:Strategic Patroller and Strategic Attacker}
 \subsection{Problem and correction to line graph strategy}
 \label{Subsection:Problem and correction to line graph strategy}
-Consider the patroller's strategy against a diametric attack, that simply oscillates between the two diametric points.
+We will now look at the problem with the diametric attack, $V \leq \frac{m}{2\bar{d}}$ (when $\bar{d} < m \leq 2\bar{d}$), consider a patroller who oscillates between the two diametric points. We now want to see how many attacks the patroller can capture out of the possible $2(T-m+1)$ the attacker is making.
 
-The total number of attacks the attacker is making under this diametric strategy is $2(T-m+1)$, we will now measure how many the simple strategy for the patroller gets.
+As a counter-example consider
 
-We will divide the set of captured attacks, depending on what is happening. This division shall be into start captures, middle captures and end captures.
-
-The start captures are captures catching less than $m$ attacks in the early times, i.e before the middle. The middle captures are captures catching exactly $m$ attacks. The end captures are captures catching less than $m$ attacks in the late times.
-
-\begin{example}[Problem with diametric attack]
-Consider the graph $L_{5}$ so $\bar{d}=4$ for $T=20$,$m=6$, then under the diametric attack, the patroller oscillating between diametrics points gets.
-\begin{itemize}
-\item[Start] Capture $1+5=6$ attacks initially.
-\item[Middle] Capture $6+6=12$ attacks when arriving at node $5$.
-\item[End] Capture $4$ attacks when finishing at node $1$.
-\end{itemize}
-Giving $22$ out of $2(20-6+1)=30$ attacks, a better than $\frac{3}{4}$ value.
+\begin{example}[Counter-example for diametric bound]
+As a counter-example consider the game $(Q=L_{5},T=20,m=6)$ so $m=6 >\bar{d}=4$, then under the diametric attack the attacker has $30$ attacks, starting at $0,...,14$ at nodes $1$ and $5$. If the patroller oscillates between diametrics points they capture
+$1+5+6+6+4=22$ attacks out of $2(20-6+1)=30$ attacks, for a capture chance of $V=\frac{11}{15}$, which is greater than diametric bound $\frac{3}{4}$ which provides an upper bound, and hence is wrong.
 \end{example}
 
-First off it is worth considering that the number of end attacks that are going to be caught will come from two values (if more than these would be in the middle). We could suggest that waiting at the start is more preferable to ``stabilize'' into the middle quicker. the cost for doing so is to remove one from each end value, if one of the end values is 1, then the penultimate middle is also reduced by 1 and thus becomes an end value.
+Because of the counting of attacks, it is possible to delay the patroller at the start to still get a better number of captured attacks, e.g. delaying in the counter example to leave at time $2$ instead of $0$ gives $3+6+6+6+2=23$. In fact it is best to delay yourself to leave at time $m-\bar{d}$. This can be seen in Appendix \ref{Appendix:Proof of diametric waiting time}
 
-While each time we decide to wait gains us 1 for each node in the start values, until it becomes a middle value. As $m \geq \bar{d}$, we are guaranteed that there are at least two start values (as we are looking at times $0$ and $\bar{d}-1 < m$). Therefore it is certain that waiting at the start (at least while there are two start values) is not worse than the just oscillating strategy.
+This means we will capture
 
-Therefore we can wait until $t=m-(\bar{d}-1)$ (which as $m > \bar{d}-1$ means its is always possible), then this is only the start.
-
-Let us count the pattern under this strategy,
-\begin{itemize}
-\item[Start:] Capture $m-\bar{d}$ attacks initially by waiting.
-\item[Middle:] Capture $m \times (\floor{\frac{T-2m+1}{\bar{d}}}+1)$ attacks in the middle cycles (if any middle times are possible, otherwise zero if negative).
-\item[End:] Capture $T-1-(m-1+(\floor{\frac{T-2m+1}{\bar{d}}}+1)\bar{d})$ (at the penultimate node visit (if possible, this really is zero if its negative) and $T-1-(m-1+(\floor{\frac{T-2m+1}{\bar{d}}}+2)\bar{d})$ at the final node visit (again zero if negative).
-\end{itemize}
-
-This gives \begin{align*}
-& m-\bar{d}+\pospart{m \times (\floor{\frac{T-2m+1}{\bar{d}}}+1)} + \\ &\pospart{T-(m-1+(\floor{\frac{T-2m+1}{\bar{d}}}+1)\bar{d})} + \pospart{T-(m-1+(\floor{\frac{T-2m+1}{\bar{d}}}+2)\bar{d})}
+\begin{align*}
+\underbrace{m-\bar{d}}_{\text{Waiting initially}} + \underbrace{\pospart{m \times \left( \floor{\frac{T-2m+1}{\bar{d}}} +1 \right)}}_{\text{Visits which get exactly } m \text{attacks}} + \underbrace{\pospart{T- \left( m-1 + \left(\floor{\frac{T-2m+1}{\bar{d}}} +2 \right) \bar{d} \right)}}_{\text{Penultimate and Final node visits}} 
 \end{align*}
 
-We will call $\alpha=\floor{\frac{T-2m+1}{\bar{d}}}$
+The key point is that the upper bound given by the diametric attack is dependent on $T$. An example is given in Figure \ref{Figure:Example of upper bound achieved by diametric attack} which shows that for some $T$ as in Lemma \ref{Lemma:Condition on time horizon for diametric bound to hold} and as the finite time horizon becomes infinite the corrected bound reaches the suggested bound in \cite{Alpern2011}.
 
 \begin{lemma}[Condition on $T$ for bound to hold]
+\label{Lemma:Condition on time horizon for diametric bound to hold}
 When $T=m-1+(k+1)\bar{d}$ for some $k \in \mathbb{N}_{0}$ then the diametric bound holds. Otherwise as $T \rightarrow \infty$ then the diametric bound holds.
 \end{lemma}
 
 Proof: \ref{Condition on T for old diametric proof}
 
-\begin{figure}
+\begin{myfigure}
 %\includegraphics[scale=0.4]{DiametricAttack(m_45,d_30)1.png}
 \resizebox{0.95\linewidth}{!}{
 \input{Images/DiametricAttack(m_45,d_30).tex}}
 \caption{Best Upper Bound achievable under the diametric strategy}
-\end{figure}
+\label{Figure:Example of upper bound achieved by diametric attack}
+\end{myfigure}
 
 \textbf{Fixing the diametric attack}
 
@@ -747,13 +746,15 @@ Attacking at a pair of diametric nodes equiprobably for the times $I$,$I+1$...,$
 The time-limited diametric attack is only feasible is $T \geq m+\bar{d}-1$.
 \end{note}
 
-\begin{lemma}
+\begin{lemma}[Time-limited diametric attack bound]
 When $T \geq m+ \bar{d}-1$, the diametric bound $V \leq \max\{\frac{1}{2},\frac{m}{2\bar{d}}\}$ is valid.
 \end{lemma}
 
 Proof: \ref{Time-limited diametric attack proof}
+
+
 \subsection{New Tools}
-We seek to find a larger class of optimal patrols for hamiltonian graphs, by using groups of nodes.
+We seek to find a larger class of optimal patrols for Hamiltonian graphs, by using groups of nodes.
 
 \begin{definition}[Alternating Random Hamiltonian Patrol(ARHP)]
 An \textit{Alternating Random Hamiltonian Patrol} (\textit{ARHP}) is a mixed strategy following the Hamiltonian cycle but with a probability $p$ of starting at ``even'' nodes and a probability of $\frac{2}{n}-p$ of starting at ``odd'' nodes.
@@ -1751,11 +1752,15 @@ c_{j} \lambda_{j} \text{ for } s_{j}=B_{j}+1,i \neq j  \\
 
 Looking at the single node problem, we notice that there is no cost to transition to the state $s=B$, so at this point we must decide if we are renew now or renew at $s=B+1$ or never renew at all (If indifferent between $B+1,B+2,....$)
 
-It is curious whether this sudden spike in the cost (and therefore in the resulting index) will cause any issue with the proposed heuristics.
+It is curious whether this sudden spike in the cost (and therefore in the resulting index) will cause any issue with the proposed heuristics. Looking at the results of only using deterministic attack times on $K_{6}$ in a numerical experiment (see Figure \ref{Figure:Deterministic attack times} we can see a larger amount of errors.
 
-\begin{Huge}
-This numerical experiment needs to be done
-\end{Huge}
+\begin{myfigure}
+\label{Figure:Deterministic attack times}
+\begin{center}
+\input{Images/OldDeterministicOnly.tex}
+\end{center}
+\caption{Frequency of percentage error with only deterministic attack times}
+\end{myfigure}
 
 
 \section{Strategic Patroller with Random Attackers and Local-observations}
@@ -2873,6 +2878,10 @@ A subgraph is said to be \textit{induced} by $N'$ (or \textit{edge-preserving}) 
 \label{examplefigure: subgraph example}
 \end{myfigure}
 
+\begin{definition}[Adjacency,Incidency]
+We say nodes, $n,m$ are \textit{adjacent} if $\exists (n,m) \in E$ and we say the edge $(n,m)$ is \textit{incident} to both $n$ and $m$.
+\end{definition}
+
 \begin{definition}[Walk,Path,Trail,Cycle]
 A sequence of nodes $(n_{0},n_{1},...,n_{l})$ is a \textit{walk} of length $l$ if $e_{n_{i},n_{i+1}} \in E$ $\forall i=0,...,l-1$. Corresponding to a walk is the sequnece of $l$ edges $(e_{n_{0},n_{1}},e_{n_{1},n_{2}},...,e_{n_{l-1},n_{l}})$.
 
@@ -3135,6 +3144,30 @@ A \textit{edge-vertex dual} of a directed graph $G$, called $EV(G)$, is made of 
 \end{center}
 \caption{A graph $G$ and its directed edge-vertex dual, $EV(G)$}
 \end{myfigure}
+
+\section{Proof of diametric waiting time}
+\label{Appendix:Proof of diametric waiting time}
+
+Consider visit $i$ to a end node capturing $C_{i}$ of the attacks placed by the diametric attack, then the total number of attacks captured is $C=\sum\limits_{i=0}^{\floor{\frac{T-1}{\bar{d}}}} C_{i}$.
+
+Then leaving the initial node at time $t$ gives us, $C_{0}=\min(t,T-m+1)$ , $C_{i}=\pospart{\min(t+i \bar{d},m,T-(t+i \bar{d})}$ for $i \neq 0$.
+
+We first note that $C_{0}$ is increasing in the region $t \leq T-m$ and constant for $t \geq T-m+1$. So $C_{0}$ is concave. Due to this being increasing, and therefore its only possible to have others increasing if $t \leq T-m$, we will make this an assumption.
+
+Now we look at $C_{i}$ and see it is increasing for the region $t \leq m-1-i\bar{d}$, constant for $m-i\bar{d} \leq t \leq T-1-m-i \bar{d}$ and decreasing for $ T-m-i \bar{d} \leq t \leq T-i \bar{d}-1$. So $C_{i}$ is concave. Hence $C$ is concave and so finding the best choice for $t$ is when the net increase is constant (or decreasing for the first time).
+
+We see that $C_{0}$ always improves, contributing $1$ to the net increase. $C_{i}$ however is only increasing, and contributes $1$, if $i \leq \frac{m-1-t}{\bar{d}} < 2$ (as $m \leq 2\bar{d}$), so only $C_{1}$ can possibly contribute an increase when $t \leq m-\bar{d}-1$.
+
+$C_{i}$ is decreasing, contributing $-1$ if $\frac{T-m-t}{\bar{d}} \leq i \leq \frac{T-1-t}{\bar{d}}$, with at most $2$ $C_{i}$'s being decreased (as the gap is $\frac{m}{2 \bar{d}}$ and $\bar{d} < m \leq 2 \bar{d}$).
+
+This worst issue occurs when $\frac{T-m-t}{\bar{d}}$ or $\frac{T-1-t}{\bar{d}}$ are integers, meaning we have chosen $t=T-m-k\bar{d}$ or $t=T-1-k\bar{d}$ for some $k \in \mathbb{Z}$.
+
+So overall increasing $t$ to $t+1$, with $t \leq m-\bar{d}-1$, gives us a net increase $1$ when we have non-integers, $0$ when we have integers  and $-1$ if $t > m- \bar{d}-1$.
+
+So we pick the upper concave region, as its about to go from increasing to decreasing, giving us a choice of $t=m-\bar{d}$.
+ 
+Note. $t=m-\bar{d}-1$ is not net decreasing, but $t=m-\bar{d}-1$ is net decreasing, so $t=m-\bar{d}$ is a choice for the maximum.
+
 
 \section{Improving random oscillations}
 \label{Appendix:Improving random oscillations}
