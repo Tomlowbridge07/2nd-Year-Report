@@ -1,18 +1,101 @@
-\begin{thebibliography}{1}
+\begin{thebibliography}{10}
+
+\bibitem{Steve2003}
+Steve Alpern and Shmuel Gal.
+\newblock {\em {The Theory of Search Games and Rendezvous}}.
+\newblock International Series in Operations Research {\&} Management Science.
+  Kluwer Academic Publishers, Boston, 2003.
+
+\bibitem{Alpern2016}
+Steve Alpern, Thomas Lidbetter, Alec Morton, and Katerina Papadaki.
+\newblock {Patrolling a pipeline Book section Patrolling a Pipeline}.
+\newblock {\em Proceedings. Lecture Notes in Computer Science}, 9996:129--138,
+  2016.
 
 \bibitem{Alpern2011}
 Steve Alpern, Alec Morton, and Katerina Papadaki.
 \newblock {Patrolling Games}.
 \newblock {\em Operations Research}, 59(5):1246--1257, 2011.
 
+\bibitem{Birge1989}
+J.~R. Birge and S.~M. Pollock.
+\newblock {Modelling Rural Police Patrol}.
+\newblock {\em Journal of the Operational Research Society}, 40(1):41--54,
+  1989.
+
+\bibitem{Brown2006}
+Gerald Brown, Matthew Carlyle, Javier Salmer{\'{o}}n, and Kevin Wood.
+\newblock {Defending critical infrastructure}.
+\newblock {\em Interfaces}, 36(6):530--544, 2006.
+
+\bibitem{Chaiken1978}
+Jan~M Chaiken and Peter Dormont.
+\newblock {a Patrol Car Allocation Model: Background}.
+\newblock {\em Management Science}, 24(12):1280--1290, 1978.
+
+\bibitem{Chelst1978}
+Kenneth Chelst.
+\newblock {an Algorithm for Deploying a Crime Directed (Tactical) Patrol
+  Force}.
+\newblock {\em Management Science}, 24(12):1314--1327, 1978.
+
+\bibitem{Feichtinger1983}
+Gustav Feichtinger.
+\newblock {A Differential Games Solution to a Model of Competition Between a
+  Thief and the Police}.
+\newblock {\em Management Science}, 29(6):686--699, 1983.
+
+\bibitem{Fox}
+Craig~R. Fox, David Bardolet, and Daniel Lieb.
+\newblock {Partition Dependence in Decision Analysis, Resource Allocation, and
+  Consumer Choice}.
+\newblock {\em Experimental business research}, XX(19):229--251, 2005.
+
+\bibitem{Larson1972}
+Richard~C Larson.
+\newblock {\em {Urban police patrol analysis}}, volume~28.
+\newblock MIT Press Cambridge, MA, 1972.
+
 \bibitem{Lin2013}
-Kyle~Y Lin, Michael~P Atkinson, Timothy~H Chung, and Kevin~D Glazebrook.
+Kyle~Y. Lin, Michael~P. Atkinson, Timothy~H. Chung, and Kevin~D. Glazebrook.
 \newblock {A Graph Patrol Problem with Random Attack Times}.
 \newblock {\em Operations Research}, 61(3):694--710, 2013.
+
+\bibitem{Lin2014}
+Kyle~Y. Lin, Michael~P. Atkinson, and Kevin~D. Glazebrook.
+\newblock {Optimal patrol to uncover threats in time when detection is
+  imperfect}.
+\newblock {\em Naval Research Logistics}, 61(8):557--576, 2014.
+
+\bibitem{Lindelauf2009}
+Roy Lindelauf, Peter Borm, and Herbert Hamers.
+\newblock {The influence of secrecy on the communication structure of covert
+  networks}.
+\newblock {\em Social Networks}, 31(2):126--137, 2009.
 
 \bibitem{Papadaki2016}
 Katerina Papadaki, Steve Alpern, Thomas Lidbetter, and Alec Morton.
 \newblock {Patrolling a Border}.
 \newblock {\em Operations Research}, 64(6):1256--1269, 2016.
+
+\bibitem{Paruchuri2008}
+Praveen Paruchuri, Jp~Pearce, and Janusz Marecki.
+\newblock {Efficient Algorithms to Solve Bayesian Stackelberg Games for
+  Security Applications.}
+\newblock In {\em Aaai}, volume~1, pages 2--5, New York, New York, USA, 2008.
+  ACM Press.
+
+\bibitem{Puterman1994}
+Martin~L Puterman.
+\newblock {\em {Markov Decision Processes: Discrete Stochastic Dynamic
+  Programming}}.
+\newblock John Wiley {\&} Sons Inc., 1994.
+
+\bibitem{Taylor1985}
+Bernard~W Taylor, Laurence~J Moore, Edward~R Clayton, K~Roscoe Davis, and
+  Terry~R Rakes.
+\newblock {An Integer Nonlinear Goal Programming Model for the Deployment of
+  State Highway Patrol Units}.
+\newblock {\em Management Science}, 31(11):1335--1347, 1985.
 
 \end{thebibliography}
