@@ -28,21 +28,28 @@
 \BOOKMARK [2][-]{subsection.4.7}{Numerical experiments}{section.4}% 28
 \BOOKMARK [1][-]{section.5}{Future Work}{}% 29
 \BOOKMARK [2][-]{subsection.5.1}{Proof completions}{section.5}% 30
-\BOOKMARK [2][-]{subsection.5.2}{Extending Discrete Attack time to generic distributions}{section.5}% 31
-\BOOKMARK [3][-]{subsubsection.5.2.1}{Plan}{subsection.5.2}% 32
-\BOOKMARK [2][-]{subsection.5.3}{Strategic Patroller with Random Attackers on Edges}{section.5}% 33
-\BOOKMARK [3][-]{subsubsection.5.3.1}{Plan}{subsection.5.3}% 34
-\BOOKMARK [1][-]{section*.39}{Appendices}{}% 35
-\BOOKMARK [1][-]{appendix.A}{Graph Definitions}{}% 36
-\BOOKMARK [1][-]{appendix.B}{Strategic Patroller and Strategic Attacker}{}% 37
-\BOOKMARK [2][-]{subsection.B.1}{Proof of diametric waiting time}{appendix.B}% 38
-\BOOKMARK [2][-]{subsection.B.2}{Proof of conditions on T for diametric attack}{appendix.B}% 39
-\BOOKMARK [2][-]{subsection.B.3}{Proof of time-limited diametric attack}{appendix.B}% 40
-\BOOKMARK [2][-]{subsection.B.4}{Generalised ARHP}{appendix.B}% 41
-\BOOKMARK [1][-]{appendix.C}{Improving random oscillations}{}% 42
-\BOOKMARK [2][-]{subsection.C.1}{Reason For Probability of Interception formula}{appendix.C}% 43
-\BOOKMARK [2][-]{subsection.C.2}{Naive Improvement Complete analysis}{appendix.C}% 44
-\BOOKMARK [2][-]{subsection.C.3}{Combinatorial Improvement analysis}{appendix.C}% 45
-\BOOKMARK [2][-]{subsection.C.4}{Combinatorial improvement extension}{appendix.C}% 46
-\BOOKMARK [1][-]{appendix.D}{Optimal Solution for a Random Attacker}{}% 47
-\BOOKMARK [1][-]{appendix.E}{Optimal Solution for Random Attacker with Local-Observations}{}% 48
+\BOOKMARK [3][-]{subsubsection.5.1.1}{Plan}{subsection.5.1}% 31
+\BOOKMARK [2][-]{subsection.5.2}{Extending Discrete Attack time to generic distributions}{section.5}% 32
+\BOOKMARK [3][-]{subsubsection.5.2.1}{Plan}{subsection.5.2}% 33
+\BOOKMARK [2][-]{subsection.5.3}{Strategic Patroller with Random Attackers on Edges}{section.5}% 34
+\BOOKMARK [3][-]{subsubsection.5.3.1}{Plan}{subsection.5.3}% 35
+\BOOKMARK [2][-]{subsection.5.4}{Investigate weighted graphs }{section.5}% 36
+\BOOKMARK [3][-]{subsubsection.5.4.1}{Plan}{subsection.5.4}% 37
+\BOOKMARK [2][-]{subsection.5.5}{Investigate types of patrolling}{section.5}% 38
+\BOOKMARK [3][-]{subsubsection.5.5.1}{Plan}{subsection.5.5}% 39
+\BOOKMARK [1][-]{section*.39}{Appendices}{}% 40
+\BOOKMARK [1][-]{appendix.A}{Graph Definitions}{}% 41
+\BOOKMARK [1][-]{appendix.B}{Patrolling games}{}% 42
+\BOOKMARK [2][-]{subsection.B.1}{Proof of diametric waiting time}{appendix.B}% 43
+\BOOKMARK [2][-]{subsection.B.2}{Proof of conditions on T for diametric attack}{appendix.B}% 44
+\BOOKMARK [2][-]{subsection.B.3}{Proof of time-limited diametric attack}{appendix.B}% 45
+\BOOKMARK [2][-]{subsection.B.4}{Proof of time-delayed attack}{appendix.B}% 46
+\BOOKMARK [2][-]{subsection.B.5}{Proof of type-delayed attack}{appendix.B}% 47
+\BOOKMARK [2][-]{subsection.B.6}{Generalised ARHP}{appendix.B}% 48
+\BOOKMARK [1][-]{appendix.C}{Improving random oscillations}{}% 49
+\BOOKMARK [2][-]{subsection.C.1}{Reason For Probability of Interception formula}{appendix.C}% 50
+\BOOKMARK [2][-]{subsection.C.2}{Naive improvement analysis}{appendix.C}% 51
+\BOOKMARK [2][-]{subsection.C.3}{Combinatorial improvement analysis}{appendix.C}% 52
+\BOOKMARK [2][-]{subsection.C.4}{Combinatorial improvement extension}{appendix.C}% 53
+\BOOKMARK [1][-]{appendix.D}{Optimal Solution for a Random Attacker}{}% 54
+\BOOKMARK [1][-]{appendix.E}{Optimal Solution for Random Attacker with Local-Observations}{}% 55

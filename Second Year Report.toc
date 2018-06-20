@@ -17,10 +17,10 @@
 \contentsline {subsection}{\numberline {2.5}Joining star graphs by centralised connections}{30}{subsection.2.5}
 \contentsline {section}{\numberline {3}Strategic Patroller with Random Attackers}{32}{section.3}
 \contentsline {subsection}{\numberline {3.1}Deterministic Attack time experiments}{32}{subsection.3.1}
-\contentsline {subsection}{\numberline {3.2}Proposed Solutions}{34}{subsection.3.2}
+\contentsline {subsection}{\numberline {3.2}Proposed Solutions}{33}{subsection.3.2}
 \contentsline {section}{\numberline {4}Strategic Patroller with Random Attackers and Local-observations}{35}{section.4}
 \contentsline {subsection}{\numberline {4.1}Altering the problem for instantaneous moving patroller}{35}{subsection.4.1}
-\contentsline {subsection}{\numberline {4.2}Numerical results for instantaneously moving patroller}{37}{subsection.4.2}
+\contentsline {subsection}{\numberline {4.2}Numerical results for instantaneously moving patroller}{36}{subsection.4.2}
 \contentsline {subsection}{\numberline {4.3}Altering problem to accommodate local-observable information}{37}{subsection.4.3}
 \contentsline {subsection}{\numberline {4.4}Deterministic attack time assumption}{40}{subsection.4.4}
 \contentsline {subsection}{\numberline {4.5}Single node solution}{40}{subsection.4.5}
@@ -28,21 +28,28 @@
 \contentsline {subsection}{\numberline {4.7}Numerical experiments}{47}{subsection.4.7}
 \contentsline {section}{\numberline {5}Future Work}{49}{section.5}
 \contentsline {subsection}{\numberline {5.1}Proof completions}{49}{subsection.5.1}
+\contentsline {subsubsection}{\numberline {5.1.1}Plan}{49}{subsubsection.5.1.1}
 \contentsline {subsection}{\numberline {5.2}Extending Discrete Attack time to generic distributions}{49}{subsection.5.2}
 \contentsline {subsubsection}{\numberline {5.2.1}Plan}{51}{subsubsection.5.2.1}
 \contentsline {subsection}{\numberline {5.3}Strategic Patroller with Random Attackers on Edges}{51}{subsection.5.3}
 \contentsline {subsubsection}{\numberline {5.3.1}Plan}{53}{subsubsection.5.3.1}
+\contentsline {subsection}{\numberline {5.4}Investigate weighted graphs }{53}{subsection.5.4}
+\contentsline {subsubsection}{\numberline {5.4.1}Plan}{53}{subsubsection.5.4.1}
+\contentsline {subsection}{\numberline {5.5}Investigate types of patrolling}{54}{subsection.5.5}
+\contentsline {subsubsection}{\numberline {5.5.1}Plan}{54}{subsubsection.5.5.1}
 \contentsline {section}{Appendices}{i}{section*.39}
 \contentsline {section}{\numberline {A}Graph Definitions}{i}{appendix.A}
-\contentsline {section}{\numberline {B}Strategic Patroller and Strategic Attacker}{iv}{appendix.B}
+\contentsline {section}{\numberline {B}Patrolling games}{iv}{appendix.B}
 \contentsline {subsection}{\numberline {B.1}Proof of diametric waiting time}{iv}{subsection.B.1}
-\contentsline {subsection}{\numberline {B.2}Proof of conditions on T for diametric attack}{v}{subsection.B.2}
+\contentsline {subsection}{\numberline {B.2}Proof of conditions on T for diametric attack}{iv}{subsection.B.2}
 \contentsline {subsection}{\numberline {B.3}Proof of time-limited diametric attack}{v}{subsection.B.3}
-\contentsline {subsection}{\numberline {B.4}Generalised ARHP}{v}{subsection.B.4}
-\contentsline {section}{\numberline {C}Improving random oscillations}{v}{appendix.C}
-\contentsline {subsection}{\numberline {C.1}Reason For Probability of Interception formula}{v}{subsection.C.1}
-\contentsline {subsection}{\numberline {C.2}Naive Improvement Complete analysis}{v}{subsection.C.2}
-\contentsline {subsection}{\numberline {C.3}Combinatorial Improvement analysis}{vi}{subsection.C.3}
-\contentsline {subsection}{\numberline {C.4}Combinatorial improvement extension}{vii}{subsection.C.4}
-\contentsline {section}{\numberline {D}Optimal Solution for a Random Attacker}{viii}{appendix.D}
-\contentsline {section}{\numberline {E}Optimal Solution for Random Attacker with Local-Observations}{viii}{appendix.E}
+\contentsline {subsection}{\numberline {B.4}Proof of time-delayed attack}{vi}{subsection.B.4}
+\contentsline {subsection}{\numberline {B.5}Proof of type-delayed attack}{xviii}{subsection.B.5}
+\contentsline {subsection}{\numberline {B.6}Generalised ARHP}{xxiii}{subsection.B.6}
+\contentsline {section}{\numberline {C}Improving random oscillations}{xxiii}{appendix.C}
+\contentsline {subsection}{\numberline {C.1}Reason For Probability of Interception formula}{xxiii}{subsection.C.1}
+\contentsline {subsection}{\numberline {C.2}Naive improvement analysis}{xxiv}{subsection.C.2}
+\contentsline {subsection}{\numberline {C.3}Combinatorial improvement analysis}{xxv}{subsection.C.3}
+\contentsline {subsection}{\numberline {C.4}Combinatorial improvement extension}{xxvi}{subsection.C.4}
+\contentsline {section}{\numberline {D}Optimal Solution for a Random Attacker}{xxvii}{appendix.D}
+\contentsline {section}{\numberline {E}Optimal Solution for Random Attacker with Local-Observations}{xxvii}{appendix.E}
