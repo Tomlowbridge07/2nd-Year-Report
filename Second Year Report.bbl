@@ -1,5 +1,16 @@
 \begin{thebibliography}{10}
 
+\bibitem{Alpern2014}
+Steve Alpern and Robbert Fokkink.
+\newblock {Accumulation games on graphs}.
+\newblock {\em Networks}, 64(1):40--47, 2014.
+
+\bibitem{Alpern2011a}
+Steve Alpern, Robbert Fokkink, Marco Timmer, and Jerome Casas.
+\newblock {Ambush frequency should increase over time during optimal predator
+  search for prey}.
+\newblock {\em Journal of the Royal Society Interface}, 8(64):1665--1672, 2011.
+
 \bibitem{Steve2003}
 Steve Alpern and Shmuel Gal.
 \newblock {\em {The Theory of Search Games and Rendezvous}}.
@@ -22,6 +33,11 @@ J.~R. Birge and S.~M. Pollock.
 \newblock {Modelling Rural Police Patrol}.
 \newblock {\em Journal of the Operational Research Society}, 40(1):41--54,
   1989.
+
+\bibitem{Black1965}
+William~L. Black.
+\newblock {Discrete sequential search}.
+\newblock {\em Information and Control}, 8(2):159--162, 1965.
 
 \bibitem{Brown2006}
 Gerald Brown, Matthew Carlyle, Javier Salmer{\'{o}}n, and Kevin Wood.
@@ -51,6 +67,11 @@ Craig~R. Fox, David Bardolet, and Daniel Lieb.
   Consumer Choice}.
 \newblock {\em Experimental business research}, XX(19):229--251, 2005.
 
+\bibitem{Kikuta2002a}
+Kensaku Kikuta and William~H. Ruckle.
+\newblock {Continuous accumulation games on discrete locations}.
+\newblock {\em Naval Research Logistics}, 49(1):60--77, 2002.
+
 \bibitem{Larson1972}
 Richard~C Larson.
 \newblock {\em {Urban police patrol analysis}}, volume~28.
@@ -67,11 +88,23 @@ Kyle~Y. Lin, Michael~P. Atkinson, and Kevin~D. Glazebrook.
   imperfect}.
 \newblock {\em Naval Research Logistics}, 61(8):557--576, 2014.
 
+\bibitem{Lin2016}
+Kyle Y~Elsevier Lin, Kyle~Y Lin, and Dashi~I Singham.
+\newblock {Calhoun: The NPS Institutional Archive DSpace Repository Finding a
+  hider by an unknown deadline Finding a hider by an unknown deadline}.
+\newblock {\em Operations Research Letters Calhoun Operations Research
+  Letters}, 441(44):25--32, 2016.
+
 \bibitem{Lindelauf2009}
 Roy Lindelauf, Peter Borm, and Herbert Hamers.
 \newblock {The influence of secrecy on the communication structure of covert
   networks}.
 \newblock {\em Social Networks}, 31(2):126--137, 2009.
+
+\bibitem{Matula1964}
+David Matula.
+\newblock {A Periodic Optimal Search}.
+\newblock {\em American Mathematical Monthly}, 71(1):15--21, 1964.
 
 \bibitem{Papadaki2016}
 Katerina Papadaki, Steve Alpern, Thomas Lidbetter, and Alec Morton.
@@ -91,11 +124,34 @@ Martin~L Puterman.
   Programming}}.
 \newblock John Wiley {\&} Sons Inc., 1994.
 
+\bibitem{Ruckle2000}
+W.~H. Ruckle and K.~Kikuta.
+\newblock {Continuous accumulation games in continuous regions}.
+\newblock {\em Journal of Optimization Theory and Applications},
+  106(3):581--601, 2000.
+
+\bibitem{Ruckle1983}
+William~H Ruckle.
+\newblock {\em {Geometric games and their applications}}.
+\newblock Research notes in mathematics. Pitman Advanced Pub., 1983.
+
 \bibitem{Taylor1985}
 Bernard~W Taylor, Laurence~J Moore, Edward~R Clayton, K~Roscoe Davis, and
   Terry~R Rakes.
 \newblock {An Integer Nonlinear Goal Programming Model for the Deployment of
   State Highway Patrol Units}.
 \newblock {\em Management Science}, 31(11):1335--1347, 1985.
+
+\bibitem{Zoroa1999}
+N~Zoroa and P~Zoroa.
+\newblock {A Game Related to the Number of Hides Game}.
+\newblock {\em Journal of Optimization Theory and Applications},
+  103(2):457--473, 1999.
+
+\bibitem{Zoroa2004}
+P~Zoroa and N~Zoroa.
+\newblock {Search and Ambush Games with Capacities}.
+\newblock {\em Journal of Optimization Theory and Applications},
+  123(2):431--450, 2004.
 
 \end{thebibliography}

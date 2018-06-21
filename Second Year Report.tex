@@ -136,11 +136,17 @@ While these are a strategic problem from only the police force's point of view, 
 
 Game-theoretic analyses have been done in studies of counter-terrorism actions (\cite{Brown2006},\cite{Lindelauf2009}), to find how a patroller should randomize their patrol, it has been shown that the obvious that given $n$ targets spend $\frac{1}{n}$ of the available patrol time on every target is not necessarily a good idea(\cite{Fox}). The problem has been formulated as a Stackleberg (leader-follower decisions) type game, instead of a simultaneous decision one, in which heuristics have been found that near optimally solve the problem (\cite{Paruchuri2008}).
 
-A finite time ,simultaneous decision, game-theoretic formulation, based on a search game has been formulated and is called the patrol game (\citep{Alpern2011}). A search game involves a searcher who aims to minimize the time to find a hider, who doesn't want to be found, in some region (\cite{Steve2003})). Section \ref{Section:Review of Strategic Patrolling games} reviews the formulation and results of the patrol game, which uses discrete time and the same deterministic attack times. While general tools were found, only exact solutions to certain classes of graphs were found and in particular only a partial solution to the line graph was found, which was later completed (\cite{Papadaki2016}). A continuous version time version of the patrol game has also been formulated and solved for the line graph, agreeing with the discrete case (\cite{Alpern2016}).
+A baseline to start searching for an entity is the search game, a game-theoretic formulation, which involves a searcher aiming to minimize the time until they find either an immobile or mobile hider in some search space (\cite{Steve2003}). As a special search space, graphs are considered to just be subset of $\mathbb{R}^{3}$ (or $\mathbb{R}^{2}$ if planar) by embedding.
 
-Following this work, a infite time horizon patrol problem was formulated for generic attack times which can differ between nodes (\citep{Lin2013}), this problem is reviewed in Section \ref{Section:Review of patrolling problem with random attackers}. By using work related to indices developed for multi-arm bandits, they manage to develop near optimal heuristics for the patrol problem. They then move to the infinite time horizon patrol game, by introducing a strategic attacker, and again find near optimal heuristics for the problem. The patrol problem and game were later extended to include the idea of overlooking an attack instead of capture being ensured and again near optimal heuristic were developed (\cite{Lin2014}).
+Much work has been done on the search game involving extensions to a searcher who has multiple types of modes they can search in, this work was applied to a predator prey model, to analyse at what frequency a predator should ambush the prey (\cite{Alpern2011a}). Another variation of the search game in which the hider can hide portions of their self across, so that they is some critical amount of their self which needs to not be caught to be an effective hider, for a discrete (\cite{Kikuta2002a}) and continuous (\cite{Ruckle2000}) region of space the strategies were found be pure. This was later studied with a graphical structure and found that mixed strategies need to be employed (\cite{Alpern2014}).
 
-Our work will focus on extending the work done in \cite{Alpern2011} and \cite{Papadaki2016} to get an exact answer for more general graphs, with the aim of solving the exact game for trees. We develop a similar theory as in \citep{Lin2013} to deal with a problem, where the patroller may observe some suspicious behaviour from attackers and incorporates this information into their decision.
+Another common assumption is that we divide the search space into cells and the hider is in one of these cells with some initial probability distribution, and each search costing the searcher an amount dependent on the cell picked, upon completion of a search where the hider is not find, the searcher updates the prior probability (\cite{Black1965},\cite{Matula1964}). It is found that the searcher has a uniformly optimal strategy for all time horizons and so even with an unknown deadline can act optimally (\cite{Lin2016}). Work has also been done when the hider places parts of their self in cells (\cite{Ruckle1983}) and where these cells have a capacity (\cite{Zoroa1999},\cite{Zoroa2004})
+
+A patrol game (\citep{Alpern2011}) takes the search game in which the hider is always in the search space, and allows the hider (now called an attacker) to only be in the space for a subset of the time horizon, which is chosen by the attacker. This means that the patrol games are win-lose games instead of games of degree like the original search game. Section \ref{Section:Review of Strategic Patrolling games} reviews the formulation and initial results of patrol games on graphs. While general tools were found, only exact solutions to certain classes of graphs were found and in particular only a partial solution to the line graph was found, which was later completed (\cite{Papadaki2016}). A continuous version time version of the patrol game has also been formulated and solved for the line graph, agreeing with the discrete case (\cite{Alpern2016}). Throughout it is proposed that the intuitive solution, of simply going back and forth on the line, is not optimal and that it is the size of the gap between visits relative to how long the attacker is in the network that matters. In section \ref{Section:Patrolling games} we propose an issue with one attacking strategy developed when the time horizon is finite, correcting the issue and proposing a more general application. This is with an aim to get a solution for trees which provide a great lower bound for any graph.
+
+Following this work, a infite time horizon patrol problem was formulated for generic attack times which can differ between nodes (\citep{Lin2013}), this problem is reviewed in Section \ref{Section:Review of patrolling problem with random attackers}. By using work related to indices developed for multi-arm bandits, they manage to develop near optimal heuristics for the patrol problem. They then move to the infinite time horizon patrol game, by introducing a strategic attacker, and again find near optimal heuristics for the problem. In section \ref{Section:Strategic Patroller with Random Attackers} we alter the theory to deal with a problem, where the patroller may observe some suspicious behaviour from attackers and incorporates this information into their decision, but first we look at accounting for instantaneous movement of a patroller in the graph, in order to model that of guard flicking through live-video feeds.
+
+The patrol problem and game were later extended to include the idea of overlooking an attack instead of capture being ensured and again near optimal heuristic were developed (\cite{Lin2014})
 
 \subsection{Review of Strategic Patrolling games}
 \label{Section:Review of Strategic Patrolling games}
@@ -1755,49 +1761,34 @@ and the index reflects this, only wanting the patroller to visit in state, $s=B$
 
 \begin{align*}
 W_{j}(\bm{s})=\begin{cases}
-c_{j} \lambda_{j} R_{j}  \text{ for } s_{j}=B_{j} \\ 
-c_{j} \lambda_{j} \text{ for } s_{j}=B_{j}+1  \\
+c_{j} \lambda_{j} (B_{j}-1) R_{j}  \text{ for } s_{j}=B_{j}-1 \\ 
+c_{j} \lambda_{j} x_{j} \text{ for } s_{j}=B_{j},B_{j}+1  \\
 0 \text{ Otherwise} \\
 \end{cases}
 \end{align*}
 
-Looking at the single node problem, we notice that there is no cost to transition to the state $s=B$, so at this point we must decide if we are renew now or renew at $s=B+1$ or never renew at all (If indifferent between $B+1,B+2,....$)
+Looking at the single node problem, we notice that there is no cost to transition to the state $s=B$, at which point we incur a cost of $c \lambda R$ to go to $s=B+1$ and then we incur a cost of $c \lambda$.
 
-It is curious whether this sudden spike in the cost (and therefore in the resulting index) will cause any issue with the proposed heuristics. Looking at the results of only using deterministic attack times on $K_{6}$ in a numerical experiment (see Figure \ref{Figure:Deterministic attack times} we can see a larger amount of errors.
+We notice that the index has its first value in the state $s=B-1$, so in our main problem, when deciding between nodes, we put an index on a state that isn't immediately about to incur cost. Then once its incurring costs, we place a higher index.
+
+However consider a large such as $B=100$ , then for states $s=1,....,98$ we have no index and have no incentive to go visit at all, whether this spike in the index causes any issue with the proposed heuristics is worth some consideration.
 
 \begin{myfigure}
 \begin{center}
+%THIS FIGURE NEEDS REPLOTTING AT SOME POINT (WITH DIFF COSTS)
 \input{Images/OldDeterministicOnly.tex}
 \end{center}
 \caption{Frequency of percentage error with only deterministic attack times}
 \label{Figure:Deterministic attack times}
 \end{myfigure}
 
-\subsection{Proposed Solutions}
-To `smooth' the spike in the cost and index, we could suggest splitting up the index in some fashion. Before we suggest splitting the index through we must take into consideration how the benefit and penalty heuristics differ. As the penalty is measuring how much index is not claimed, it should be easy to split it amongst all states $s \leq B$, so that the sum is the correct index. But the benefit is measuring how much index is claimed, so it needs to be cumulative and is therefore a little harder to split amongst all the states $s \leq B$, we do not need that sum is the correct index.
+\subsection{Smoothing the index}
+To smooth the spike in index, we could suggest splitting up the index in some fashion. Before we suggest splitting the index through we must take into consideration how the benefit and penalty heuristics differ. As the penalty is measuring how much index is not claimed, it should be easy to split it amongst all states $s \leq B-1$, so that the sum is the correct index. But the benefit is measuring how much index is claimed, so it needs to be cumulative and is therefore a little harder to split amongst all the states $s \leq B-1$, we do not need that sum is the correct index.
 
-We will first consider splitting the index equally, so for the penalty we use the index
-
-\begin{align*}
-W_{j}^{EP}(\bm{s})=\begin{cases}
-\frac{c_{j} \lambda R_{j}}{B}  \text{ for } s_{j} \leq B_{j} \\ 
-c_{j} \lambda_{j} \text{ for } s_{j}=B_{j}+1  \\
-\end{cases}
-\end{align*}
-
-and for the benefit use the cumulative version
+Consider a the splitting function, for node $j$'s index, $l_{j}(x)$ with $x \in [1,....,B_{j}-1]$ s.t $L_{j}(B_{j}-1)=B_{j}-1$ where $L_{j}(x)=\sum\limits_{u=1}^{x} l_{j}(u)$ , and to place more emphasis on the spike we will require that $l_{j}(x)$ is non-decreasing. For now we will assume the same splitting is used on each node, dropping the subscript.
 
 \begin{align*}
-W_{j}^{EB}(\bm{s})=\begin{cases}
-\frac{s_{j} (c_{j} \lambda R_{j})}{B}  \text{ for } s_{j} \leq B_{j} \\ 
-c_{j} \lambda_{j} \text{ for } s_{j}=B_{j}+1  \\
-\end{cases}
-\end{align*}
-
-We can also consider splitting the index unequally, using the splitting function, on node $j$, $l_{j}(x)$ with $x \in [1,....,B]$ s.t $L_{j}(B_{j})=B_{j}$ where $L_{j}(x)=\sum\limits_{u=1}^{x} l_{j}(u)$ , and to place more emphasis on the spike we will require that $l_{j}(x)$ is non-decreasing. For now we will assume the same splitting is used on each node, dropping the subscript.
-
-\begin{align*}
-W_{j}^{UEP}(\bm{s})=\begin{cases}
+W_{j}^{SP}(\bm{s})=\begin{cases}
 l(s_{j}) \times \frac{c_{j} \lambda R_{j}}{B}  \text{ for } s_{j} \leq B_{j} \\ 
 c_{j} \lambda_{j} \text{ for } s_{j}=B_{j}+1  \\
 \end{cases}
@@ -1806,33 +1797,39 @@ c_{j} \lambda_{j} \text{ for } s_{j}=B_{j}+1  \\
 and for the benefit use the cumulative version
 
 \begin{align*}
-W_{j}^{UEB}(\bm{s})=\begin{cases}
+W_{j}^{SB}(\bm{s})=\begin{cases}
 L(s_{j}) \times \frac{(c_{j} \lambda R_{j})}{B}  \text{ for } s_{j} \leq B_{j} \\ 
 c_{j} \lambda_{j} \text{ for } s_{j}=B_{j}+1  \\
 \end{cases}
 \end{align*}
 
-So that original has $l(x) =0 \; \forall x \neq B$ and $l(B)=B$. The equal splitting has,$l(x)=1$. For our numerical study, we will consider using a linear increase $l(x)=\frac{2s_{j}}{B+1}$.
+So the original index has $l(x) =0 \; \forall x \neq B-1$ and $l(B-1)=B-1$. The equal splitting has,$l(x)=1 \; \forall x$. For our numerical study, we will consider using a linear increase $l(x)=\frac{2s_{j}}{B+1} \; \forall x$ for the unequal splitting .
 
-We now present, at depth 3, both the equal and unequal splitting against its counterpart.
+We now present, at depth 3, both the equal and unequal splitting against its original counterpart for the penalty (\ref{Figure:Penalty splitting experiment}) and benefit heuristics (\ref{Figure:Benefit splitting experiment}).
 
 \begin{myfigure}
-
+%THIS FIGURE NEEDS REPLOTTING AT SOME POINT (WITH DIFF COSTS)
+\input{Images/PenaltyDetSplittingExperiment.tex}
 \caption{Equal and unequal splitting against original for penalty heuristic}
+\label{Figure:Penalty splitting experiment}
 \end{myfigure}
 
 
 \begin{myfigure}
-
+%THIS FIGURE NEEDS REPLOTTING AT SOME POINT (WITH DIFF COSTS)
+\input{Images/BenefitDetSplittingExperiment.tex}
 \caption{Equal and unequal splitting against original for benefit heuristic}
+\label{Figure:Benefit splitting experiment}
 \end{myfigure}
+
+Our numerical experiments would seem to indicate that splitting the index amongst all states, $s \leq B$ does not seem to provide any increase in the heuristics performance.
 
 \section{Strategic Patroller with Random Attackers and Local-observations}
 \label{Section:Patrolling games with random attackers and local-observations}
 We now look at altering the work summarized in Section \ref{Section:Review of patrolling problem with random attackers} to incorporate suspicious behaviour of attackers who arrive while the patroller is present.
 
 \subsection{Altering the problem for instantaneous moving patroller}
-As the standard set-up has a patroller moving at unit speed along the edges, they are never really present at a node (even when waiting). As we wish to have the patroller observe some arrivals we shall first alter this assumption to that of an instantaneous moving patrolling. For now we will use the same assumption that attackers who arrive while the patroller is present are caught, however we will soon assume they are smart enough to not start their attack and instantly get caught.
+We may now wish to alter the standard set-up of a patroller moving at unit speed along the edges, if the guard was flicking through live-video feeds, while unit time is spend on each feed, there is no transition time between nodes. To more closely represent this we will alter the theory to account for an instantaneously moving patroller.
 
 \begin{myfigure}
 \begin{center}
@@ -1908,33 +1905,27 @@ The following are the changes
 
 \begin{align*}
 &f(k) \equiv \frac{c \lambda \int_{0}^{k-1} P(X \leq t) dt + \omega}{k} \\
-&W(k) \equiv c \lambda \left( \int_{k-1}^{k} P(X \leq t) dt - \int_{0}^{k-1} P(X \leq t) dt \right)
+&W(k) \equiv c \lambda \left( k \int_{k-1}^{k} P(X \leq t) dt - \int_{0}^{k-1} P(X \leq t) dt \right)
 \end{align*}
 
 \begin{note}
-$W(0)=0$ and for $k \geq B+1$ $W(k)= c \lambda E[X]$
+$W(0)=0$ and for $k \geq B+1$ $W(k)= c \lambda (1+E[X])$
 \end{note}
 
 Using this new definition of $W(k)$, Theorem \ref{Theorem:Single node optimal policy} still holds and gives us the optimal policy. Hence suggesting an index of
 
 \begin{align*}
-W_{i}(\bm{s}) \equiv c_{i} \lambda_{i} \left( \int_{s_{i}-1}^{s_{i}} P(X_{i} \leq t) dt - \int_{0}^{s_{i}-1} P(X_{i} \leq t) dt \right)
+W_{i}(\bm{s}) \equiv c_{i} \lambda_{i} \left( s_{i} \int_{s_{i}-1}^{s_{i}} P(X_{i} \leq t) dt - \int_{0}^{s_{i}-1} P(X_{i} \leq t) dt \right)
 \end{align*}
-
-For completness sake, we provide numerical results for the IRH and IPH defined as before, but using this index.
 
 \subsection{Numerical results for instantaneously moving patroller}
 For completeness sake, we provide numerical results for the IRH and IPH defined as before, but using this index.
 
 
-\begin{huge}
-THIS NEEDS TO BE DONE
-\end{huge}
-
 
 
 \subsection{Altering problem to accommodate local-observable information}
-Now that we have established a instantaneously moving patroller, we now introduce the idea of local-observations, that is the patroller witnesses attackers arriving at there current node, but the attackers do not begin there attack immediately,as they are aware of the patroller's presence. For now we assume that any such attacker is only able to delay their attack to start at the beginning of the next time period.
+Now that we have established a instantaneously moving patroller, we can now introduce the idea of local-observations, that is the patroller witnesses attackers arriving at there current node, but the attackers do not begin there attack immediately, as they are aware of the patroller's presence. For now we assume that any such attacker is only able to delay their attack to start at the beginning of the next time period, instead of waiting till the patroller leaves the node.
 
 \begin{figure}
 \begin{center}
@@ -2649,8 +2640,33 @@ The proof for the time-limited diametric attack (See Appendix \ref{Appendix:Proo
 
 \textbf{Plan:} !Not sure what to go here!
 
+\subsection{Complete Numerical experiment for simultaneous moving patroller}
+We first focus on the deterministic case, so that
 
-\subsection{Extending Discrete Attack time to generic distributions}
+\begin{align*}
+C_{j}(\bm{s},i) &= \begin{cases}
+c_{j} \lambda_{j} R_{j} \text{ if } s_{j}=B_{j} , j \neq i \\
+c_{j} \lambda_{j} \text{ if } s_{j}=B_{j} , j \neq i \\
+0 \text{ otherwise} 
+\end{cases}
+\end{align*}
+
+and an index
+
+\begin{align*}
+W_{i}(\bm{s}) \equiv \begin{cases}
+0 \text{ if } s_{i} < B_{i} \\
+B_{i} c_{i} \lambda_{i} R_{i} \text{ if } s_{i}=B_{i} \\
+(1+X_{i})c_{i} \lambda_{i} \text{if} s_{i}=B_{i}+1
+\end{cases}
+\end{align*}
+
+
+\textbf{Time Estimate:} 1 Month
+
+\textbf{Plan:} To rewrite code to deal with generic attack distributions, by using functions and integration tables. To alter code to use a path selection which works out the optimal long-run average cost for the heuristic policy at a certain look-ahead, by the use of cycles. Then to run numerical experiments, with the same set up as in \citep{Lin2013} and compare the results to the optimum. We also want to check if the same issue is found when we use purely deterministic attack times an whether splitting the index seems to help (as it does with local observations)
+
+\subsection{Extending Discrete Attack time to generic distributions for local observations}
 We want to look at removing the restriction placed on the attack time to be deterministic, as in section \ref{Section:Deterministic attack time assumption}. This will allow us to deal with any generic distribution, to do so we will focus on the single node problem with a generic distribution.
 
 As before if we start in states $(B+1,v)$ we will renew if $g \leq c \lambda$ and by the neglecting strategy we know this to guaranteed. So the optimal strategy will have all states with $s=B+1$ renew immediately.
