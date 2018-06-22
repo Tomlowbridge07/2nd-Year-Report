@@ -88,6 +88,7 @@ cross/.default={1pt}}
 
 \begin{document}
 
+
 \pagestyle{empty}
 {
   \renewcommand{\thispagestyle}[1]{}
@@ -104,6 +105,8 @@ cross/.default={1pt}}
 \newpage
 \pagenumbering{arabic}
 
+\pagestyle{empty}
+{
 \begin{center}
 \begin{Huge}
 \textbf{Summary of report}
@@ -111,46 +114,56 @@ cross/.default={1pt}}
 \end{center}
 
 
-In section \ref{Section:Literature Reviews} we provide an overview of the current work done on security problems, which focus on a patroller attempting to stop some malicious entity. We will also provide an in-depth review of \cite{Alpern2011} and \cite{Lin2013} upon which our contributions in sections \ref{Section:Patrolling games} and \ref{Section:Patrolling games with random attackers and local-observations} will be based upon.
+In section \ref{Section:Literature Reviews} we provide an overview of the current work done on security problems, which focuses on a patroller attempting to stop some malicious entity. We will also provide an in-depth review of \cite{Alpern2011} and \cite{Lin2013} upon which our extensions in sections \ref{Section:Patrolling games} and \ref{Section:Patrolling games with random attackers and local-observations} will be based.
 
-In section \ref{Section:Patrolling games} we continue last years initial work and provide new optimal strategies for the patroller as well as correcting an optimal attack strategy which solves a small issue with Lemma 9 in \cite{Alpern2011}. We further develop the idea that led to this correction in order to allow us to solve a wider class of graphs.
+In section \ref{Section:Patrolling games} we continue last year's initial findings and provide new optimal strategies for the patroller, as well as correcting an optimal attack strategy which solves a ambiguity with Lemma 9 in \cite{Alpern2011}. We further develop the idea the in order to provide us with tools to handle a wider class of graphs.
 
-In Section \ref{Section:Strategic Patroller with Random Attackers} we analyse the work done in \cite{Alpern2011} more closely, particularly looking at the issue with having only deterministic attack times. This is in an aim to provide evidence that the errors in our work in Section \ref{Section:Patrolling games with random attackers and local-observations} are exhibited in the original problem, and that it is a case of too much knowledge in the Lagrangian relaxation. We propose multiple solutions to the problem and carry out numerical experiments.
+In section \ref{Section:Strategic Patroller with Random Attackers} we analyse the work done in \cite{Alpern2011} more closely, particularly looking if their issue with having only deterministic attack times and the idea of having too much knowledge. This is in an aim to see if there is any evidence that the error of our heuristic in our later work(section \ref{Section:Patrolling games with random attackers and local-observations}) are exhibited in the original problem's heuristics. We introduce the idea of splitting the index among non-acting states which will be use in our extension.
 
-In Section \ref{Section:Patrolling games with random attackers and local-observations} we build on the work done in \cite{Lin2013} by introducing the concept of the patroler observing suspicous behaviour of arriving attackers and try to incorporate this information in an effort to develop a similar heuristic.
+In section \ref{Section:Patrolling games with random attackers and local-observations} we build on the work done in \cite{Lin2013} by introducing the concept of the patroler who can move instantaneously. And later who observes suspicious behaviour of arriving attackers and try to incorporate this information in an effort to develop a heuristic which is near optimal.
 
-Finally in Section \ref{Section:Future Work} we conclude the report with a list of uncompleted work as well as a brief introduction to ideas for future work and extensions to our security problems. 
+Finally in section \ref{Section:Future Work} we conclude the report with a list of uncompleted work as well as a brief introduction to ideas for future work and extensions to our type of security problems. 
 
-We leave most proofs to the Appendix, in which we also provide some graph definitions for those unfamiliar with common graph terminology.
+We leave most proofs to the Appendix. We also provide some definitions of graph terminology.
+}
+\clearpage
+\pagestyle{plain}
+
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{1em}
 
 \newpage
+\pagenumbering{arabic}
 
 \section{Literature Reviews}
 \label{Section:Literature Reviews}
 \subsection{Overview of Security Problems}
-Security problems arise in many real world scenarios, such as a security guard patrolling a museum, police patrolling a city and military personal guarding bases and borders. At the core of all these problems is the need to deploy resources to locations in order to find undesirable activity. When resources are scarce but can be used continuously one may suggest a patrol of the locations, which means the structure of the locations and how they can be traversed is of key importance. While most of the time this idea of traversing is physical, be it a guard walking around a museum or a drone flying of a region, it is not necessarily true, it may be a guard flicking through live-video feeds.
+Security problems arise in many real world scenarios, such as a security guard patrolling a museum, police patrolling a city and military personal guarding bases and borders. At the core of all these problems is the need to deploy resources to locations in order to find undesirable activity. When multiple resources are available, it is a question of where to deploy then and for what length of time, such as a fire brigade being deployed to sectors to fight a spreading forest fire. However when resources are scarce but can be used continuously one may suggest a patrol of the locations, which means the structure of the locations and how they can be traversed is of key importance. While most of the time this idea of traversing is physical, be it a guard walking around a museum or a drone flying of a region, it is not necessarily true, it may be a guard flicking through live-video feeds.
 
-Early work in the area focused on police patrols in urban areas (\cite{Larson1972},\cite{Chelst1978},\cite{Chaiken1978}), later research focused on patrolling rural areas (\cite{Birge1989}) and highways (\cite{Taylor1985}). These early works relied on the fact that the crime rate was known at the different locations and that they remained constant while the patrol was happening and involved randomizing the patrols in order to maximize the probability of intercepting a crime in progress.
+Early work in the area focused on police patrols in urban areas (\cite{Larson1972},\cite{Chelst1978},\cite{Chaiken1978}), using many technieques inclduing statistics based on $M/M/c$ queues( with small modifications due to the stochasticity of the number of servers) for the purpose of alloacting patrols, later moving onto patrolling rural areas (\cite{Birge1989}), in which the primary difference was the incorporation of the travel time into the service rate. Furthermore work was done on police patrolling highways(\cite{Taylor1985}), . These early works relied on the fact that the crime rate was known at the different locations and that they remained constant while the patrol was happening.The solution to the problems involved randomizing the patrols in order to maximize the probability of intercepting a crime in progress.
 
-While these are a strategic problem from only the police force's point of view, one may wish to introduce a strategic problem for the attacker, making the problem a game theoretic one, while differential game formulations exist (\cite{Feichtinger1983}) these tend to focus on a dynamic (and often strategic) process of mutual adjustment, rather than confronting the problem of a scheduler who has has to determine the path of the patrol to take beforehand.
-
-Game-theoretic analyses have been done in studies of counter-terrorism actions (\cite{Brown2006},\cite{Lindelauf2009}), to find how a patroller should randomize their patrol, it has been shown that the obvious that given $n$ targets spend $\frac{1}{n}$ of the available patrol time on every target is not necessarily a good idea(\cite{Fox}). The problem has been formulated as a Stackleberg (leader-follower decisions) type game, instead of a simultaneous decision one, in which heuristics have been found that near optimally solve the problem (\cite{Paruchuri2008}).
+While the work done in scheduling police patrols are a strategic only from the police force's point of view, one may wish to introduce a strategic problem for the attacker.This makes the problem a game-theoretic one, while differential game formulations exist (\cite{Feichtinger1983}) these tend to focus on a dynamic (and often strategic) process of mutual adjustment, rather than confronting the problem of a scheduler who has has to determine the path of the patrol to take beforehand.
 
 A baseline to start searching for an entity is the search game, a game-theoretic formulation, which involves a searcher aiming to minimize the time until they find either an immobile or mobile hider in some search space (\cite{Steve2003}). As a special search space, graphs are considered to just be subset of $\mathbb{R}^{3}$ (or $\mathbb{R}^{2}$ if planar) by embedding.
 
-Much work has been done on the search game involving extensions to a searcher who has multiple types of modes they can search in, this work was applied to a predator prey model, to analyse at what frequency a predator should ambush the prey (\cite{Alpern2011a}). Another variation of the search game in which the hider can hide portions of their self across, so that they is some critical amount of their self which needs to not be caught to be an effective hider, for a discrete (\cite{Kikuta2002a}) and continuous (\cite{Ruckle2000}) region of space the strategies were found be pure. This was later studied with a graphical structure and found that mixed strategies need to be employed (\cite{Alpern2014}).
+Game-theoretic analyses have been done in studies of counter-terrorism actions (\cite{Brown2006},\cite{Lindelauf2009}), to find how a patroller should randomize their patrol. It has been shown that the obvious strategy of; given $n$ targets, spend $\frac{1}{n}$ of the available patrol time on every target; is not necessarily a good idea(\cite{Fox}). The game has also been formulated as a Stackleberg (leader-follower decisions) type game, instead of a simultaneous decision one, in which near optimal heuristics have been found(\cite{Paruchuri2008}).
 
-Another common assumption is that we divide the search space into cells and the hider is in one of these cells with some initial probability distribution, and each search costing the searcher an amount dependent on the cell picked, upon completion of a search where the hider is not find, the searcher updates the prior probability (\cite{Black1965},\cite{Matula1964}). It is found that the searcher has a uniformly optimal strategy for all time horizons and so even with an unknown deadline can act optimally (\cite{Lin2016}). Work has also been done when the hider places parts of their self in cells (\cite{Ruckle1983}) and where these cells have a capacity (\cite{Zoroa1999},\cite{Zoroa2004})
+Many extensions the search game have been studied, such as a searcher who has multiple modes(such as fast or slow), they can search in, this work was applied to a predator prey model, to analyse at what frequency a predator should ambush the prey (\cite{Alpern2011a}). Another variation of the search game, is the accumulation game, in which the hider can hide portions of their self across the search space, with some critical amount of their self which needs to avoid being found in roder to be effective. For a continuous portioning of the hider in a discrete (\cite{Kikuta2002a}) and continuous (\cite{Ruckle2000}) search space, the strategies were found be pure. While later this studied with a graphical structure and it was found that mixed strategies need to be employed in optimum(\cite{Alpern2014}).
 
-A patrol game (\citep{Alpern2011}) takes the search game in which the hider is always in the search space, and allows the hider (now called an attacker) to only be in the space for a subset of the time horizon, which is chosen by the attacker. This means that the patrol games are win-lose games instead of games of degree like the original search game. Section \ref{Section:Review of Strategic Patrolling games} reviews the formulation and initial results of patrol games on graphs. While general tools were found, only exact solutions to certain classes of graphs were found and in particular only a partial solution to the line graph was found, which was later completed (\cite{Papadaki2016}). A continuous version time version of the patrol game has also been formulated and solved for the line graph, agreeing with the discrete case (\cite{Alpern2016}). Throughout it is proposed that the intuitive solution, of simply going back and forth on the line, is not optimal and that it is the size of the gap between visits relative to how long the attacker is in the network that matters. In section \ref{Section:Patrolling games} we propose an issue with one attacking strategy developed when the time horizon is finite, correcting the issue and proposing a more general application. This is with an aim to get a solution for trees which provide a great lower bound for any graph.
+Another common assumption about the search space is that we can divide it into cells, then the hider is in one of these cells. We assume some initial probability distribution of where the hider is, is known the searcher and that searching a cell costs the searcher a differing amount dependent on the cell. Then the seracher upon completion of a search where the hider is not find, can update the prior probability in a bayesian fashion(\cite{Black1965},\cite{Matula1964}). It has been found that the searcher has a uniformly optimal strategy for all time horizons and so even if the searcher has an unknown deadline, to find the hider, they can act optimally (\cite{Lin2016}). Work has also been done to incorporate the portioning of the hider as in the accumulation game, but when we have search cells(\cite{Ruckle1983}) and further when these cells have a limited capacity of how much the hider can hide in them(\cite{Zoroa1999},\cite{Zoroa2004})
 
-Following this work, a infite time horizon patrol problem was formulated for generic attack times which can differ between nodes (\citep{Lin2013}), this problem is reviewed in Section \ref{Section:Review of patrolling problem with random attackers}. By using work related to indices developed for multi-arm bandits, they manage to develop near optimal heuristics for the patrol problem. They then move to the infinite time horizon patrol game, by introducing a strategic attacker, and again find near optimal heuristics for the problem. In section \ref{Section:Strategic Patroller with Random Attackers} we alter the theory to deal with a problem, where the patroller may observe some suspicious behaviour from attackers and incorporates this information into their decision, but first we look at accounting for instantaneous movement of a patroller in the graph, in order to model that of guard flicking through live-video feeds.
+While search games (and there successors) are of major importance when there are two uncooperative element, they have also been expended to rendezvous search games(\cite{Steve2003}). A rendevous game is a game where two rendezvours wish to detect each other in the search space. Such games change the min-max objective of search games into a min-min objective. While rendezvous games do not inherintely have a mallicous entity, they are still useful in secruity problems such as, the regrouping of military assets in an unknown environment and with the development of communication technologies have been applied to the frequencies on military assets communicate. Like before often a graphical structure can be applied (\cite{Alpern1999}). To reintroduce a mallicous entity in the field of communication, a searcher is introduce to create a three player problem , with two rendezvours who are cooperative and a enemy searcher. This idea has been applied to the wire-tapping of phone lines(\cite{Alpern1998}) and the jamming of signals in millitary communications(\cite{Abdel-Rahman2014}).
+
+A patrolling game (\citep{Alpern2011}) takes the search game in which the hider is always in the search space, and allows the hider (now called an attacker) to only be in the space for a subset of the time horizon, which is chosen by the attacker. This means that the patrol games are win-lose games instead of games of degree like the original search game. Section \ref{Section:Review of Strategic Patrolling games} reviews the formulation and initial results of patrol games on graphs. While general tools were found, only exact solutions to certain classes of graphs were found and in particular only a partial solution to the line graph was found, which was later completed (\cite{Papadaki2016}). A continuous time version of the patrol game has also been formulated and solved for the line graph, agreeing with the discrete case (\cite{Alpern2016}). Throughout it is proposed that the intuitive solution, of simply going back and forth on the line, is not optimal and that it is the size of the gap between visits relative to how long the attacker is in the network that matters. In section \ref{Section:Patrolling games} we propose an issue with one attacking strategy developed when the time horizon is finite, correcting the issue and proposing a more general application. This is all done with the aim of getting a solution for all tree graphs, which provide a great lower bound for any graph.
+
+Following this work, a infinite time horizon patrol problem was formulated for generic attack times which can differ between nodes (\citep{Lin2013}), this problem is reviewed in Section \ref{Section:Review of patrolling problem with random attackers}. By using work related to indices developed for multi-arm bandits, they manage to develop near optimal heuristics for the patrol problem. They then move to the infinite time horizon patrol game, by introducing a strategic attacker, and again find near optimal heuristics for the problem. In section \ref{Section:Strategic Patroller with Random Attackers} we alter the theory to deal with a problem, where the patroller may observe some suspicious behaviour from attackers and incorporates this information into their decision, but first we look at accounting for instantaneous movement of a patroller in the graph, in order to model that of guard flicking through live-video feeds.
 
 The patrol problem and game were later extended to include the idea of overlooking an attack instead of capture being ensured and again near optimal heuristic were developed (\cite{Lin2014})
 
 \subsection{Review of Strategic Patrolling games}
 \label{Section:Review of Strategic Patrolling games}
-This section summarizes the key work from \cite{Alpern2011} and their work on Patrol games. Providing a baseline for future work done in section \ref{Section:Patrolling games}
+This section summarizes the key work from \cite{Alpern2011} and their work on patrolling games. This will provide a baseline for future work done in \ref{Section:Patrolling games}
 
 \subsubsection{Game set-up}
 A patrolling game, $G=G(Q,T,m)$, is a win-lose, zero-sum game between a maximizing patroller (often referred to as she) and a minimizing attacker (often referred to as he). The parameters of the game are:
@@ -203,246 +216,103 @@ Many general properties for the game can be easily proven; such as that the one-
 We shall now focus on the unrestricted, one-off game, for the rest of this section as it provides an upper bound for the periodic game.
 
 \subsubsection{Bounds and Tools}
-We shall provide a list of attacks and patrollers to give bounds on $V$ which can be applied to all graphs. The lower bounds are given in terms of the patroller's ``good'' strategy against all attacker options, similarly the upper bounds are given in terms of the attacker's ``good'' strategy against all the patroller options. When we reach tightness between the bound these ``good'' strategies become an optimal solution.
+We shall provide a group of patrols and attackss to give bounds on $V$ which can be applied to all graphs. The lower bounds are given in terms of the patroller's `good' strategy against all attacker options, similarly the upper bounds are given in terms of the attacker's `good' strategy against all the patroller options. When we reach tightness between the bound these `good' strategies become an optimal solution.
 
 \textbf{General bounds(Patroller and Attacker):}
 
-By the patroller waiting a random node they can achieve $V \geq \frac{1}{n}$ and by the attacker picking a random node with a fixed time $I$ they can achieve $V \leq \frac{m}{n}$ (More generally $V \leq \frac{\omega}{n}$ for $\omega$, the maximum number of nodes any patrol can cover).
-
-\begin{lemma}[General bounds]
-\label{Lemma:General bounds}
-$$\frac{1}{n} \leq V \leq \frac{\omega}{n} \leq \frac{m}{n}$$
-Where $\omega$ is the maximum number of distinct nodes that can be visited in an attack interval.
-\end{lemma}
+By the patroller waiting a random node they can achieve $V \geq \frac{1}{n}$ and by the attacker picking a random node with a fixed time $I$ they can achieve $V \leq \frac{\omega}{n} \leq \frac{m}{n}$, where $\omega$ is the maximum number of nodes the patroller can visit in the interval, $I$ of length $m$.
 
 \textbf{Decomposition(Patroller):}
 
-We can consider decomposing the graph so that we just operate on parts with some appropriate probability.
-
-\begin{definition}[Edge-preserving subgraph]
-A subgraph, $Q'=(N',E')$ of $Q$ is called edge-preserving if $n_{1},n_{2} \in Q \cap Q*$ then if $(n_{1},n_{2}) \in E \implies (n_{1},n_{2}) \in E'$ 
-\end{definition}
-
-Meaning for an edge-preserving subgraph,we only need to pick the nodes and the edges are mandated by the original graph.
-
-\begin{lemma}[Decomposition lower bound]
-Consider decomposing $Q$ into edge-preserving subgraphs $Q_{i}$ for $i=1,...,k$ with values $V_{i}=V(Q_{i})$ such that $Q=\bigcup\limits_{i=1}^{k} Q_{i}$ then
-$$V \geq \frac{1}{\sum\limits_{i=1}^{k} \frac{1}{V_{i}}} $$
-Furthermore in the case of a disjoint decomposition equality is reached
-\end{lemma}
-
-The above provides a solution to build disjointly decomposable graphs, so it is only worth studying connected graphs.
-
-
-\begin{example}
-For $Q$ as seen in Figure \ref{Figure:Q decompisition example}. Consider when $m=3$, the decomposition of $Q$ into the graphs $Q_{1} \equiv L_{2}$ and $Q_{2} \equiv L_{3}$. $V_{1}=V(L_{2})=1$ as alternating between $1$ and $2$ can catch every attack. $V_{2}=V(L_{3})=\frac{3}{4}$ (as seen in \cite{Alpern2011}). 
-
-Then we can get the bound $V \geq \frac{1}{\frac{1}{V_{1}}+\frac{1}{V_{2}}} = \frac{1}{\frac{1}{1}+\frac{3}{4}}=\frac{4}{7}$.
-\end{example}
-
-\begin{myfigure}
-\begin{center}
-\begin{tikzpicture}[baseline=(current bounding box.north),-,auto,node distance=2cm,
-                    thick,main node/.style={circle,draw,font=\sffamily\Large\bfseries}]
-
-  \node[main node] (1) {$1$};
-  \node[main node] (2) [right of=1] {$2$};
-  \node[main node] (3) [below of=1] {$3$};
-  \node[main node] (4) [below of=3] {$4$};
-
-  \path[every node/.style={font=\sffamily}]
-    (1) edge  (2)
-    edge (3)
-    (2) edge (3)
-    (3) edge (4);
-  
-  \node (Box1) [draw=blue,dashed,thick,fit=(1) (2),fill=blue,opacity=0.2] {};  
-  \node (Box2) [draw=red,dashed,thick,fit=(1) (3) (4),fill=red,opacity=0.2] {};
-  
-  \node [yshift=3.0ex, blue] at (Box1.north) {$Q_{1}$};
-  \node [xshift=3.0ex, red] at (Box2.east) {$Q_{2}$};  
-\node [left=0.5cm,text width=0.5cm] at (1)
-{
-$Q$
-};   
-\end{tikzpicture}
-\end{center}
-\caption{Decomposition of Q into \textcolor{blue}{$Q_{1}$} and \textcolor{red}{$Q_{2}$}.}
-\label{Figure:Q decompisition example}
-\end{myfigure}
+We can consider decomposing the graph into subsets of nodes, and hence (edge-preserving) sub-graphs, $Q_{i}$, with known values, $V_{i}=V(Q_{i})$.Then by playing on these sub-graphs with some appropriate probabilities, $p_{i}= \frac{1}{\sum\limits_{j=1}^{n} \frac{V_{i} }{V_{j}}}$, the patroller can achieve $V \leq \frac{1}{\sum\limits_{j=1}^{n} \frac{1}{V_{j}}}$, with equality if the decomposition is disjoint. An example of this can be found in Appendix \ref{Appendix:Example of deocmposition}
 
 \textbf{Simplification(Patroller and Attacker):}
 
-\begin{definition}[Node Identification]
-The operation of \textit{node identification} on two nodes, $u$ and $v$, of a graph, $G=(N,E)$ into a single node $w$, is a mapping $f:N \rightarrow N'$ resulting in a new graph $G'=(N',E')$ where $N'=(N \setminus  \{u,v\}) \cup \{w\}$ with $E'=E \setminus \{(u,v)\}$ if $(u,v) \in E$ and under the condition that $\forall x \in N$, $f(x) \in N'$ is incident to $e' \in E'$ iff $e \in E$ is incident to $x \in N$.
-Furthermore if a graph, $Q$, undergoes repeated node identification to become $Q'$ then we say it has been \textit{simplified}. 
-\end{definition}
+The `merging' of adjacent nodes (Formally Node identification) reducing the number of nodes. When this merging is repeated the graph is said to be simplified.
 
 \begin{definition}[Embedded walk]
 An \textit{Embedded walk}, $W'$, on $Q'$ is the walk, $W$, done on $Q$ under the simplification mapping of $Q$ to $Q'$. i.e if $\pi :Q \rightarrow Q'$ is the simplification map, then $W'=\pi (W)$.
 \end{definition}
 
-\begin{lemma}[Simplification]
-If $Q'$ is a simplified version of $Q$ then $V(Q') \geq V(Q)$
-\end{lemma}
-
-Simplification allows us to get bounds for both the patroller and attacker, depending on whether $Q'$ or $Q$ is the graph we are working on.
-
-\begin{example}
-For $Q$ as seen in Figure \ref{Figure:Q simplification example}, when $m=3$, the simplification of the graph by identifying nodes $1$ and $2$ simplifies $Q$ to $Q'=L_{3}$. Hence we can get the bound that $V(L_{3}) \geq  V(Q)$ so $V(Q) \leq \frac{3}{4} $
-\end{example}
-
-\begin{myfigure}
-\begin{center}
-\begin{tikzpicture}[baseline=(current bounding box.north),-,auto,node distance=2cm,
-                    thick,main node/.style={circle,draw,font=\sffamily\Large\bfseries}]
-
-  \node[main node] (1) {$1$};
-  \node[main node] (2) [right of=1] {$2$};
-  \node[main node] (3) [below of=1] {$3$};
-  \node[main node] (4) [below of=3] {$4$};
-  
-  \node (P1) [below of=2] {};
-  \node (P2) [right of=P1] {};
-  \node (P3) [right of=P2] {};
-  
-  \draw[->] (P2) edge (P3);
-  
-  \node[main node] (b) [right of=P3] {$b$};
-  \node[main node] (a) [above of=b] {$a$};
-  \node[main node] (c) [below of=b] {$c$};
-
-  \path[every node/.style={font=\sffamily}]
-    (1) edge  (2)
-    edge (3)
-    (2) edge (3)
-    (3) edge (4)
-    (a) edge (b)
-    (b) edge (c);
-  
-  \node (Box1) [draw,dashed,thick,fit=(1) (2),fill,opacity=0.2] {};  
-  
-  \node [yshift=3.0ex] at (Box1.north) {$1,2$ Identified};  
-\node [left=0.5cm,text width=0.5cm] at (1) {$Q$};
-\node [left=0.5cm,text width=0.5cm] at (a) {$Q'$};   
-\end{tikzpicture}
-\end{center}
-\caption{Simplifcation of $Q$ to $Q'$ by identification.}
-\label{Figure:Q simplification example}
-\end{myfigure}
-
+If we embed an optimal walk on $Q$ into $Q'$ (a simplified version of $Q$), then it is shown that $V(Q') \geq V(Q)$. It is worth noting that from this perspective, the bound on $Q'$ is an attacker bound. However by considering an opposite of simplification we can get patroller bounds. An example of this can be found in Appendix \ref{Appendix:Example of simplification}
 
 \textbf{Diametric attack(Attacker)}
 
-Let $d(i,i')$ is the distance between nodes $i$ and $i'$ with the distance measured by the minimum number of edges.
+Attacking with equal probability at a pair of points which are the maximum distance apart, starting at attack times $\tau=0,1,...,T-m$ with equal probability is called the \textit{diametrical attack}. intervals(starting at $\tau=0,1,...,T-m$. By using such an attack the diametric bound in Lemma 9 (from \cite{Alpern2011}) $V \leq \max\left\{\frac{m}{\raisebox{-0.5ex}{$\scriptstyle 2 \bar{d}$}} , \frac{1}{2} \right\}$
 
-\begin{definition}[Graph Diameter]
-The \textit{diameter} of a graph $Q$ is defined by $\bar{d}=\max\limits_{i,i' \in N} d(i,i')$ . The node pairs satisfying this are called \textit{diametrical}.
-\end{definition}
 
-\begin{lemma}
-The attacker playing equally likely at a pair of diametrical for a random time interval is called the \textit{diametric attack}, and gives $V \leq \max\left\{\frac{m}{\raisebox{-0.5ex}{$\scriptstyle 2 \bar{d}$}} , \frac{1}{2} \right\}$
-\end{lemma}
-
-In section \ref{Section:Patrolling games} we will present an issue with this lemma.
+While this bound can hold, an issue caused by the time-horizon is ambiguous in the statement of the Lemma. We will discuss this ambiguity and provide a more concrete statement which considers the time-horizon.
 
 \textbf{Covering(Patroller) and Independence(Attacker):}
 
-\begin{definition}[Covering]
-A patrol, $W$, is called \textit{intercepting} if it intercepts every possible attack at every node contained in the patrol, i.e all nodes visited by $W$ are in any subpath of length $m$ (i.e visits are at most $m$ apart).
+A collection of patrols which each capture every node within there patrol is called \textit{covering} set, with the minimal number of patrols needed called the \textit{covering number}, $\mathcal{C}$. As the patroller can implement one of these patrols, $V \geq \frac{1}{\mathcal{c}}$.
 
-A set of intercepting patrols forms a \textit{Covering set} if every node in $Q$ is contained in at least one of the patrols. Furthermore the \textit{Covering number}, $\mathcal{C}$ is the minimum cardinality of all the covering sets.
-\end{definition}
+A set of nodes in which any patrol cannot catch more than one is called  an \textit{independent} set, with the maximal number of nodes which can be used called the \textit{independence number}, $\mathcal{I}$. As the patroller can play at one of these nodes with equal probability, $V \leq \frac{1}{I}$. 
 
-\begin{definition}[Independence]
-Two nodes, $i$ and $i'$, are called \textit{independent} (for attack time, $m$) if any patrol intercepting an attack at $i$ cannot also intercept an attack at $i'$.
-
-A set of independent points forms a \textit{Independent set} if every element of the set is independent of every other element. Furthermore the independence number $\mathcal{I}$ is the maximum cardinality of all the independent sets.
-\end{definition}
 
 For the one-off game being independent is equivalent to $d(i,i') \geq m$ and for the Periodic game it is equivalent to $d(i,i') \geq m$ and $2d(i,i') \leq T$(due to returning to start).
-
-
-Clearly $\mathcal{I} \leq \mathcal{C}$ as to cover a collection of independent nodes, at least that many covering patrols are needed (Possibly more if they also don't get every node in $Q$)
-
-\begin{lemma}[Covering and Independence]
-$$ \frac{1}{\mathcal{C}} \leq V \leq \frac{1}{\mathcal{I}} $$
-\end{lemma}
 
 \subsubsection{Solved Graphs}
 We shall provide some information on graphs that have already been solved
 
 \textbf{Hamiltonian:}
 
-A Hamiltonian graph is a graph with a Hamiltonian cycle, that is a walk which visits all nodes only once, returning to the start. Two classes of such graphs are cyclic graphs, $C_{n}$ and the complete graphs, $K_{n}$. While Hamiltonian graphs can exhibit more than one Hamiltonian cycle we shall assume that we have selected one arbitrarily. We shall also assume that the attack, $m < n$, as otherwise by following the Hamiltonian cycle we guarantee capture (i.e for $m \geq n \implies V=1$).
+In a Hamiltonian graph, following a Hamiltonian cycle(called a \textit{Hamiltonian patrol}) means the patroller sees every node every $n$ time periods, so if $m \geq n$ all attacks will be caught, hence it is assumed that $m < n$ (otherwise $V=1$).
 
-\begin{definition}[Random Hamiltonian Patrol]
-A \textit{Random Hamiltonian Patrol} is a mixed strategy starting with equal probability at all nodes and following the Hamiltonian cycle.
-\end{definition}
+To extend this the \textit{random Hamiltonian patrol} is a patrol strategy starting with equal probability at all nodes on the graph and patrolling by following a fixed Hamiltonian cycle. It is shown that using this strategy gives $V \geq \frac{m}{n}$, as the patroller sees each node, at each time with this probability. Now with a general attacker bound, they get the result that $V=\frac{m}{n}$ for Hamiltonian graphs.
 
-\begin{theorem}[Hamiltonian]
-If $Q$ is Hamiltonian, by following the Random Hamiltonian Patrol (if feasible), the patroller can achieve $V \geq \frac{m}{n}$.
-\end{theorem}
-
-This, along with a general bound (Lemma \ref{Lemma:General bounds}) , provides the solution $V=\frac{m}{n}$.
+Two classes of such graphs are cyclic graphs, $C_{n}$ and the complete graphs, $K_{n}$ and we note that the extra edges in the class of complete graphs do not effect the value of the game.
 
 \textbf{Line:}
 
-A Line Graph, $L_{n}$, is a graph consisting of $n$ nodes with $n-1$ edges connecting the nodes in a straight line.  While the line graph is complicated to solve it has been done across two papers, \cite{Alpern2011} and \cite{Papadaki2016}. The solution required the division of the $(n,m)$ space into sub-regions (inside which different strategies are adopted by the attacker and patroller). We highlight the regions for comparison to solving our bigger class of graphs later.
+A Line Graph, $L_{n}$, is a graph consisting of $n$ nodes with $n-1$ edges connecting the nodes in a straight line.  While the line graph is complicated to solve it has been done across two papers, \cite{Alpern2011} and \cite{Papadaki2016}. The solution required the division of the $(n,m)$ space into sub-regions (inside which different strategies are adopted by the attacker and patroller). We highlight the regions, and corresponding values, for comparison to solving our more generic class of graphs later.
 
 \begin{itemize}
-\item $S_{1}= \{(n,m) \, | \, m > 2(n-1) \}$ for $V=1$
-\item $S_{2}= \{(n,m) \, | \,  n-1 < m \leq 2(n-1) \}$ for $V=\frac{m}{2(n-1)}$
-\item $S_{3}= \{(n,m) \, | \, m=2,n\geq 3 \}$ for $V=\frac{1}{\ceil{\frac{n}{2}}}$
-\item $S_{4}= \{(n,m) \, | \, m=n-1, \text{ or } m=n-2 \text{ and } m \geq 3 \text{ odd} \}$ for $V=\frac{1}{2}$
-\item $S_{5}= \{(n,m) \, | \, m \leq n-3, \text{ or } m=n-2 \text{ and } m \geq 3 \text{ even} \}$ for $V=\frac{m}{n-1+m}$
+\item $S_{1}= \{(n,m) \, | \, m > 2(n-1) \}$ which have values $V=1$
+\item $S_{2}= \{(n,m) \, | \,  n-1 < m \leq 2(n-1) \}$ which have values $V=\frac{m}{2(n-1)}$
+\item $S_{3}= \{(n,m) \, | \, m=2,n\geq 3 \}$ which have values $V=\frac{1}{\ceil{\frac{n}{2}}}$
+\item $S_{4}= \{(n,m) \, | \, m=n-1, \text{ or } m=n-2 \text{ and } m \geq 3 \text{ odd} \}$ which have values $V=\frac{1}{2}$
+\item $S_{5}= \{(n,m) \, | \, m \leq n-3, \text{ or } m=n-2 \text{ and } m \geq 3 \text{ even} \}$ which have values $V=\frac{m}{n-1+m}$
 \end{itemize}
+
+It is worth highlighting the strict concavity of the value function for the line in the region, $S_{5}$, as this is the region that will cause us the most issue when trying to generalise their results. See Figure \ref{Figure:Line 10 value function}.
 
 \begin{myfigure}
 \begin{center}
 \input{Images/LineRegions(L_10).tex}
 \end{center}
-\caption{Value of $L_{10}$ for \textcolor{yellow}{$S_{1}$},\textcolor{red}{$S_{2}$},\textcolor{purple}{$S_{4}$},\textcolor{blue}{$S_{5}$},\textcolor{green}{$S_{3}$}}
+\caption{Value of game on$L_{10}$ with attention drawn to $(10,m)$ split into regions; \textcolor{yellow}{$S_{1}$},\textcolor{red}{$S_{2}$},\textcolor{purple}{$S_{4}$},\textcolor{blue}{$S_{5}$},\textcolor{green}{$S_{3}$}}
+\label{Figure:Line 10 value function}
 \end{myfigure}
 
-
-However $S_{2}$ uses the diametric attack, so will exhibit the issue discussed in Section \ref{Section:Patrolling games} and will be corrected.
+We also note that $S_{2}$ uses the diametric attack in \cite{Papadaki2016}, and so its ambiguity in the time horizon can be resolved using the alteration in \ref{Section:Patrolling games}
 
 \textbf{Bipartite:}
 
-A bipartite graph is a graph which can be partitioned into two sets, $A$ and $B$ (with $|A|=a,|B|=b$, assume WLOG that $b \geq a$) were edges only exist between these two sets. A special bipartite graph is the complete bipartite graph $K_{a,b}$, in which all combinations of nodes in $A$ and $B$ are adjacent.
+In a bipartite graph, with sets disjoin sets $A$ and $B$ (WLOG assume $|B| \geq |A|$),then the \textit{Bipartite Attack} selects nodes will equal probability from $B$ for a fixed time interval, $I$ (or for the two time intervals, $I$ and $I+1$ with equal probability if $m$ is odd). It has been shown that by the patroller following the attack $V \leq \frac{m}{2|B|}$ as the patroller much alternate between the sets, seeing a potential attack every other time periods(during the attack interval). When $m \geq 2|B|$ this alternating guarantees capture and $V=1$.
 
-Assume that $m < 2b$, as otherwise there exists a $2b$ period patrol which covers all nodes and guarantees capture (i.e if $m \geq 2b  \implies V=1$).
+On a complete biparitate, $K_{b,b}$ which is a hamiltonian graph, the patroller bound gets a tight lower bound so they show that $V=\frac{m}{2b}$.
 
-\begin{definition}[Bipartite Attack]
-The \textit{Bipartite Attack} selects nodes equiprobably from the larger set $B$ for a fixed time interval, $I$ (or for the two time intervals, $I$ and $I+1$ equiprobably if $m$ is odd).
-\end{definition}
+\begin{note}
+When $m$ is odd, the use of two fixed time intervals $I$ and $I+1$ is made to `balance' the fact that it is possible to see $\frac{m+1}{2}$ possible attacks, but with the offset time intervals two of these only see half a potential attack.
+\end{note}
 
-\begin{theorem}[Bipartite]
-If $Q$ is bipartite with $b \geq a$, by following the Bipartite Attack, the attacker can achieve $V \leq \frac{m}{2b}$
-\end{theorem}
-
-The reasoning behind the bound is that any patrol must alternate between $|A|$ and $|B|$, so only visits a node from $B$ every other time step. 
-
-\begin{corollary}[Complete Bipartite]
-\label{Corollary:Complete Bipartite}
-The value of the complete bipartite graph, $K_{a,b}$, with $b \geq a$, then $V=\frac{m}{2b}$
-\end{corollary}
-
-This is because a lower bound of $V \geq \frac{m}{2b}$ is given by the random Hamiltonian patrol in $K_{b,b}$ , which simplifies to $K_{a,b}$.
+\subsubsection{Conclusion on review of patrolling problem}
+While \cite{Alpern2011} introduced the patrolling game and along with \cite{Papadaki2016} solved the game for some of the most common graphical structures, they present no solution for generic graphs and comment that exact solutions to graphs are difficult to find. However with common graph classes solved they have provided a good baseline for our future work, which will continue their theory, discussing new strategies and their applications to a more generalised line graph, called the extended star graph.
 
 \subsection{Review of patrolling problem with random attackers}
 \label{Section:Review of patrolling problem with random attackers}
-This section summarizes the key work from \cite{Lin2013} and their work on Patrolling games with random attackers. Providing a baseline for future work done in section \ref{Section:Patrolling games with random attackers and local-observations}
+As discussed towards the end of section \ref{Section:Review of Strategic Patrolling games}, it proves quite difficult to find exact solutions to the patrolling game for a general graph. With the aim to develop strategies to the patrolling game on any graph, \cite{Lin2013} first develops a similar patrolling problem which is only strategic for the patroller but uses stochastic attack time distributions in the infinite time horizon. They manage to find a near optimal heuristic for the patroller. Later they reintroduce the game-theoretic element of a strategic attacker by formulating a normal-form(matrix) game, in which the patroller has only a finite list of strategies, picked to be `appropriately good'.
 
 \subsubsection{Problem set-up}
-A patrolling problem with random attackers, $G=G(Q,\bm{X},\bm{\lambda},\bm{c})$ is a minimizing problem for the patroller. The parameters of the problem are
+A patrolling problem with random attackers, $G=G(Q,\bm{X},\Lambda,\bm{p},\bm{c})$ is a minimizing problem for the patroller. The parameters of the problem are
 
 \begin{itemize}
 \item The graph, $Q=(N,E)$, made of nodes, $N$ ($|N|=n$), joined by edges, $E$, which can be represented by an adjacency matrix, $A$.
 \item A vector of attack time distributions, $\bm{X}=(X_{1},...,X_{n})$.
-\item A vector of poisson arrival rates, $\bm{\lambda}=(\lambda_{1},...,\lambda_{n})$.
-\item A vector of costs, $\bm{c}=(c_{1},...,c_{n})$
+\item A Poisson process arrival rate, $\Lambda$.
+\item A vector of node choosing probabilities, $\bm{p}=(p_{1},...,p_{n})$
+\item A vector of costs, $\bm{c}=(c_{1},...,c_{n})$.
 \end{itemize}
 
 \begin{myfigure}
@@ -503,7 +373,9 @@ A patrolling problem with random attackers, $G=G(Q,\bm{X},\bm{\lambda},\bm{c})$ 
 \caption{Example of $G=(K_{4},\bm{X},\bm{\lambda},\bm{c})$ with patroller currently at node $3$}
 \end{myfigure}
 
-The attackers arrive at node $i$ according a poisson process of rate $\lambda_{i}$, beginning their attack immediately, which lasts $X_{i}$ time. The patroller detects all ongoing attacks when arriving at node $i$, the patroller then decides which node to move to and moves there taking unit time to arrive(which can be the current node).
+The attackers arrive to the system at a rate of $\Lambda$, at which point they pick to attack node $i$ with probability $p_{i}$. They begin their attack immediately, which lasts an amount of time drawn from the nodes attack time distribution, $X_{i}$. The patroller detects all ongoing attacks when arriving at node $i$, the patroller then decides which node to move to and moves there taking unit time to arrive(which can be the current node).
+
+By Poisson thinning it is possible to divide the overall Poisson arrival process to individual Poisson arrival processes at each node, with rate $\lambda_{i}=\Lambda p_{i}$.
 
 \begin{myfigure}
 \begin{center}
@@ -563,7 +435,7 @@ We can formulate such as problem as a Markov Decision Process(MDP) with state sp
 
 Because the future of the process is independent of its past, it is only the current state that matters, the process is a Markov Chain(MC) and hence the patroller's problem is justified as a MDP.
 
-The patroller incurs costs for all attackers able to complete their attacks. When the decision to move to node $i$ is made the cost incurred for the next time period is $C(\bm{s},i)=\sum\limits_{j=1}^{j=n} C_{j}(\bm{s},i)$ , where $C_{j}(\bm{s},i)$ is the cost at node $j$ choosing to move to node $i$ in the next time period. We have that
+The patroller incurs costs for all attackers able to complete their attacks. When the decision to move to node $i$ is made the cost incurred for the next time period is $C(\bm{s},i)=\sum\limits_{j=1}^{n} C_{j}(\bm{s},i)$ , where $C_{j}(\bm{s},i)$ is the cost at node $j$ choosing to move to node $i$ in the next time period. We have that
 
 \begin{align*}
 C_{j}(\bm{s},i)&=c_{j} \lambda_{j} \int_{0}^{s_{j}} P(t-1 < X_{j} \leq t) dt \\
@@ -2632,6 +2504,16 @@ As we can see from Figure \ref{Figure:BH and PH for new plain index} the change 
 
 \section{Future Work}
 \label{Section:Future Work}
+
+\subsection{Use of trees in general graphs for patrolling games}
+For now we will assume that the value of the game for all tree graphs has been found. We know consider the role of spanning tree graph, $T=(N_{T},E_{T})$, in a general graph, $G=(N,E)$. Then we know $V(G) \leq V(T)$, as the introduction of more edges cannot harm the patroller.
+
+As a graph may have more than one spanning tree, we may wish to find the best spanning tree, $T_{\text{min}}(m)=\argmin_{T} \{V(T,m) \, | \, T \text{ is a spanning tree of } G  \}$.
+
+We propose that we may take all spanning trees, $\mathcal{T}$ and there values and play the strategies suggested by these with certain probabilities, prompted by the values of the trees.  
+
+
+
 \subsection{Proof completions}
 The proof for the time-limited diametric attack (See Appendix \ref{Appendix:Proof of time-limited diametric attack}) needs cleaning up. The idea of this proof needs extending to the time-delayed diametric attack and type-delayed diametric attack
 
@@ -2887,10 +2769,17 @@ Further to the idea that the patroller may overlook an attacker (\citep{Lin2014}
 A \textit{graph}, $G=G(N,E)$, is made up of: a set of \textit{nodes} (also called \textit{vertices} or \textit{points}), $N$, which are places ; and a set of \textit{edges} (also called \textit{arcs} or lines), $E$, which are connections between places, so elements of $E$ must be two-element subsets of $N$.
 \end{definition}
 
+\begin{note}
+For notational purposes both $e_{i,i'} \in E$ and $(i,i') \in E$ are equivalent.
+\end{note}
+
+\begin{definition}[Adjacency,Incidency]
+We say nodes, $n,m$ are \textit{adjacent} if $\exists (n,m) \in E$ and we say the edge $(n,m)$ is \textit{incident} to both $n$ and $m$.
+\end{definition}
+
 \begin{definition}[Adjacency matrix]
 A graph, $G$, can be reprsented as an \textit{adjacency matrix}, $A$, where $A_{i,j}=1 \iff (i,j) \in E$
 \end{definition}
-
 
 \begin{definition}[Subgraph]
 A graph $Q'=(N',E')$ is said to be a \textit{subgraph} of $Q=(N,E)$ if $N' \subset N$ and $E' \subset E$.
@@ -2988,8 +2877,35 @@ A subgraph is said to be \textit{induced} by $N'$ (or \textit{edge-preserving}) 
 \label{examplefigure: subgraph example}
 \end{myfigure}
 
-\begin{definition}[Adjacency,Incidency]
-We say nodes, $n,m$ are \textit{adjacent} if $\exists (n,m) \in E$ and we say the edge $(n,m)$ is \textit{incident} to both $n$ and $m$.
+\begin{definition}[Edge-preserving subgraph]
+A subgraph, $Q'=(N',E')$ of $Q$ is called edge-preserving if $n_{1},n_{2} \in Q \cap Q*$ then if $(n_{1},n_{2}) \in E \implies (n_{1},n_{2}) \in E'$ 
+\end{definition}
+
+\begin{definition}[Edge types]
+An edge $(i,i)$ is called a \textit{loop}. If more than one copy of the edge $(i,j)$ exits in $E$, it is said to be a \textit{multiple edge}. A \textit{simple graph} is graph without any loops or multiple edges.
+\end{definition}
+
+\begin{definition}[Node Identification]
+The operation of \textit{node identification} on two nodes, $u$ and $v$, of a graph, $G=(N,E)$ into a single node $w$, is a mapping $f:N \rightarrow N'$ resulting in a new graph $G'=(N',E')$ where $N'=(N \setminus  \{u,v\}) \cup \{w\}$ with $E'=E \setminus \{(u,v)\}$ if $(u,v) \in E$ and under the condition that $\forall x \in N$, $f(x) \in N'$ is incident to $e' \in E'$ iff $e \in E$ is incident to $x \in N$.
+Furthermore if a graph, $Q$, undergoes repeated node identification to become $Q'$ then we say it has been \textit{simplified}. 
+\end{definition}
+
+\begin{definition}[Embedding]
+An \textit{embedding} of a graph, $G$, onto a surface(compact, connected 2-manifold), $\Sigma$, is a representation of $G$ in $\Sigma$ in which points are associated with nodes and simple arcs(homeomorphic images of $[0,1]$) are associated with edges such that
+\begin{itemize}
+\item the end points of arc are the points associated with the nodes indecent with the edge
+\item no arcs include points associated with other nodes
+\item two arcs never intersect at a point which is interior to either of the arcs
+\end{itemize}
+\end{definition}
+
+\begin{definition}[Planar]
+A graph, $G$, is called \textit{planar} if it can be embedded in the plan $\mathbb{R}^{2}$.
+\end{definition}
+
+\begin{definition}[Distance,diameter]
+The \textit{distance} between node $i$ and node$i'$ is the minimum number of edges between $i$ and $i'$ denoted, $d(i,i')$.
+A graph's \textit{diameter} is the maximum distance between any pair of nodes, defined by $\bar{d} \equiv \max\limits_{i,i' \in N} d(i,i')$. Any pair of nodes $i$,$i'$ that are the diameter apart(i.e $d(i,i')=\bar{d}$) are called \textit{diametrical} 
 \end{definition}
 
 \begin{definition}[Walk,Path,Trail,Cycle]
@@ -3253,6 +3169,91 @@ A \textit{edge-vertex dual} of a directed graph $G$, called $EV(G)$, is made of 
 \end{tikzpicture}
 \end{center}
 \caption{A graph $G$ and its directed edge-vertex dual, $EV(G)$}
+\end{myfigure}
+
+\section{Examples}
+\subsection{Example of decomposition}
+\label{Appendix:Example of deocmposition}
+\begin{example}
+For $Q$ as seen in Figure \ref{Figure:Q decompisition example}. Consider when $m=3$, the decomposition of $Q$ into the graphs $Q_{1} \equiv L_{2}$ and $Q_{2} \equiv L_{3}$. $V_{1}=V(L_{2})=1$ as alternating between $1$ and $2$ can catch every attack. $V_{2}=V(L_{3})=\frac{3}{4}$ (as seen in \cite{Alpern2011}). 
+
+Then we can get the bound $V \geq \frac{1}{\frac{1}{V_{1}}+\frac{1}{V_{2}}} = \frac{1}{\frac{1}{1}+\frac{3}{4}}=\frac{4}{7}$.
+\end{example}
+
+\begin{myfigure}
+\begin{center}
+\begin{tikzpicture}[baseline=(current bounding box.north),-,auto,node distance=2cm,
+                    thick,main node/.style={circle,draw,font=\sffamily\Large\bfseries}]
+
+  \node[main node] (1) {$1$};
+  \node[main node] (2) [right of=1] {$2$};
+  \node[main node] (3) [below of=1] {$3$};
+  \node[main node] (4) [below of=3] {$4$};
+
+  \path[every node/.style={font=\sffamily}]
+    (1) edge  (2)
+    edge (3)
+    (2) edge (3)
+    (3) edge (4);
+  
+  \node (Box1) [draw=blue,dashed,thick,fit=(1) (2),fill=blue,opacity=0.2] {};  
+  \node (Box2) [draw=red,dashed,thick,fit=(1) (3) (4),fill=red,opacity=0.2] {};
+  
+  \node [yshift=3.0ex, blue] at (Box1.north) {$Q_{1}$};
+  \node [xshift=3.0ex, red] at (Box2.east) {$Q_{2}$};  
+\node [left=0.5cm,text width=0.5cm] at (1)
+{
+$Q$
+};   
+\end{tikzpicture}
+\end{center}
+\caption{Decomposition of Q into \textcolor{blue}{$Q_{1}$} and \textcolor{red}{$Q_{2}$}.}
+\label{Figure:Q decompisition example}
+\end{myfigure}
+
+\subsection{Example of simplification}
+\label{Appendix:Example of simplification}
+\begin{example}
+For $Q$ as seen in Figure \ref{Figure:Q simplification example}, when $m=3$, the simplification of the graph by identifying nodes $1$ and $2$ simplifies $Q$ to $Q'=L_{3}$. Hence we can get the bound that $V(L_{3}) \geq  V(Q)$ so $V(Q) \leq \frac{3}{4} $
+\end{example}
+
+\begin{myfigure}
+\begin{center}
+\begin{tikzpicture}[baseline=(current bounding box.north),-,auto,node distance=2cm,
+                    thick,main node/.style={circle,draw,font=\sffamily\Large\bfseries}]
+
+  \node[main node] (1) {$1$};
+  \node[main node] (2) [right of=1] {$2$};
+  \node[main node] (3) [below of=1] {$3$};
+  \node[main node] (4) [below of=3] {$4$};
+  
+  \node (P1) [below of=2] {};
+  \node (P2) [right of=P1] {};
+  \node (P3) [right of=P2] {};
+  
+  \draw[->] (P2) edge (P3);
+  
+  \node[main node] (b) [right of=P3] {$b$};
+  \node[main node] (a) [above of=b] {$a$};
+  \node[main node] (c) [below of=b] {$c$};
+
+  \path[every node/.style={font=\sffamily}]
+    (1) edge  (2)
+    edge (3)
+    (2) edge (3)
+    (3) edge (4)
+    (a) edge (b)
+    (b) edge (c);
+  
+  \node (Box1) [draw,dashed,thick,fit=(1) (2),fill,opacity=0.2] {};  
+  
+  \node [yshift=3.0ex] at (Box1.north) {$1,2$ Identified};  
+\node [left=0.5cm,text width=0.5cm] at (1) {$Q$};
+\node [left=0.5cm,text width=0.5cm] at (a) {$Q'$};   
+\end{tikzpicture}
+\end{center}
+\caption{Simplifcation of $Q$ to $Q'$ by identification.}
+\label{Figure:Q simplification example}
 \end{myfigure}
 
 \section{Patrolling games}
@@ -3987,6 +3988,6 @@ It is worth noting that this is analogous to the result found by the usual combi
 \section{Optimal Solution for a Random Attacker}
 \label{Appendix:Optimal Solution for a Random Attacker}
 
-\section{Optimal Solution for Random Attacker with Local-Observations}
+\section{Optimal Solution for Local-Observations}
 \label{Appendix:Optimal Solution for Random Attacker with Local-Observations}
 \end{document}

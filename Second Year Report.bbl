@@ -1,5 +1,17 @@
 \begin{thebibliography}{10}
 
+\bibitem{Abdel-Rahman2014}
+Mohammad~J. Abdel-Rahman and Marwan Krunz.
+\newblock {Game-theoretic quorum-based frequency hopping for anti-jamming
+  rendezvous in DSA networks}.
+\newblock {\em 2014 IEEE International Symposium on Dynamic Spectrum Access
+  Networks, DYSPAN 2014}, pages 248--258, 2014.
+
+\bibitem{Alpern1999}
+Steve Alpern, V.~J. Baston, and Skander Essegaier.
+\newblock {Rendezvous search on a graph}.
+\newblock {\em Journal of Applied Probability}, 36(01):223--231, mar 1999.
+
 \bibitem{Alpern2014}
 Steve Alpern and Robbert Fokkink.
 \newblock {Accumulation games on graphs}.
@@ -27,6 +39,11 @@ Steve Alpern, Thomas Lidbetter, Alec Morton, and Katerina Papadaki.
 Steve Alpern, Alec Morton, and Katerina Papadaki.
 \newblock {Patrolling Games}.
 \newblock {\em Operations Research}, 59(5):1246--1257, 2011.
+
+\bibitem{Alpern1998}
+Steve Alpern and Lim~Wei Shi.
+\newblock {The Symmetric Rendezvous-Evasion Game}.
+\newblock {\em SIAM Journal on Control and Optimization}, 36(3):948--959, 1998.
 
 \bibitem{Birge1989}
 J.~R. Birge and S.~M. Pollock.
