@@ -139,11 +139,11 @@ We leave most proofs to the Appendix. We also provide some definitions of graph 
 \section{Literature Reviews}
 \label{Section:Literature Reviews}
 \subsection{Overview of Security Problems}
-Security problems arise in many real world scenarios, such as a security guard patrolling a museum, police patrolling a city and military personal guarding bases and borders. At the core of all these problems is the need to deploy resources to locations in order to find undesirable activity. When multiple resources are available, it is a question of where to deploy then and for what length of time, such as a fire brigade being deployed to sectors to fight a spreading forest fire. However when resources are scarce but can be used continuously one may suggest a patrol of the locations, which means the structure of the locations and how they can be traversed is of key importance. While most of the time this idea of traversing is physical, be it a guard walking around a museum or a drone flying of a region, it is not necessarily true, it may be a guard flicking through live-video feeds.
+Security problems arise in many real world scenarios, such as a security guard patrolling a museum, police patrolling a city and military personal guarding bases and borders. At the core of all these problems is the need to deploy resources to locations in order to find undesirable activity. When multiple resources are available, it is a question of where to deploy then and for what length of time, such as a fire brigade being deployed to sectors to fight a spreading forest fire. However when resources are scarce but can be used continuously, one may suggest a patrol of the locations. Using a patrol means the structure of the locations and how they can be traversed is of key importance, rather than just where to deploy the resources. While most of the time this idea of traversing is physical, be it a guard walking around a museum or a drone flying of a region, it is not necessarily true, it may be a guard flicking through live-video feeds.
 
-Early work in the area focused on police patrols in urban areas (\cite{Larson1972},\cite{Chelst1978},\cite{Chaiken1978}), using many technieques inclduing statistics based on $M/M/c$ queues( with small modifications due to the stochasticity of the number of servers) for the purpose of alloacting patrols, later moving onto patrolling rural areas (\cite{Birge1989}), in which the primary difference was the incorporation of the travel time into the service rate. Furthermore work was done on police patrolling highways(\cite{Taylor1985}), . These early works relied on the fact that the crime rate was known at the different locations and that they remained constant while the patrol was happening.The solution to the problems involved randomizing the patrols in order to maximize the probability of intercepting a crime in progress.
+Early work in the area focused on police patrols in urban areas (\cite{Larson1972},\cite{Chelst1978},\cite{Chaiken1978}), using many techniques including statistics based on $M/M/c$ queues( with small modifications due to the stochasticity in the number of servers) for the purpose of alloacting patrols, later moving onto patrolling rural areas (\cite{Birge1989}), in which the primary difference was the incorporation of the travel time into the service rate. Furthermore work was done on police patrolling highways(\cite{Taylor1985}), used a non-linear goal program reflecting the non-linear relationship between deployment and performance with multiple objectives. These early works relied on the fact that the crime rate was known at the different locations and that they remained constant while the patrol was happening. The solution to the problems involved randomizing the patrols in order to maximize the probability of intercepting a crime in progress.
 
-While the work done in scheduling police patrols are a strategic only from the police force's point of view, one may wish to introduce a strategic problem for the attacker.This makes the problem a game-theoretic one, while differential game formulations exist (\cite{Feichtinger1983}) these tend to focus on a dynamic (and often strategic) process of mutual adjustment, rather than confronting the problem of a scheduler who has has to determine the path of the patrol to take beforehand.
+While the work done in scheduling police patrols are a strategic only from the police force's point of view, one may wish to introduce a strategic problem for the attacker. This makes the problem a game-theoretic one, while differential game formulations exist (\cite{Feichtinger1983}) these tend to focus on a dynamic (and often strategic) process of mutual adjustment, rather than confronting the problem of a scheduler who has has to determine the path of the patrol to take beforehand.
 
 A baseline to start searching for an entity is the search game, a game-theoretic formulation, which involves a searcher aiming to minimize the time until they find either an immobile or mobile hider in some search space (\cite{Steve2003}). As a special search space, graphs are considered to just be subset of $\mathbb{R}^{3}$ (or $\mathbb{R}^{2}$ if planar) by embedding.
 
@@ -151,19 +151,19 @@ Game-theoretic analyses have been done in studies of counter-terrorism actions (
 
 Many extensions the search game have been studied, such as a searcher who has multiple modes(such as fast or slow), they can search in, this work was applied to a predator prey model, to analyse at what frequency a predator should ambush the prey (\cite{Alpern2011a}). Another variation of the search game, is the accumulation game, in which the hider can hide portions of their self across the search space, with some critical amount of their self which needs to avoid being found in roder to be effective. For a continuous portioning of the hider in a discrete (\cite{Kikuta2002a}) and continuous (\cite{Ruckle2000}) search space, the strategies were found be pure. While later this studied with a graphical structure and it was found that mixed strategies need to be employed in optimum(\cite{Alpern2014}).
 
-Another common assumption about the search space is that we can divide it into cells, then the hider is in one of these cells. We assume some initial probability distribution of where the hider is, is known the searcher and that searching a cell costs the searcher a differing amount dependent on the cell. Then the seracher upon completion of a search where the hider is not find, can update the prior probability in a bayesian fashion(\cite{Black1965},\cite{Matula1964}). It has been found that the searcher has a uniformly optimal strategy for all time horizons and so even if the searcher has an unknown deadline, to find the hider, they can act optimally (\cite{Lin2016}). Work has also been done to incorporate the portioning of the hider as in the accumulation game, but when we have search cells(\cite{Ruckle1983}) and further when these cells have a limited capacity of how much the hider can hide in them(\cite{Zoroa1999},\cite{Zoroa2004})
+Another common assumption about the search space is that we can divide it into cells, then the hider is in one of these cells. We assume some initial probability distribution of where the hider is, is known by the searcher and that searching a cell costs the searcher a differing amount dependent on the cell. Then the searcher upon completion of a search where the hider is not find, can update the prior probability in a bayesian fashion(\cite{Black1965},\cite{Matula1964}). It has been found that the searcher has a uniformly optimal strategy for all time horizons and so even if the searcher has an unknown deadline, to find the hider, they can act optimally (\cite{Lin2016}). Work has also been done to incorporate the portioning of the hider as in the accumulation game, but when we have search cells(\cite{Ruckle1983}) and further when these cells have a limited capacity of how much the hider can hide in them(\cite{Zoroa1999},\cite{Zoroa2004})
 
-While search games (and there successors) are of major importance when there are two uncooperative element, they have also been expended to rendezvous search games(\cite{Steve2003}). A rendevous game is a game where two rendezvours wish to detect each other in the search space. Such games change the min-max objective of search games into a min-min objective. While rendezvous games do not inherintely have a mallicous entity, they are still useful in secruity problems such as, the regrouping of military assets in an unknown environment and with the development of communication technologies have been applied to the frequencies on military assets communicate. Like before often a graphical structure can be applied (\cite{Alpern1999}). To reintroduce a mallicous entity in the field of communication, a searcher is introduce to create a three player problem , with two rendezvours who are cooperative and a enemy searcher. This idea has been applied to the wire-tapping of phone lines(\cite{Alpern1998}) and the jamming of signals in millitary communications(\cite{Abdel-Rahman2014}).
+While search games (and there successors) are of major importance when there are two uncooperative element, they have also been expended to rendezvous search games(\cite{Steve2003}). A rendevous game is a game where two rendezvours wish to detect each other in the search space. Such games change the min-max objective of search games into a min-min objective. While rendezvous games do not inherintely have a mallicous entity, they are still useful in security problems such as, the regrouping of military assets in an unknown environment and with the development of communication technologies have been applied to the frequencies on military assets communicate. Like before often a graphical structure can be applied (\cite{Alpern1999}). To reintroduce a mallicous entity in the field of communication, a searcher is introduced to create a three player problem, with two rendezvours who are cooperative and a enemy searcher. This idea has been applied to the wire-tapping of phone lines(\cite{Alpern1998}) and the jamming of signals in millitary communications(\cite{Abdel-Rahman2014}).
 
 A patrolling game (\citep{Alpern2011}) takes the search game in which the hider is always in the search space, and allows the hider (now called an attacker) to only be in the space for a subset of the time horizon, which is chosen by the attacker. This means that the patrol games are win-lose games instead of games of degree like the original search game. Section \ref{Section:Review of Strategic Patrolling games} reviews the formulation and initial results of patrol games on graphs. While general tools were found, only exact solutions to certain classes of graphs were found and in particular only a partial solution to the line graph was found, which was later completed (\cite{Papadaki2016}). A continuous time version of the patrol game has also been formulated and solved for the line graph, agreeing with the discrete case (\cite{Alpern2016}). Throughout it is proposed that the intuitive solution, of simply going back and forth on the line, is not optimal and that it is the size of the gap between visits relative to how long the attacker is in the network that matters. In section \ref{Section:Patrolling games} we propose an issue with one attacking strategy developed when the time horizon is finite, correcting the issue and proposing a more general application. This is all done with the aim of getting a solution for all tree graphs, which provide a great lower bound for any graph.
 
 Following this work, a infinite time horizon patrol problem was formulated for generic attack times which can differ between nodes (\citep{Lin2013}), this problem is reviewed in Section \ref{Section:Review of patrolling problem with random attackers}. By using work related to indices developed for multi-arm bandits, they manage to develop near optimal heuristics for the patrol problem. They then move to the infinite time horizon patrol game, by introducing a strategic attacker, and again find near optimal heuristics for the problem. In section \ref{Section:Strategic Patroller with Random Attackers} we alter the theory to deal with a problem, where the patroller may observe some suspicious behaviour from attackers and incorporates this information into their decision, but first we look at accounting for instantaneous movement of a patroller in the graph, in order to model that of guard flicking through live-video feeds.
 
-The patrol problem and game were later extended to include the idea of overlooking an attack instead of capture being ensured and again near optimal heuristic were developed (\cite{Lin2014})
+The patrol problem and game were later extended to include the idea of overlooking an attack instead of capture being ensured and again near optimal heuristics were developed (\cite{Lin2014})
 
 \subsection{Review of Strategic Patrolling games}
 \label{Section:Review of Strategic Patrolling games}
-This section summarizes the key work from \cite{Alpern2011} and their work on patrolling games. This will provide a baseline for future work done in \ref{Section:Patrolling games}
+This section summarizes the key work from \cite{Alpern2011} and their work on patrolling games. This will provide a baseline for future work done in \ref{Section:Patrolling games}.
 
 \subsubsection{Game set-up}
 A patrolling game, $G=G(Q,T,m)$, is a win-lose, zero-sum game between a maximizing patroller (often referred to as she) and a minimizing attacker (often referred to as he). The parameters of the game are:
@@ -216,7 +216,7 @@ Many general properties for the game can be easily proven; such as that the one-
 We shall now focus on the unrestricted, one-off game, for the rest of this section as it provides an upper bound for the periodic game.
 
 \subsubsection{Bounds and Tools}
-We shall provide a group of patrols and attackss to give bounds on $V$ which can be applied to all graphs. The lower bounds are given in terms of the patroller's `good' strategy against all attacker options, similarly the upper bounds are given in terms of the attacker's `good' strategy against all the patroller options. When we reach tightness between the bound these `good' strategies become an optimal solution.
+We shall provide a group of patrols and attacks to give bounds on $V$ which can be applied to all graphs. The lower bounds are given in terms of the patroller's `good' strategy against all attacker options, similarly the upper bounds are given in terms of the attacker's `good' strategy against all the patroller options. When we reach tightness between the bound these `good' strategies become an optimal solution.
 
 \textbf{General bounds(Patroller and Attacker):}
 
@@ -228,7 +228,7 @@ We can consider decomposing the graph into subsets of nodes, and hence (edge-pre
 
 \textbf{Simplification(Patroller and Attacker):}
 
-The `merging' of adjacent nodes (Formally Node identification) reducing the number of nodes. When this merging is repeated the graph is said to be simplified.
+The `merging' of adjacent nodes (formally node identification) reduces the number of nodes. When this merging is repeated the graph is said to be \textit{simplified}.
 
 \begin{definition}[Embedded walk]
 An \textit{Embedded walk}, $W'$, on $Q'$ is the walk, $W$, done on $Q$ under the simplification mapping of $Q$ to $Q'$. i.e if $\pi :Q \rightarrow Q'$ is the simplification map, then $W'=\pi (W)$.
@@ -245,7 +245,7 @@ While this bound can hold, an issue caused by the time-horizon is ambiguous in t
 
 \textbf{Covering(Patroller) and Independence(Attacker):}
 
-A collection of patrols which each capture every node within there patrol is called \textit{covering} set, with the minimal number of patrols needed called the \textit{covering number}, $\mathcal{C}$. As the patroller can implement one of these patrols, $V \geq \frac{1}{\mathcal{c}}$.
+A set of patrols which each capture every node within there patrol is called  \textit{covering}, with the minimal number of patrols needed for such a set called the \textit{covering number}, $\mathcal{C}$. As the patroller can implement one of these patrols, $V \geq \frac{1}{\mathcal{c}}$.
 
 A set of nodes in which any patrol cannot catch more than one is called  an \textit{independent} set, with the maximal number of nodes which can be used called the \textit{independence number}, $\mathcal{I}$. As the patroller can play at one of these nodes with equal probability, $V \leq \frac{1}{I}$. 
 
@@ -257,7 +257,7 @@ We shall provide some information on graphs that have already been solved
 
 \textbf{Hamiltonian:}
 
-In a Hamiltonian graph, following a Hamiltonian cycle(called a \textit{Hamiltonian patrol}) means the patroller sees every node every $n$ time periods, so if $m \geq n$ all attacks will be caught, hence it is assumed that $m < n$ (otherwise $V=1$).
+In a Hamiltonian graph, following a Hamiltonian cycle(called a \textit{Hamiltonian patrol}) the patroller sees every node every $n$ time periods, so if $m \geq n$ all attacks will be caught, hence it is assumed that $m < n$ (otherwise $V=1$).
 
 To extend this the \textit{random Hamiltonian patrol} is a patrol strategy starting with equal probability at all nodes on the graph and patrolling by following a fixed Hamiltonian cycle. It is shown that using this strategy gives $V \geq \frac{m}{n}$, as the patroller sees each node, at each time with this probability. Now with a general attacker bound, they get the result that $V=\frac{m}{n}$ for Hamiltonian graphs.
 
@@ -281,7 +281,7 @@ It is worth highlighting the strict concavity of the value function for the line
 \begin{center}
 \input{Images/LineRegions(L_10).tex}
 \end{center}
-\caption{Value of game on$L_{10}$ with attention drawn to $(10,m)$ split into regions; \textcolor{yellow}{$S_{1}$},\textcolor{red}{$S_{2}$},\textcolor{purple}{$S_{4}$},\textcolor{blue}{$S_{5}$},\textcolor{green}{$S_{3}$}}
+\caption{Value of game on $L_{10}$ with attention drawn to $(10,m)$ split into regions; \textcolor{yellow}{$S_{1}$},\textcolor{red}{$S_{2}$},\textcolor{purple}{$S_{4}$},\textcolor{blue}{$S_{5}$},\textcolor{green}{$S_{3}$}}
 \label{Figure:Line 10 value function}
 \end{myfigure}
 
@@ -302,7 +302,7 @@ While \cite{Alpern2011} introduced the patrolling game and along with \cite{Papa
 
 \subsection{Review of patrolling problem with random attackers}
 \label{Section:Review of patrolling problem with random attackers}
-As discussed towards the end of section \ref{Section:Review of Strategic Patrolling games}, it proves quite difficult to find exact solutions to the patrolling game for general graphs. With an aim to develop strategies to the patrolling game on any graph, \cite{Lin2013} first develops a model similar to the patrol game, the patrolling problem, which is only strategic for the patroller and uses stochastic attack time distributions in the infinite time horizon for randomly arriving attackers. They manage to find a near optimal heuristic for the patroller by using Lagrangian relaxation and finding an index, refered to as the fair cost to visit a node, along the lines of those developed by \cite{Whittle1988}. Later they reintroduce the game-theoretic element of a strategic attacker by formulating a normal-form(matrix) game, in which the patroller has only a finite list of strategies, picked to be `appropriately good'.
+As discussed towards the end of section \ref{Section:Review of Strategic Patrolling games}, it proves quite difficult to find exact solutions to the patrolling game for general graphs. With an aim to develop strategies to the patrolling game on any graph, \cite{Lin2013} first develops a model similar to the patrol game, the patrolling problem, which is only strategic for the patroller and uses stochastic attack time distributions in the infinite time horizon for randomly arriving attackers. They manage to find a near optimal heuristic for the patroller by using Lagrangian relaxation and finding an index, referred to as the fair cost to visit a node, along the lines of those developed by \cite{Whittle1988}. Later they reintroduce the game-theoretic element of a strategic attacker by formulating a normal-form(matrix) game, in which the patroller has only a finite list of strategies, picked to be `appropriately good'.
 
 We now provide a summary of the work done in \cite{Lin2013} with some new notation.
 
@@ -502,10 +502,10 @@ Like before $\pi$ will induce a patrol pattern, $\psi^{k}_{\pi}$ with length $K'
 \mu_{i}(\pi_{i},\bm{s}_{0})=\frac{1}{K'} \sum\limits_{k=0}^{K'-1} \pi_{i}(\psi^{k}_{\pi})
 \end{align*}
 
-Now we restrict ourselves to having a maximum long-run average visit rate of one. This is know as the \textit{Total-Rate}(TR) constraint. So we restrict ourselves to obey this constraint and to the corresponding set of policies,
+Now we restrict ourselves to having a maximum long-run average visit rate of one. This is known as the \textit{Total-Rate}(TR) constraint. So we restrict ourselves to obey this constraint and to the corresponding set of policies,
 
 \begin{align*}
-\Pi^{\text{TR}}=\left\{ \pi \in \Pi^{\text{MN}} \, \bigg| \, \sum\limits_{i=1}^{N} \mu_{i}(\pi_{i},\bm{s}_{0}) \leq 1 \, , \, \forall \bm{s}_{0} \in \Omega \right\}
+\Pi^{\text{TR}}=\left\{ \pi \in \Pi^{\text{MN}} \, \bigg| \, \sum\limits_{i=1}^{n} \mu_{i}(\pi_{i},\bm{s}_{0}) \leq 1 \, , \, \forall \bm{s}_{0} \in \Omega \right\}
 \end{align*}
 
 Again this is still a relaxation and any $\pi \in \Pi$ has a $\pi \in \Pi^{\text{TR}}$.
@@ -598,18 +598,18 @@ The numerical results of these heuristics can be found in Section 3.4 in \citep{
 
 \subsection{Issue and correction with the diametric bound}
 \label{Section:Issue and correction with the diametric bound}
-We now state Lemma 9 in \cite{Alpern2011} as the diametric bound
+We now state Lemma 9 in \cite{Alpern2011} as the diametric bound, the attackers bound by attacking randomly throughout time at the diametric nodes.
 
 \begin{lemma}[Diametric bound]
 $V \leq \max \{\frac{1}{2},\frac{m}{\raisebox{-0.5ex}{$\scriptstyle 2 \bar{d}$}} \}$, guaranteed by the diametric attack.
 \end{lemma}
 
-We will now look at an issue with the diametric bound when $\bar{d} < m \leq 2 \bar{d}$, so we are dealing with the bound $V \leq frac{m}{\raisebox{-0.5ex}{$\scriptstyle 2 \bar{d}$}}$. The result of the lemma states with ambiguity that this holds for large $m$ and $T$, however the results are used for smaller $T$ such as in Theorem 16 in \citep{Alpern2011}. We will analyse this issue and present a more concrete conclusion on conditions for which $T$ must take in order to use this bound. We will then present an altered diametric attack, which can further help to reduce the conditions on $T$.
+We will now look at an issue with the diametric bound when $\bar{d} < m \leq 2 \bar{d}$, so we are dealing with the bound $V \leq \frac{m}{\raisebox{-0.5ex}{$\scriptstyle 2 \bar{d}$}}$. The result of the lemma states with ambiguity that this holds for large $m$ and $T$, however the results are used for smaller $T$ such as in Theorem 16 in \citep{Alpern2011}. We will analyse this issue of `large' $T$,  and present a more concrete conclusion on conditions for which $T$ must take in order to use this bound. We will then present an altered diametric attack, which can further help to reduce the conditions on $T$ for the same bound.
 
-The diametric attack has the attacker start at two diametrical nodes with equal probability and then choosing a starting attack time, $\tau=0,1...,T-m$ again with equal probability. Hence it can be thought of as the attacker making $2(T-m+1)$ attacks each with equal probability. To see how the patroller can do against this attacking strategy, we can consider a simple oscillatory strategy, going back and forth between the diametrical nodes, for them.
+The diametric attack has the attacker start at two diametrical nodes with equal probability and then choosing a starting attack time, $\tau=0,1...,T-m$ again with equal probability. Hence it can be thought of as the attacker making $2(T-m+1)$ attacks each with equal probability. To see how the patroller can do against this attacking strategy, we can consider a simple oscillatory strategy, going back and forth between the diametrical nodes, and see how many potential attacks are captured.
 
 \begin{example}[Issue with the diametric bound]
-Consider the game $(Q=L_{5},T=20,m=6)$ so $m=6 >\bar{d}=4$, then under the diametric attack the attacker has $30$ attacks, starting at $0,...,14$ at nodes $1$ and $5$. If the patroller oscillates between diametrics points they capture
+Consider the game $(Q=L_{5},T=20,m=6)$ so $m=6 >\bar{d}=4$, then under the diametric attack the attacker has $30$ attacks, starting at $0,...,14$ at nodes $1$ and $5$. If the patroller oscillates between diametric points they capture
 $1+5+6+6+4=22$ attacks out of $2(20-6+1)=30$ attacks, for a capture chance of $V=\frac{11}{15}$, which is greater than diametric bound $\frac{3}{4}$.
 \end{example}
 
@@ -618,7 +618,7 @@ We could now consider delaying the patroller initially to get a better number of
 This means the patroller will capture, by oscillating,
 
 \begin{align*}
-\underbrace{m-\bar{d}}_{\text{Waiting initially}} + \underbrace{\pospart{m \times \left( \floor{\frac{T-2m+1}{\bar{d}}} +1 \right)}}_{\text{Visits which get exactly } m \text{attacks}} + \underbrace{\pospart{T- \left( m-1 + \left(\floor{\frac{T-2m+1}{\bar{d}}} +2 \right) \bar{d} \right)}}_{\text{Penultimate and Final node visits}} 
+\underbrace{m-\bar{d}}_{\text{Waiting initially}} + \underbrace{\pospart{m \times \left( \floor{\frac{T-2m+1}{\bar{d}}} +1 \right)}}_{\text{Visits which get exactly } m \text{ attacks}} + \underbrace{\pospart{T- \left( m-1 + \left(\floor{\frac{T-2m+1}{\bar{d}}} +2 \right) \bar{d} \right)}}_{\text{Penultimate and final node visits}} 
 \end{align*}
 
 The key point is that the upper bound given by the diametric attack is dependent on $T$. An example is given in Figure \ref{Figure:Example of upper bound achieved by diametric attack} which shows that for some $T$ as in Lemma \ref{Lemma:Condition on time horizon for diametric bound to hold} and as the finite time horizon becomes infinite the corrected bound reaches the suggested bound in \cite{Alpern2011}.
@@ -640,21 +640,19 @@ For proof see Appendix \ref{Appendix:Proof of conditions on T for diametric atta
 
 \textbf{Fixing the diametric attack}
 
-A possible ``fix'' to the problem of the excess time is to limit the diametric attacks window in which attacks are placed.
+A possible `fix' to the issue is to limit the time the attack take place in, only using the time up to a point such that the condition is met, i.e. $T=m-1+(k+1)\bar{d}$ for some $k \in \mathbb{N}_{0}$.
 
 \begin{definition}[Time-limited diametric attack]
 Attacking at a pair of diametric nodes equiprobably for the times $I$,$I+1$...,$I+\bar{d}-1$ (i.e starting attacks at $\tau,\tau+1,...,\tau+\bar{d}-1$) is called the \textit{timed diametric attack}.
 \end{definition}
 
-\begin{note}
-The time-limited diametric attack is only feasible is $T \geq m+\bar{d}-1$.
-\end{note}
+To make the time-limited diametric attack feasible, we need that the condition holds for some $k=0,1,2,...$ and that means holding for $k=0$ will suffice, i.e. $T \geq m-1+\bar{d}$.
 
 \begin{lemma}[Time-limited diametric attack bound]
 When $T \geq m+ \bar{d}-1$, the diametric bound $V \leq \max\{\frac{1}{2},\frac{m}{2\bar{d}}\}$ is valid.
 \end{lemma}
 
-For proof see Appendix \ref{Appendix:Proof of time-limited diametric attack}
+For proof see appendix \ref{Appendix:Proof of time-limited diametric attack}
 
 \subsection{New Tools}
 We seek to find a larger class of optimal patrols for Hamiltonian graphs, by using groups of nodes.
@@ -663,7 +661,7 @@ We seek to find a larger class of optimal patrols for Hamiltonian graphs, by usi
 An \textit{Alternating Random Hamiltonian Patrol} (\textit{ARHP}) is a mixed strategy following the Hamiltonian cycle but with a probability $p$ of starting at ``even'' nodes and a probability of $\frac{2}{n}-p$ of starting at ``odd'' nodes.
 \end{definition}
 
-\begin{examplefigure}
+\begin{myfigure}
 \begin{center}
 \begin{tikzpicture}[baseline=(current bounding box.north),-,auto,node distance=1cm,
                     thick,main node/.style={circle,draw,font=\sffamily\bfseries}]
@@ -695,11 +693,11 @@ An \textit{Alternating Random Hamiltonian Patrol} (\textit{ARHP}) is a mixed str
    
 \end{tikzpicture}
 \end{center}
-\caption{ $C_{8}$ with the \textcolor{blue}{blue nodes being ``even'' nodes} started at with probability $\frac{1}{16}$ and the \textcolor{red}{red nodes being ``odd'' nodes} started at with probability $\frac{3}{16}$.}
-\end{examplefigure}
+\caption{$C_{8}$ with the \textcolor{blue}{blue nodes being ``even'' nodes} started at with probability $\frac{1}{16}$ and the \textcolor{red}{red nodes being ``odd'' nodes} started at with probability $\frac{3}{16}$.}
+\end{myfigure}
 
 \begin{lemma}
-When $n$ and $m$ are both even, following the Alternating Random Hamiltonian Patrol, if feasible, gives the same lower bound as the random Hamiltonian patrol, i.e $V \geq \frac{m}{n}$.
+When $n$ and $m$ are both even, following the ARHP gives the same lower bound as the random Hamiltonian patrol, i.e $V \geq \frac{m}{n}$.
 \end{lemma}
 
 \begin{proof}
@@ -724,40 +722,41 @@ We now look at extending the idea of the diametric attack. First we notice that 
 A useful extension, would be not using two nodes but using multiple points each the same distance apart from each other mutually.
 
 \begin{definition}[Polygonal attack]
-A \textit{$d$-polygonal attack} is an attack at a set of nodes $D= \set{i \in N}{ d(i,i')=d}$ at the time intervals $I,I+1,...,I+d-1$ (for a chosen initial $I$)
+A \textit{$d$-polygonal attack} is an attack at a set of nodes $D$ such that $d(i,i')=d \; \forall i,i' \in D$ at the time intervals $I,I+1,...,I+d-1$ (for a chosen initial $I$)
 \end{definition}
 
-We can also consider having the points \textit{at least} the same distance apart
+We can also consider having the points at least the same distance apart
 
 \begin{definition}[Uneven polygonal attack]
-A \textit{$d$-Uneven polygonal attack} is an attack at a set of nodes $D= \set{i \in N}{ d(i,i') \geq d}$ at the time intervals $I,I+1,...,I+d-1$ (for a chosen initial $I$)
+A \textit{$d$-uneven polygonal attack} is an attack at a set of nodes $D$ such that $d(i,i') \geq d \; \forall i,i' \in D$ at the time intervals $I,I+1,...,I+d-1$ (for a chosen initial $I$)
 \end{definition}
 
-\begin{note}
-Just like the time-limited diametric attack, the (uneven) polygonal attack is only feasible if $T \geq m+d-1$.
-\end{note}
+We need to consider the feasibility of these attacks, due to requiring $d$ potential starting times, we need that $T \geq m-d+1$
 
-The idea behind this attack is very similar to the timed diametric attack.
+The idea behind this attack is very similar to the timed-limited diametric attack.
 
 \begin{lemma}
-When $T \geq m+d-1$ and a set $D$ as in the $d$- (uneven) polygonal attack, the bound $V \leq \max \{ \frac{1}{|D|} , \frac{m}{|D|d} \}$ is valid
+When $T \geq m+d-1$ and a set $D$ as in the $d$- polygonal attack, the bound $V \leq \max \{ \frac{1}{|D|} , \frac{m}{|D|d} \}$ is valid
 \end{lemma}
+
+The proof follows the same logic as the time-limited diametric attack, except there are now more points which are each $d$ away.
+
+We conjecture that the uneven-polygonal attack also has the same bound as the polygonal one, as the idea is that any that are strictly greater are just worse for the patroller. However this idea is not yet formalized.
 
 
 \subsection{Star graph solution}
-As a special case of Complete bipartite we have the star graph, $S_{n}=K_{1,n}$, that is a tree with one internal node (the centre) and $n$ leaf nodes (the external nodes). Hence $V(S_{n})=V(K_{1,n})=\frac{m}{2n}$ for $m<2n$ (by the Complete bipartite corollary(\ref{Corollary:Complete Bipartite})). This is achieved by the patroller forming a patrol which alternates between different  external nodes and the centre, and the attacker attacking at all the external nodes with equal probability (for a fixed time interval).
-
+As a special case of complete bipartite graph we have the star graph, $S_{n}=K_{1,n}$, that is a tree with one internal node (the centre) and $n$ leaf nodes (the external nodes). Hence $V(S_{n})=V(K_{1,n})=\frac{m}{2n}$ for $m<2n$ (by Theorem 15 (1) in \cite{Lin2013}). This is achieved by the patroller forming a patrol which alternates between different  external nodes and the centre, and embedded Hamiltonian patrol from $C_{2n}$, and the attacker attacking at all the external nodes with equal probability for a fixed time interval (or two consecutive time intervals if $m$ is odd).
 
 \subsection{Extending the star graph}
-The line and star graphs provided a good starting point for attempting to solving the problem with a general tree graph. If a more general version of the star graph can be solved, it may provide better bounds on a general tree. 
+The line and star graphs provided a good starting point for attempting to solve the problem with a general tree graph. If a more general version of the star graph can be solved, it may provide better bounds on a general tree. 
 
-The idea is to extend the star graph to a more general graph which is a mix between the line and the star, by extending the length of the branches (at first just one branch). This may better model a tightly packed region to search and another that is far away, consider the example of a small town and larger city connected by a road. 
+The idea is to extend the star graph to a more general graph, which is a mix between the line and the star, by extending the length of the branches (at first just one branch). This may better model a tightly packed region to search and another that is far away, consider the example of a small town and larger city connected by a road. 
 
 \begin{definition}[Elongated Star Graph]
 The \textit{Elongated Star Graph}, $S_{n}^{k}$ is made from $S_{n}$, by performing subdivision on one of the edges repeatedly $k$ times, so that one of the external nodes is now $k+1$ away from the centre.
 \end{definition}
 
-The labelling will be done as in Example Figure \ref{myfigure: Example of elongated labelling} and we will from now assume that $n \geq 3$, as otherwise we are just dealing with the line.
+The labelling will be done as in Example Figure \ref{Figure:Example of elongated labelling}, we note that $*$ nodes are symmetric and so we will be dealing with strategies that treat them as equal (see section 3.1 in \cite{Lin2013}). We will from now assume that $n \geq 3$, as otherwise we are just dealing with the line graph, however we can think of $n=2$ to get the results for the line graph for comparison.
 
 
 \begin{myfigure}
@@ -790,10 +789,10 @@ The labelling will be done as in Example Figure \ref{myfigure: Example of elonga
 \end{tikzpicture}
 \end{center}
 \caption{Labeling on the graph $S_{4}^5$.}
-\label{myfigure: Example of elongated labelling}
+\label{Figure:Example of elongated labelling}
 \end{myfigure}
 
-To start our analysis of this graph, we can look at an expanded graph which can simplify down to our extended star graph. Consider the cyclic graph $C_{(2k+1)+(2n-1)}=C_{2(n+k)}$, we can simplify this graph by node identifying. The identifying map is one such that we identify nodes $i$ to $2k+2-i$ for $i=1,..,k$ and identify nodes $2k+2,2k+4,..,2k+2n$.
+To start our analysis of this graph, we can look at an expanded graph which can simplify down to our extended star graph. Consider the cyclic graph $C_{(2k+1)+(2n-1)}=C_{2(n+k)}$, we can simplify this graph to $S_{n}^{k}$.
 
 
 \begin{myfigure}
@@ -872,21 +871,37 @@ To start our analysis of this graph, we can look at an expanded graph which can 
 
 
 \begin{definition}[Random Oscillation]
-The \textit{Oscillation} on $S_{n}^{k}$ is any embedded Hamiltonian Patrol on $C_{2(n+k)}$ under the simplification above.
-The \textit{Random Oscillation} on $S_{n}^{k}$ is the embedded Random Hamiltonian Patrol on $C_{2(n+k)}$ under the simplification above.
+The simplification map from $C_{2(n+k)}$ to $S_{n}^{k}$ is a mapping form nodes $i$ and $2k+2-i$ to node $i$ for $i=1,...,k$ and $2k,2k+2,...,2k+2n-2$ to node $c$ and $2k+2j-1$ to node $*$ for $j=1,...,n-1$.
+
+The \textit{oscillation} on $S_{n}^{k}$ is any embedded Hamiltonian patrol on $C_{2(n+k)}$ under the simplification above.
+
+The \textit{random oscillation} on $S_{n}^{k}$ is the embedded random Hamiltonian patrol on $C_{2(n+k)}$ under the simplification above.
 \end{definition}
 
 \begin{lemma}
-For $m < 2(n+k)$ following the Random Oscillation,
-$$V(S_{n}^{k}) \geq V(C_{2(n+k)})=\frac{m}{2(n+k)}$$
-and if $m \geq 2(n+k)$ then $V(S_{n}^{k})=1$, achieved by any Oscillation.
+For $m \leq 2(n+k)$ following the Random Oscillation,
+$$V(S_{n}^{k}) \geq \frac{m}{2(n+k)}$$
+and if $m > 2(n+k)$ then $V(S_{n}^{k})=1$, achieved by any Oscillation.
 \end{lemma}
 
-Hence we have the solution in $m \geq 2(n+k)$ , so we can now restrict ourselves to $m < 2(n+k)$.
+The proof follows immediately from the simplification bound(Lemma 1 (4) in \cite{Alpern2011}) and the Hamiltonian solution(Theorem 13 (1) in \cite{Alpern2011}) i.e.
 
-We could now consider applying the time-limited diametric attack to get bounds on the problem, $\bar{d}=n-1$ gives the bound $V \leq \max \{\frac{1}{2} , \frac{m}{2(n-1)}  \}$, however this bound is not tight and this is because we are not utilising all $*$ type nodes.
+\begin{align*}
+V(S_{n}^{k}) \geq V(C_{2(n+k)})=\frac{m}{2(n+k)}
+\end{align*}
 
-We suggest using all $*$ type nodes and node $1$, and assign some probability of attacking a node equivalent to the distance from the centre, $c$. However it turns out that the timing must also change if we wish to attack nodes with uneven probabilities. We create the time-delayed attack.
+Hence we have the solution in $m > 2(n+k)$ , so we can now restrict ourselves to $m \leq 2(n+k)$.
+
+
+\begin{note}
+We have the solution for $m=2(n+k)$, but to be consistent with the regions in the line graph, we will pull this into the next region.
+\end{note}
+
+We could now consider applying the time-limited diametric attack to get bounds on the problem, $\bar{d}=n-1$ gives the bound $V \leq \max \{\frac{1}{2} , \frac{m}{2(n-1)}  \}$, however this bound is not tight with our random oscillation bound, this is because we are not utilising all $*$ type nodes.
+
+Instead of using just one $*$ node (which by symmetry will never yield optimal) we must utilise all the $*$ nodes equally, we can use weights on the distance from the centre. However when using these weights we must spread out  the attack at each position in time, to ensure each potential attack in space and time has an equal weight.
+
+Similiar to the proof of the bipartite graph bounds(Theorem 15 (1) in \cite{Alpern2011}), a timing issue arises when $m$ is odd, however using two fixed time intervals fixes this problem. This holds even when $m$ is even, hence to avoid the problem we will use a baseline spread of two consecutive time periods and then spread out from these according to the weight.
 
 \begin{definition}[Time-delayed attack]
 Let the \textit{time-delayed attack}, be the attack that attacks at the extended node labeled $1$ with probability $\frac{k+1}{n+k}$ and a particular normal node labeled $*$ with probability $\frac{1}{n+k}$.
@@ -910,7 +925,7 @@ If node $1$ is chosen have the attack choose probability intervals with equal pr
  \node[cross=5pt,red] (c1) at (-3.5,0.5) {};
  \node[cross=5pt,red] (c2) at (3.5,0.5) {};
  \draw[dashed] (c1) -- (c2);
- \node (linelabel1) at (-4.4,0.5) {Type $1$};
+ \node (linelabel1) at (-5.1,0.5) {$1$ Node attacks};
  
  
  \draw (-1,0.2) -- (-1,-0.2);
@@ -922,34 +937,47 @@ If node $1$ is chosen have the attack choose probability intervals with equal pr
  \node[cross=5pt,red] (c3) at (-1,1) {};
  \node[cross=5pt,red] (c4) at (1,1) {};
  \draw[dashed] (c3) -- (c4);
- \node (linelabel1) at (-1.9,1) {Type $*$}; 
+ \node (linelabel1) at (-2.6,1) {$*$ Node attacks}; 
 
 \end{tikzpicture}
 \end{center}
+\caption{Diagram of attack spread in time, for both $*$ class nodes and node $1$}
 \end{myfigure}
 
+\begin{note}
+By making the spread in time proportional to the weight of attacking the node, each potential attack in space and time has the same weight.
+\end{note}
+
 \begin{lemma}
-When $T \geq m+2k$, the analogous `diametric' bound $V \leq \max \{ \frac{k+1}{n+k} , \frac{m}{2(n+k)}   \}$ holds
+When $T \geq m+2k$, the upper bound $V \leq \max \{ \frac{k+1}{n+k} , \frac{m}{2(n+k)}   \}$  is guaranteed by the time-delayed attack.
 \end{lemma}
 
-With this analogous `diametric' we have a solution as long as we are in the range where $m \geq 2(k+1)$ so the lemma gives $V \leq \frac{m}{2(n+k)}$.
+This bound is analogous to the diametric bound, and as long as we are in the range where $m \geq 2(k+1)$ so the lemma gives $V \leq \frac{m}{2(n+k)}$.
 
-\begin{lemma}[Solution in $m \geq 2(k+1)$]
-By the attacker using the stage-delayed attack and the patroller using a random oscillation patrol, we achieve the value, when $2(k+1) \leq m \leq 2(n+k)$
+\begin{theorem}[Solution in $m \geq 2(k+1)$]
+By the attacker using the time-delayed attack and the patroller using a random oscillation patrol, we achieve the value, when $2(k+1) \leq m \leq 2(n+k)$, of
 $$V=\frac{m}{2(n+k)}$$
-\end{lemma}
+\end{theorem}
 
-Hence we have a solution for 2 regions $m > 2(n+k)$ and $2(k+1) \leq m \leq 2(n+k)$.
+Hence we have a solution for 2 regions $m > 2(n+k)$ and $2(k+1) \leq m \leq 2(n+k)$, which we note are analogous to regions $S_{1}$ and $S_{2}$ in the line graph. Hence prompting definitions for our regions
+
+\begin{itemize}
+\item $S_{1}' = \{(n,m,k) \, | \, m > 2(n+k) \}$ which have values $V=1$
+\item $S_{2}' = \{(n,m,k) \, | \, 2(k+1) \leq m \leq 2(n+k) \}$ which have values $V=\frac{m}{2(n+k)}$
+\end{itemize}
+
+An example of these regions and the elongated star graph's value can be seen in \ref{Figure:Elongated star graph region 1 and 2 value}
 
 \begin{myfigure}
 \resizebox{0.95\linewidth}{!}{
 \input{Images/ElongatedStarRegions(S_10_5).tex}}
 \caption{Value of the Star Graph, $S_{10}^{5}$}
+\label{Figure:Elongated star graph region 1 and 2 value}
 \end{myfigure}
 
-We then seek solutions in the region $m < 2(k+1)$. However in this region we are below the Random Oscillation bound for the patroller and we can suggest some improvement as in \cite{Papadaki2016} from the embedded Hamiltonian bound. To see the issue and why the Random Oscillation can be improved we will look at the probability of interception under the strategy.
+We then seek solutions in the region $m < 2(k+1)$, however in this region we are below the random oscillation bound for the patroller and we can suggest some improvement (as in $S_{5}$ in the line graph) from the embedded Hamiltonian bound with. To see the issue and why the random oscillation can be improved we will look at the probability of interception under this patrol strategy.
 
-If the patroller is performing a Random Oscillation, then for a pure attack at node $i$ the probability of capture is given by (derivation in appednix \ref{appednixsection: Reason for probability of interception}),
+If the patroller is performing a random oscillation, then for a pure attack at node $i$ the probability of capture is given by (derivation in appendix \ref{Appendix:Reason for probability of interception}),
 \begin{equation}
 \label{eq:Prob of Interception}
 w(i)= \left\{\begin{array}{l}
@@ -967,17 +995,18 @@ We will call $w(i)$ the probability of \textit{interception} at node $i$.
 \input{Images/BaseInterceptionOnS_4^5(m=4).tex}
 \end{center}
 \caption{Interception probabilities of $S^5_{4}$ when $m=4$.}
+\label{Figure:Base interception probabilities}
 \end{examplefigure}
 
-It is very clear that the issues are towards the end of the graph, where the returns, under the Random Oscillation do not provide adequate coverage, hence we may wish to improve these end points of the graph. To do so we will introduce the idea of cycles which are played with guarantee capture of all attacks at noes within their cycle.
+Looking at the function (or the figure \ref{Figure:Base interception probabilities})it is clear that the issues are towards the end of the graph. This is because the next return under the random oscillation does not provide adequate coverage, hence we may wish to improve these end points of the graph. To do so we introduce the concepts of cycles which are played to guarantee capture of all attacks at all nodes within their cycle(\textit{covering}).
 
-\begin{definition}[End-ensuring cycle]
-Define a cycle of length $m$ (if even) or $m-1$ (if odd) to be \textit{End-ensuring} if one of the points along the cycle is a leaf node. Define the \textit{Half-length} of such cycles to be $\hat{m}=\floor{\frac{m}{2}}$.
+\begin{definition}[End-covering cycle]
+Define a cycle of length $m$ (if even) or $m-1$ (if odd) to be \textit{end-covering} if one of the points along the cycle is a leaf node. Define the \textit{half-length} of such cycles to be $\hat{m}=\floor{\frac{m}{2}}$.
 \end{definition}
 
-In \cite{Papadaki2016} the authors improved nodes with poor interception probabilities by introducing two end-ensuring cycles. We shall do the same, though now more consideration needs to be taken on how to place these End-ensuring cycles. 
+In \cite{Papadaki2016} the authors improved the line graph's end nodes, which have poor interception probabilities, by introducing a end-covering cycle at each end. We shall do the same, though now more consideration needs to be taken on how to place these end-covering cycles. 
 
-We first classify nodes into types, we partition the node set, $N$, into 
+We first classify nodes into types, we partition the node set, $N=L \cup M \cup R \cup S$, where
 \begin{itemize}
 \item Left nodes, $L=\left\{ i \, | \, i \leq \floor{\frac{m}{2}}+1 , i \leq k+1 \right\}$ 
 \item Middle nodes, $M=\left\{ i \, | \, \floor{\frac{m}{2}}+2 \leq i \leq n+k-\floor{\frac{m}{2}} , i \leq k+1 \right\}$
@@ -986,16 +1015,16 @@ We first classify nodes into types, we partition the node set, $N$, into
 \end{itemize}
 
 \begin{note}
-The set $R$ is empty if $\floor{\frac{m}{2}} \leq n-1$. The set $M$ is empty if $\floor{\frac{m}{2}} \geq k-1$ or $\floor{\frac{m}{2}} \geq n+k-2$.
+The set $R$ is empty if $\hat{m} \leq n-1$. The set $M$ is empty if $\hat{m} \geq k-1$ or $\hat{m} \geq n+k-2$.
 \end{note}
 
 Then $ V \geq w_{\min} \equiv w_{\min}^{N}=\min \left\{ w_{\min}^{L},w_{\min}^{M},w_{\min}^{R},w_{\min}^{S} \right\}$ , where $w_{\min}^{X}=\min\limits_{i \in X} w(i)$. We aim to use end-ensuring cycles to improve $w_{\min}$, which means improving the worst node sets, and hence improving the random oscillation bound.
 
 
-Now from equation \ref{eq:Prob of Interception} we not some properties of each node set.
+Now from equation \ref{eq:Prob of Interception} we note some properties for each node set.
 \begin{itemize}
 \item $w_{min}^{L}=w(1)$, as for $i \in L$ we have that $w(i)$ is increasing in $i$.
-\item $w_{min}^{M}=w(\floor{\frac{m}{2}}+2)=\frac{2m}{2(n+k)}$ , as for $i \in M $ we have that $w(i)=\frac{2m}{2(n+k)}$ $\forall i \in M$.
+\item $w_{min}^{M}=w(\hat{m}+2)=\frac{2m}{2(n+k)}$ , as for $i \in M $ we have that $w(i)=\frac{2m}{2(n+k)}$ $\forall i \in M$.
 \item $w_{min}^{R}=w(k+1)$, as for $i \in R$ we have that $w(i)$ is decreasing in $i$.
 \item $w_{min}^{S}=w(*)$, as $w(c) > w(*)$.
 \end{itemize}
@@ -3914,7 +3943,7 @@ In the one-off game, the BRHP strategy is always feasible. However in the period
 \label{Appendix:Improving random oscillations}
 
 \subsection{Reason For Probability of Interception formula}
-\label{appednixsection: Reason for probability of interception}
+\label{Appendix:Reason for probability of interception}
 To argue why this is consider looking at just the integer points on the graph first,
 then by looking whether it is best to return via the ``left return'' or a ``right return'', that is the shortest time to the next return along the oscillation. The time/distance to return via the left motion, i.e through $1$, is $2(i-1)$ and the time/distance to return via the right motion, i.e through $c$ and the set of $*$'s, is $2(n+k-(i-1))=2(n+k+1-i)$. So the categories fall when $2(i-1) < 2(n+k+i-1) , 2(i-1)=2(n+k+1-i) , \text{ and } 2(i-1) > 2(n+k+1-i)$. These decide the boundaries and they return with these distances.
 
