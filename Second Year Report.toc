@@ -15,15 +15,15 @@
 \contentsline {subsection}{\numberline {2.2}New Tools}{17}{subsection.2.2}
 \contentsline {subsection}{\numberline {2.3}Star graph solution}{18}{subsection.2.3}
 \contentsline {subsection}{\numberline {2.4}Elongating the star graph}{19}{subsection.2.4}
-\contentsline {subsection}{\numberline {2.5}Generalising the star graph}{27}{subsection.2.5}
+\contentsline {subsection}{\numberline {2.5}Generalising the star graph}{28}{subsection.2.5}
 \contentsline {subsection}{\numberline {2.6}Joining star graphs by centralised connections}{31}{subsection.2.6}
-\contentsline {section}{\numberline {3}Strategic Patroller with Random Attackers}{34}{section.3}
-\contentsline {subsection}{\numberline {3.1}Deterministic Attack time experiments}{34}{subsection.3.1}
+\contentsline {section}{\numberline {3}Strategic Patroller with Random Attackers}{33}{section.3}
+\contentsline {subsection}{\numberline {3.1}Deterministic Attack time experiments}{35}{subsection.3.1}
 \contentsline {subsection}{\numberline {3.2}Smoothing the index}{35}{subsection.3.2}
-\contentsline {section}{\numberline {4}Strategic Patroller with Random Attackers and Local-observations}{36}{section.4}
-\contentsline {subsection}{\numberline {4.1}Altering the problem for instantaneous moving patroller}{37}{subsection.4.1}
-\contentsline {subsection}{\numberline {4.2}Numerical results for instantaneously moving patroller}{38}{subsection.4.2}
-\contentsline {subsection}{\numberline {4.3}Altering problem to accommodate local-observable information}{38}{subsection.4.3}
+\contentsline {section}{\numberline {4}Strategic Patroller with Random Attackers and Local-observations}{38}{section.4}
+\contentsline {subsection}{\numberline {4.1}Altering the problem for instantaneous moving patroller}{38}{subsection.4.1}
+\contentsline {subsection}{\numberline {4.2}Numerical results for instantaneously moving patroller}{39}{subsection.4.2}
+\contentsline {subsection}{\numberline {4.3}Altering problem to accommodate local-observable information}{39}{subsection.4.3}
 \contentsline {subsection}{\numberline {4.4}Deterministic attack time assumption}{42}{subsection.4.4}
 \contentsline {subsection}{\numberline {4.5}Single node solution}{42}{subsection.4.5}
 \contentsline {subsection}{\numberline {4.6}Index and heuristics}{47}{subsection.4.6}
