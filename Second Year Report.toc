@@ -6,41 +6,44 @@
 \contentsline {subsubsection}{\numberline {1.2.3}Solved Graphs}{6}{subsubsection.1.2.3}
 \contentsline {subsubsection}{\numberline {1.2.4}Conclusion on review of patrolling problem}{8}{subsubsection.1.2.4}
 \contentsline {subsection}{\numberline {1.3}Review of patrolling problem with random attackers}{8}{subsection.1.3}
-\contentsline {subsubsection}{\numberline {1.3.1}Problem set-up}{8}{subsubsection.1.3.1}
+\contentsline {subsubsection}{\numberline {1.3.1}Problem set-up}{9}{subsubsection.1.3.1}
 \contentsline {subsubsection}{\numberline {1.3.2}Problem relaxation}{11}{subsubsection.1.3.2}
 \contentsline {subsubsection}{\numberline {1.3.3}Single-node problem}{13}{subsubsection.1.3.3}
 \contentsline {subsubsection}{\numberline {1.3.4}More heuristics}{14}{subsubsection.1.3.4}
 \contentsline {section}{\numberline {2}Patrolling games}{15}{section.2}
-\contentsline {subsection}{\numberline {2.1}Issue and correction with the diametric bound}{15}{subsection.2.1}
+\contentsline {subsection}{\numberline {2.1}Issue and correction of the diametric bound}{15}{subsection.2.1}
 \contentsline {subsection}{\numberline {2.2}New Tools}{17}{subsection.2.2}
-\contentsline {subsection}{\numberline {2.3}Star graph solution}{19}{subsection.2.3}
-\contentsline {subsection}{\numberline {2.4}Extending the star graph}{19}{subsection.2.4}
-\contentsline {subsection}{\numberline {2.5}Joining star graphs by centralised connections}{31}{subsection.2.5}
-\contentsline {section}{\numberline {3}Strategic Patroller with Random Attackers}{33}{section.3}
-\contentsline {subsection}{\numberline {3.1}Deterministic Attack time experiments}{33}{subsection.3.1}
+\contentsline {subsection}{\numberline {2.3}Star graph solution}{18}{subsection.2.3}
+\contentsline {subsection}{\numberline {2.4}Elongating the star graph}{19}{subsection.2.4}
+\contentsline {subsection}{\numberline {2.5}Generalising the star graph}{27}{subsection.2.5}
+\contentsline {subsection}{\numberline {2.6}Joining star graphs by centralised connections}{31}{subsection.2.6}
+\contentsline {section}{\numberline {3}Strategic Patroller with Random Attackers}{34}{section.3}
+\contentsline {subsection}{\numberline {3.1}Deterministic Attack time experiments}{34}{subsection.3.1}
 \contentsline {subsection}{\numberline {3.2}Smoothing the index}{35}{subsection.3.2}
-\contentsline {section}{\numberline {4}Strategic Patroller with Random Attackers and Local-observations}{38}{section.4}
-\contentsline {subsection}{\numberline {4.1}Altering the problem for instantaneous moving patroller}{38}{subsection.4.1}
-\contentsline {subsection}{\numberline {4.2}Numerical results for instantaneously moving patroller}{39}{subsection.4.2}
-\contentsline {subsection}{\numberline {4.3}Altering problem to accommodate local-observable information}{39}{subsection.4.3}
+\contentsline {section}{\numberline {4}Strategic Patroller with Random Attackers and Local-observations}{36}{section.4}
+\contentsline {subsection}{\numberline {4.1}Altering the problem for instantaneous moving patroller}{37}{subsection.4.1}
+\contentsline {subsection}{\numberline {4.2}Numerical results for instantaneously moving patroller}{38}{subsection.4.2}
+\contentsline {subsection}{\numberline {4.3}Altering problem to accommodate local-observable information}{38}{subsection.4.3}
 \contentsline {subsection}{\numberline {4.4}Deterministic attack time assumption}{42}{subsection.4.4}
 \contentsline {subsection}{\numberline {4.5}Single node solution}{42}{subsection.4.5}
 \contentsline {subsection}{\numberline {4.6}Index and heuristics}{47}{subsection.4.6}
 \contentsline {subsection}{\numberline {4.7}Numerical experiments}{49}{subsection.4.7}
 \contentsline {section}{\numberline {5}Future Work}{51}{section.5}
-\contentsline {subsection}{\numberline {5.1}Use of trees in general graphs for patrolling games}{51}{subsection.5.1}
-\contentsline {subsection}{\numberline {5.2}Proof completions}{51}{subsection.5.2}
-\contentsline {subsubsection}{\numberline {5.2.1}Plan}{51}{subsubsection.5.2.1}
-\contentsline {subsection}{\numberline {5.3}Complete Numerical experiment for simultaneous moving patroller}{51}{subsection.5.3}
-\contentsline {subsection}{\numberline {5.4}Extending Discrete Attack time to generic distributions for local observations}{52}{subsection.5.4}
-\contentsline {subsubsection}{\numberline {5.4.1}Plan}{54}{subsubsection.5.4.1}
-\contentsline {subsection}{\numberline {5.5}Strategic Patroller with Random Attackers on Edges}{54}{subsection.5.5}
+\contentsline {subsection}{\numberline {5.1}Further solutions for elongated trees}{51}{subsection.5.1}
+\contentsline {subsubsection}{\numberline {5.1.1}Plan}{53}{subsubsection.5.1.1}
+\contentsline {subsection}{\numberline {5.2}Use of trees in general graphs for patrolling games}{53}{subsection.5.2}
+\contentsline {subsection}{\numberline {5.3}Proof completions}{53}{subsection.5.3}
+\contentsline {subsubsection}{\numberline {5.3.1}Plan}{53}{subsubsection.5.3.1}
+\contentsline {subsection}{\numberline {5.4}Complete Numerical experiment for simultaneous moving patroller}{53}{subsection.5.4}
+\contentsline {subsection}{\numberline {5.5}Extending Discrete Attack time to generic distributions for local observations}{54}{subsection.5.5}
 \contentsline {subsubsection}{\numberline {5.5.1}Plan}{56}{subsubsection.5.5.1}
-\contentsline {subsection}{\numberline {5.6}Investigate weighted graphs }{56}{subsection.5.6}
-\contentsline {subsubsection}{\numberline {5.6.1}Plan}{56}{subsubsection.5.6.1}
-\contentsline {subsection}{\numberline {5.7}Investigate types of patrolling}{57}{subsection.5.7}
-\contentsline {subsubsection}{\numberline {5.7.1}Plan}{57}{subsubsection.5.7.1}
-\contentsline {section}{Appendices}{i}{section*.37}
+\contentsline {subsection}{\numberline {5.6}Strategic Patroller with Random Attackers on Edges}{56}{subsection.5.6}
+\contentsline {subsubsection}{\numberline {5.6.1}Plan}{58}{subsubsection.5.6.1}
+\contentsline {subsection}{\numberline {5.7}Investigate weighted graphs }{59}{subsection.5.7}
+\contentsline {subsubsection}{\numberline {5.7.1}Plan}{59}{subsubsection.5.7.1}
+\contentsline {subsection}{\numberline {5.8}Investigate types of patrolling}{59}{subsection.5.8}
+\contentsline {subsubsection}{\numberline {5.8.1}Plan}{59}{subsubsection.5.8.1}
+\contentsline {section}{Appendices}{i}{section*.38}
 \contentsline {section}{\numberline {A}Graph Definitions}{i}{appendix.A}
 \contentsline {section}{\numberline {B}Examples}{iv}{appendix.B}
 \contentsline {subsection}{\numberline {B.1}Example of decomposition}{iv}{subsection.B.1}
