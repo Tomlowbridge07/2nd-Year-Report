@@ -23,7 +23,6 @@
 \usepackage{hyperref}
 \usepackage{tcolorbox}
 \usepackage{chngcntr}
-
 \usetikzlibrary{calc}
 \usetikzlibrary{fit}
 \usetikzlibrary{decorations.shapes,shapes.misc,calc, positioning, hobby, backgrounds}
@@ -116,15 +115,13 @@ cross/.default={1pt}}
 
 In section \ref{Section:Literature Reviews} we provide an overview of the current work done on security problems, which focuses on a patroller attempting to stop some malicious entity. We will also provide an in-depth review of \cite{Alpern2011} and \cite{Lin2013} upon which our extensions in sections \ref{Section:Patrolling games} and \ref{Section:Patrolling games with random attackers and local-observations} will be based.
 
-In section \ref{Section:Patrolling games} we continue last year's initial findings and provide new optimal strategies for the patroller, as well as correcting an optimal attack strategy which solves a ambiguity with Lemma 9 in \cite{Alpern2011}. We further develop the idea the in order to provide us with tools to handle a wider class of graphs.
-
-In section \ref{Section:Strategic Patroller with Random Attackers} we analyse the work done in \cite{Alpern2011} more closely, particularly looking if their issue with having only deterministic attack times and the idea of having too much knowledge. This is in an aim to see if there is any evidence that the error of our heuristic in our later work(section \ref{Section:Patrolling games with random attackers and local-observations}) are exhibited in the original problem's heuristics. We introduce the idea of splitting the index among non-acting states which will be use in our extension.
+In section \ref{Section:Patrolling games} we progress last year's initial findings of new tools and a possible ambiguity issue with Lemma 9 in \cite{Alpern2011}. We analyse the issue of the time horizon as discussed in last years report, as well as provide a small correction and limits for which bounds hold. We generalise the idea the in order to provide us with more tools, and in particular try to find solutions solutions to a more general star graph, using the idea of spacing potential attacks in time.
 
 In section \ref{Section:Patrolling games with random attackers and local-observations} we build on the work done in \cite{Lin2013} by introducing the concept of the patroler who can move instantaneously. And later who observes suspicious behaviour of arriving attackers and try to incorporate this information in an effort to develop a heuristic which is near optimal.
 
 Finally in section \ref{Section:Future Work} we conclude the report with a list of uncompleted work as well as a brief introduction to ideas for future work and extensions to our type of security problems. 
 
-We leave most proofs to the Appendix. We also provide some definitions of graph terminology.
+We leave most proofs to the appendix, unless they provide some useful insight. We also provide some definitions for graph terminology. We note to the reader that in the final thesis we aim to make a chapter out of section \ref{Section:Patrolling games} and section \ref{Section:Patrolling games with random attackers and local-observations}, both with more work from their extensions in section \ref{Section:Future Work} and their review in section \ref{Section:Review of Strategic Patrolling games} and \ref{Section:Review of patrolling problem with random attackers} respectively.
 }
 \clearpage
 \pagestyle{plain}
@@ -139,25 +136,25 @@ We leave most proofs to the Appendix. We also provide some definitions of graph 
 \section{Literature Reviews}
 \label{Section:Literature Reviews}
 \subsection{Overview of Security Problems}
-Security problems arise in many real world scenarios, such as a security guard patrolling a museum, police patrolling a city and military personal guarding bases and borders. At the core of all these problems is the need to deploy resources to locations in order to find undesirable activity. When multiple resources are available, it is a question of where to deploy then and for what length of time, such as a fire brigade being deployed to sectors to fight a spreading forest fire. However when resources are scarce but can be used continuously, one may suggest a patrol of the locations. Using a patrol means the structure of the locations and how they can be traversed is of key importance, rather than just where to deploy the resources. While most of the time this idea of traversing is physical, be it a guard walking around a museum or a drone flying of a region, it is not necessarily true, it may be a guard flicking through live-video feeds.
+Security problems arise in many real world scenarios, such as a security guard patrolling a museum, police patrolling a city and military personal guarding bases and borders. At the core of all these problems is the need to deploy resources to locations in order to find undesirable activity. When multiple resources are available, it is a question of where to deploy them and for what length of time, such as a fire brigade being deployed to sectors to fight a spreading forest fire. However when resources are scarce but can be used continuously, one may suggest a patrol of the locations. Using a patrol means the structure of the locations and how they can be traversed is of key importance, rather than just where to deploy the resources. While most of the time this idea of traversing is physical, be it a guard walking around a museum or a drone flying over a region, it is not necessarily true,as it may be a guard flicking through live-video feeds.
 
 Early work in the area focused on police patrols in urban areas (\cite{Larson1972},\cite{Chelst1978},\cite{Chaiken1978}), using many techniques including statistics based on $M/M/c$ queues( with small modifications due to the stochasticity in the number of servers) for the purpose of alloacting patrols, later moving onto patrolling rural areas (\cite{Birge1989}), in which the primary difference was the incorporation of the travel time into the service rate. Furthermore work was done on police patrolling highways(\cite{Taylor1985}), used a non-linear goal program reflecting the non-linear relationship between deployment and performance with multiple objectives. These early works relied on the fact that the crime rate was known at the different locations and that they remained constant while the patrol was happening. The solution to the problems involved randomizing the patrols in order to maximize the probability of intercepting a crime in progress.
 
-While the work done in scheduling police patrols are a strategic only from the police force's point of view, one may wish to introduce a strategic problem for the attacker. This makes the problem a game-theoretic one, while differential game formulations exist (\cite{Feichtinger1983}) these tend to focus on a dynamic (and often strategic) process of mutual adjustment, rather than confronting the problem of a scheduler who has has to determine the path of the patrol to take beforehand.
+While the work done in scheduling police patrols are a strategic only from the police force's point of view, one may wish to introduce a strategic problem for the attacker. This makes the problem a game-theoretic one, while differential game formulations exist (\cite{Feichtinger1983}) these tend to focus on a dynamic (and often strategic) process of mutual adjustment, rather than confronting the problem of a scheduler who has to determine the path of the patrol to take beforehand.
 
 A baseline to start searching for an entity is the search game, a game-theoretic formulation, which involves a searcher aiming to minimize the time until they find either an immobile or mobile hider in some search space (\cite{Steve2003}). As a special search space, graphs are considered to just be subset of $\mathbb{R}^{3}$ (or $\mathbb{R}^{2}$ if planar) by embedding.
 
 Game-theoretic analyses have been done in studies of counter-terrorism actions (\cite{Brown2006},\cite{Lindelauf2009}), to find how a patroller should randomize their patrol. It has been shown that the obvious strategy of; given $n$ targets, spend $\frac{1}{n}$ of the available patrol time on every target; is not necessarily a good idea(\cite{Fox}). The game has also been formulated as a Stackleberg (leader-follower decisions) type game, instead of a simultaneous decision one, in which near optimal heuristics have been found(\cite{Paruchuri2008}).
 
-Many extensions the search game have been studied, such as a searcher who has multiple modes(such as fast or slow), they can search in, this work was applied to a predator prey model, to analyse at what frequency a predator should ambush the prey (\cite{Alpern2011a}). Another variation of the search game, is the accumulation game, in which the hider can hide portions of their self across the search space, with some critical amount of their self which needs to avoid being found in roder to be effective. For a continuous portioning of the hider in a discrete (\cite{Kikuta2002a}) and continuous (\cite{Ruckle2000}) search space, the strategies were found be pure. While later this studied with a graphical structure and it was found that mixed strategies need to be employed in optimum(\cite{Alpern2014}).
+Many extensions of the search game have been studied, such as a searcher who has multiple modes(such as fast or slow), they can search in, this work was applied to a predator prey model, to analyse at what frequency a predator should ambush the prey (\cite{Alpern2011a}). Another variation of the search game, is the accumulation game, in which the hider can hide portions of their self across the search space, with some critical amount of their self which needs to avoid being found in order to be effective. For a continuous portioning of the hider in a discrete (\cite{Kikuta2002a}) and continuous (\cite{Ruckle2000}) search space, the strategies were found be pure. While later this was studied with a graphical structure and it was found that mixed strategies need to be employed in optimum(\cite{Alpern2014}).
 
 Another common assumption about the search space is that we can divide it into cells, then the hider is in one of these cells. We assume some initial probability distribution of where the hider is, is known by the searcher and that searching a cell costs the searcher a differing amount dependent on the cell. Then the searcher upon completion of a search where the hider is not find, can update the prior probability in a bayesian fashion(\cite{Black1965},\cite{Matula1964}). It has been found that the searcher has a uniformly optimal strategy for all time horizons and so even if the searcher has an unknown deadline, to find the hider, they can act optimally (\cite{Lin2016}). Work has also been done to incorporate the portioning of the hider as in the accumulation game, but when we have search cells(\cite{Ruckle1983}) and further when these cells have a limited capacity of how much the hider can hide in them(\cite{Zoroa1999},\cite{Zoroa2004})
 
-While search games (and there successors) are of major importance when there are two uncooperative element, they have also been expended to rendezvous search games(\cite{Steve2003}). A rendevous game is a game where two rendezvours wish to detect each other in the search space. Such games change the min-max objective of search games into a min-min objective. While rendezvous games do not inherintely have a mallicous entity, they are still useful in security problems such as, the regrouping of military assets in an unknown environment and with the development of communication technologies have been applied to the frequencies on military assets communicate. Like before often a graphical structure can be applied (\cite{Alpern1999}). To reintroduce a mallicous entity in the field of communication, a searcher is introduced to create a three player problem, with two rendezvours who are cooperative and a enemy searcher. This idea has been applied to the wire-tapping of phone lines(\cite{Alpern1998}) and the jamming of signals in millitary communications(\cite{Abdel-Rahman2014}).
+While search games (and there successors) are of major importance when there are two uncooperative elements, they have also been expended to rendezvous search games(\cite{Steve2003}). A rendevous game is a game where two rendezvours wish to detect each other in the search space. Such games change the min-max objective of search games into a min-min objective. While rendezvous games do not inherintely have a mallicous entity, they are still useful in security problems such as, the regrouping of military assets in an unknown environment and with the development of communication technologies have been applied to the frequencies on military assets communicate. Like before often a graphical structure can be applied (\cite{Alpern1999}). To reintroduce a mallicous entity in the field of communication, a searcher is introduced to create a three player problem, with two rendezvours who are cooperative and a enemy searcher. This idea has been applied to the wire-tapping of phone lines(\cite{Alpern1998}) and the jamming of signals in millitary communications(\cite{Abdel-Rahman2014}).
 
 A patrolling game (\citep{Alpern2011}) takes the search game in which the hider is always in the search space, and allows the hider (now called an attacker) to only be in the space for a subset of the time horizon, which is chosen by the attacker. This means that the patrol games are win-lose games instead of games of degree like the original search game. Section \ref{Section:Review of Strategic Patrolling games} reviews the formulation and initial results of patrol games on graphs. While general tools were found, only exact solutions to certain classes of graphs were found and in particular only a partial solution to the line graph was found, which was later completed (\cite{Papadaki2016}). A continuous time version of the patrol game has also been formulated and solved for the line graph, agreeing with the discrete case (\cite{Alpern2016}). Throughout it is proposed that the intuitive solution, of simply going back and forth on the line, is not optimal and that it is the size of the gap between visits relative to how long the attacker is in the network that matters. In section \ref{Section:Patrolling games} we propose an issue with one attacking strategy developed when the time horizon is finite, correcting the issue and proposing a more general application. This is all done with the aim of getting a solution for all tree graphs, which provide a great lower bound for any graph.
 
-Following this work, a infinite time horizon patrol problem was formulated for generic attack times which can differ between nodes (\citep{Lin2013}), this problem is reviewed in Section \ref{Section:Review of patrolling problem with random attackers}. By using work related to indices developed for multi-arm bandits, they manage to develop near optimal heuristics for the patrol problem. They then move to the infinite time horizon patrol game, by introducing a strategic attacker, and again find near optimal heuristics for the problem. In section \ref{Section:Strategic Patroller with Random Attackers} we alter the theory to deal with a problem, where the patroller may observe some suspicious behaviour from attackers and incorporates this information into their decision, but first we look at accounting for instantaneous movement of a patroller in the graph, in order to model that of guard flicking through live-video feeds.
+Following this work, a infinite time horizon patrol problem was formulated for generic attack times which can differ between nodes (\citep{Lin2013}), this problem is reviewed in Section \ref{Section:Review of patrolling problem with random attackers}. By using work related to indices developed for multi-arm bandits, they manage to develop near optimal heuristics for the patrol problem. They then move to the infinite time horizon patrol game, by introducing a strategic attacker, and again find near optimal heuristics for the problem. In section \ref{Section:Strategic Patroller with Random Attackers} we alter the theory to deal with a problem, where the patroller may observe some suspicious behaviour from attackers and incorporates this information into their decision, but first we look at accounting for instantaneous movement of a patroller in the graph, in order to model that of a guard flicking through live-video feeds.
 
 The patrol problem and game were later extended to include the idea of overlooking an attack instead of capture being ensured and again near optimal heuristics were developed (\cite{Lin2014})
 
@@ -173,7 +170,7 @@ A patrolling game, $G=G(Q,T,m)$, is a win-lose, zero-sum game between a maximizi
 \item The length of time the attack takes to complete, the attack-time $m$.
 \end{itemize}
 
-Two forms of the game exist: the one-off game, which is played in a finite time interval $\mathcal{T}=\{0,1,...,T-1\}$ denoted using $G^{o}$; and the periodic game, which is played on the time circle $\mathcal{T}^*=\{0,1,...,T-1\}$ (with the asterisk representing arithmetic on the time circle taking place modulo $T$) denoted using $G^p$. We will assume that $T \geq m$ , otherwise it clear that all attacks will always fail.
+Two forms of the game exist: the one-off game, which is played in a finite time interval $\mathcal{T}=\{0,1,...,T-1\}$ denoted using $G^{o}$; and the periodic game, which is played on the time circle $\mathcal{T}^*=\{0,1,...,T-1\}$ (with the asterisk representing arithmetic on the time circle taking place modulo $T$) denoted using $G^p$. We will assume that $T \geq m$, otherwise it is clear that all attacks will always fail.
 
 The pure strategies available to the patroller are called patrols, choosing a starting position and how to walk along the graph Q, $W:\mathcal{T} \rightarrow N$. With no restrictions in the one-off game, but the restriction that the edge $(W(T-1),W(0)) \in E$ in the periodic game (so that $W(T)=W(0)$). Let $$\mathcal{W}=\{ W \, | \, W:\mathcal{T} \rightarrow N \text{ s.t } (W(t),W(t+1)) \in E \text{ for } t=0,...,T-2  \} $$ be the set of all pure patrols in the one-off game (and similarly $\mathcal{W}^*$ in the periodic game). Let there be some ordering to the strategies $W_{k} \in \mathcal{W}$ (or $W_{k} \in \mathcal{W}^{*}$) for $k=1,...,|\mathcal{W}|$ (or $k=1,...,|\mathcal{W}^*|$ in the periodic game).
 
@@ -209,18 +206,18 @@ $\bm{\phi}_{k}=\left\{\begin{array}{c}
 0 \text{ if } k \neq j. \\
 \end{array} \right.$ respectively
 
-The value of the game is denoted by $V=V(Q,T,m) \equiv \max\limits_{\bm{\pi} \in \Pi} \min\limits_{\bm{\phi} \in \Phi} P(\bm{\pi},\bm{\phi})=\min\limits_{\bm{\phi} \in \Phi} \max\limits_{\bm{\pi} \in \Pi} P(\bm{\pi},\bm{\phi})$, in which we say that $(\bm{\pi},\bm{\phi})$ is a optimal \textit{Nash equilibrium}, and when needed we distinguish between the one-off and period game by using the subscripts $V^{o}$ and $V^p$ respectively.
+The value of the game is denoted by $V=V(Q,T,m) \equiv \max\limits_{\bm{\pi} \in \Pi} \min\limits_{\bm{\phi} \in \Phi} P(\bm{\pi},\bm{\phi})=\min\limits_{\bm{\phi} \in \Phi} \max\limits_{\bm{\pi} \in \Pi} P(\bm{\pi},\bm{\phi})$, in which we say that $(\bm{\pi},\bm{\phi})$ is an optimal \textit{Nash equilibrium}. When needed we distinguish between the one-off and period game by using the subscripts $V^{o}$ and $V^p$ respectively.
 
 Many general properties for the game can be easily proven; such as that the one-off game is non-increasing in $T$ (as it simply increases the size of $\mathcal{I}$) and introducing more edges for the same node set doesn't lower the value (it only increases the choice in the set $\mathcal{W}$ and $\mathcal{W}^*$). Also as $\mathcal{W}^* \subset \mathcal{W}$, it is obvious that $V^{p} (Q,T,m) \leq V^{o} (Q,T,m)$ (see \cite{Alpern2011} for details). So solving the one-off game gives an upper bound for the periodic game.
 
 We shall now focus on the unrestricted, one-off game, for the rest of this section as it provides an upper bound for the periodic game.
 
 \subsubsection{Bounds and Tools}
-We shall provide a group of patrols and attacks to give bounds on $V$ which can be applied to all graphs. The lower bounds are given in terms of the patroller's `good' strategy against all attacker options, similarly the upper bounds are given in terms of the attacker's `good' strategy against all the patroller options. When we reach tightness between the bound these `good' strategies become an optimal solution.
+We shall provide a group of patrolling and attacking strategies to give bounds on the value of the game, $V$, which can be applied to all graphs. The lower bounds are given in terms of the patroller's `good' strategy against all attacker options, similarly the upper bounds are given in terms of the attacker's `good' strategy against all the patroller options. When we reach tightness between the bound these `good' strategies become an optimal solution.
 
 \textbf{General bounds(Patroller and Attacker):}
 
-By the patroller waiting a random node they can achieve $V \geq \frac{1}{n}$ and by the attacker picking a random node with a fixed time $I$ they can achieve $V \leq \frac{\omega}{n} \leq \frac{m}{n}$, where $\omega$ is the maximum number of nodes the patroller can visit in the interval, $I$ of length $m$.
+By the patroller waiting at a random node they can achieve $V \geq \frac{1}{n}$ and by the attacker picking a random node with a fixed time $I$ they can achieve $V \leq \frac{\omega}{n} \leq \frac{m}{n}$, where $\omega$ is the maximum number of nodes the patroller can visit in the interval, $I$ of length $m$.
 
 \textbf{Decomposition(Patroller):}
 
@@ -245,9 +242,9 @@ While this bound can hold, an issue caused by the time-horizon is ambiguous in t
 
 \textbf{Covering(Patroller) and Independence(Attacker):}
 
-A set of patrols which each capture every node within there patrol is called  \textit{covering}, with the minimal number of patrols needed for such a set called the \textit{covering number}, $\mathcal{C}$. As the patroller can implement one of these patrols, $V \geq \frac{1}{\mathcal{c}}$.
+A set of patrols which each captures every potential attack at every node within the patrol is called  \textit{covering}, with the minimal number of patrols needed for such a set called the \textit{covering number}, $\mathcal{C}$. As the patroller can implement one of these patrols, $V \geq \frac{1}{\mathcal{c}}$.
 
-A set of nodes in which any patrol cannot catch more than one is called  an \textit{independent} set, with the maximal number of nodes which can be used called the \textit{independence number}, $\mathcal{I}$. As the patroller can play at one of these nodes with equal probability, $V \leq \frac{1}{I}$. 
+A set of nodes in which any patrol cannot catch more than one is called  an \textit{independent} set, with the maximal number of nodes which can be used being called the \textit{independence number}, $\mathcal{I}$. As the patroller can play at one of these nodes with equal probability, $V \leq \frac{1}{I}$. 
 
 
 For the one-off game being independent is equivalent to $d(i,i') \geq m$ and for the Periodic game it is equivalent to $d(i,i') \geq m$ and $2d(i,i') \leq T$(due to returning to start).
@@ -372,12 +369,13 @@ A patrolling problem with random attackers, $G=G(Q,\bm{X},\Lambda,\bm{p},\bm{c})
     
 \end{tikzpicture}
 \end{center}
-\caption{Example of $G=(K_{4},\bm{X},\Lambda,\bm{p},\bm{c})$ with patroller currently at node $3$}
+\caption{Example of $G=(K_{4},\bm{X},\Lambda,\bm{p},\bm{c})$ with patroller currently at node $3$.}
+\label{Figure:Example of graph diagram}
 \end{myfigure}
 
-The attackers arrive to the system at a rate of $\Lambda$, at which point they pick to attack node $i$ with probability $p_{i}$. They begin their attack immediately, which lasts an amount of time drawn from the nodes attack time distribution, $X_{i}$. The patroller detects all ongoing attacks when arriving at node $i$, the patroller then decides which node to move to and moves there taking unit time to arrive(which can be the current node).
+The attackers arrive to the system at a rate of $\Lambda$, at which point they pick to attack node $i$ with probability $p_{i}$. They begin their attack immediately, which lasts an amount of time drawn from the nodes attack time distribution, $X_{i}$. The patroller detects all ongoing attacks when arriving at node $i$, the patroller then decides which node to move to and moves there taking unit time to arrive(which can be the current node). Figure \ref{Figure:Example of graph diagram} shows shows an example of the current state of a graph, and figure \ref{Figure:Example of timing for original problem} shows an example of the timing at a node when the patroller arrives after travelling for one unit time along an edge.
 
-By Poisson thinning it is possible to divide the overall Poisson arrival process to individual Poisson arrival processes at each node, with rate $\lambda_{i}=\Lambda p_{i}$.
+By Poisson thinning it is possible to divide the overall Poisson arrival process to individual Poisson arrival processes at each node, with rate $\lambda_{i}=\Lambda p_{i}$. So we can use the single parameter of $\bm{\lambda}=(\lambda_{1},...,\lambda_{n})$, instead of $\Lambda$ and $\bm{p}$.  
 
 \begin{myfigure}
 \begin{center}
@@ -430,10 +428,11 @@ By Poisson thinning it is possible to divide the overall Poisson arrival process
        
 \end{tikzpicture}
 \end{center}
-\caption{Example for a given node, when the patroller visits at times, $1,5$}
+\caption{Example for a given node, when the patroller visits at times, $1,5$.}
+\label{Figure:Example of timing for original problem}
 \end{myfigure}
 
-We can formulate such as problem as a Markov Decision Process(MDP) with state space, $\Omega= \{\bm{s}=(s_{1},...,s_{n}) \, | \, s_{i}=1,2,... \, \text{ for } i=1,...,n \}$,  where $s_{i}$ denotes the time since the decision to last visit node $i$ was taken. Because the patroller can only visit one node per time period, all $s_{i}$ have distinct values. In particular one $s_{i}$, the current node, has value $1$. We can identify the current node by $l(\bm{s})=\argmin_{i} s_{i}$. The available decisions from state $\bm{s}$ are $\mathcal{A}(\bm{s})=\{j \, | \, A_{l(\bm{s}),j}=1 \}$ and when node $i$ is chosen by the patroller the state transitions to $\phi(\bm{s},i)=\widetilde{\bm{s}}$, where $\widetilde{s}_{i}=1$ and $\widetilde{s}_{j}=s_{j}+1 \; \forall j \neq i$.
+We can formulate such a problem as a Markov Decision Process(MDP) with state space, $\Omega= \{\bm{s}=(s_{1},...,s_{n}) \, | \, s_{i}=1,2,... \, \text{ for } i=1,...,n \}$,  where $s_{i}$ denotes the time since the decision to last visit node $i$ was taken. Because the patroller can only visit one node per time period, all $s_{i}$ have distinct values. In particular one $s_{i}$, the current node, has value $1$. We can identify the current node by $l(\bm{s})=\argmin_{i} s_{i}$. The available decisions from state $\bm{s}$ are $\mathcal{A}(\bm{s})=\{j \, | \, A_{l(\bm{s}),j}=1 \}$ and when node $i$ is chosen by the patroller the state transitions to $\phi(\bm{s},i)=\widetilde{\bm{s}}$, where $\widetilde{s}_{i}=1$ and $\widetilde{s}_{j}=s_{j}+1 \; \forall j \neq i$.
 
 Because the future of the process is independent of its past, it is only the current state that matters, the process is a Markov Chain(MC) and hence the patroller's problem is justified as a MDP.
 
@@ -514,7 +513,7 @@ Again this is still a relaxation and any $\pi \in \Pi$ has a $\pi \in \Pi^{\text
 The dependency on the initial state, $\bm{s}_{0}$, is dropped as even though $V_{i}(\pi,\bm{s}_{0})$ depends on it, the long-run average cost does not. We will similarly drop the notation on the long-run visit rate, using $\mu_{i}(\pi)$ instead.
 \end{note}
 
-Secondly they relax the TR problem by introducing the constraint as a Lagrangian multiplier, $\omega \geq 0$, to form
+Secondly they relax the TR problem even further by introducing the constraint as a Lagrangian multiplier, $\omega \geq 0$, to form
 
 \begin{align*}
 C(\omega) & \equiv \min\limits_{\pi \in \Pi^{\text{MN}}} \left(\sum\limits_{i=1}^{n} V_{i}(\pi) + \omega \left(\sum\limits_{i=1}^{n} \mu_{i}(\pi) -1\right) \right) \\
@@ -559,7 +558,7 @@ We have $W(0)=0$ and as $X$ is bounded by $B$, we have for $k \geq B$ that $W(k)
 \label{Theorem:Single node optimal policy}
 \begin{itemize}
 \item[a)] $W(k)$ is non-decreasing in $k$.
-\item[b)] If $\omega \in [W(k-1),W(k)]$ then it optimal to visit the node once every $k$ time periods, for $k=1,2,...$
+\item[b)] If $\omega \in [W(k-1),W(k)]$ then it is optimal to visit the node once every $k$ time periods, for $k=1,2,...$
 \item[c)] Moreover if $\omega \geq c \lambda E[X]$ it is never optimal to visit the node.
 \end{itemize}
 \end{theorem}
@@ -648,7 +647,7 @@ A possible `fix' to the issue is to limit the time the attack take place in, onl
 Attacking at a pair of diametric nodes equiprobably for the times $I$,$I+1$...,$I+\bar{d}-1$ (i.e starting attacks at $\tau,\tau+1,...,\tau+\bar{d}-1$) is called the \textit{timed diametric attack}.
 \end{definition}
 
-To make the time-limited diametric attack feasible, we need that the condition holds for some $k=0,1,2,...$ and that means holding for $k=0$ will suffice, i.e. $T \geq m-1+\bar{d}$.
+To make the time-limited diametric attack feasible, we need that the condition holds for some $k=0,1,2,...$ and that means holding for it holding for $k=0$ will suffice, i.e. $T \geq m-1+\bar{d}$.
 
 \begin{lemma}[Time-limited diametric attack bound]
 When $T \geq m+ \bar{d}-1$, the diametric bound $V \leq \max\{\frac{1}{2},\frac{m}{2\bar{d}}\}$ is valid.
@@ -719,7 +718,7 @@ If $m$ is odd, say $m=2m'+1$ then in the above we get two possibilities for each
 While not getting a better lower bound, the ARHP does give some control on how to perform optimally in a Hamiltonian graph. The idea of distributing the probability $\frac{2}{n}$ between two types of nodes can be extended to the idea of distributing the probability $\frac{k}{n}$ between $k$ types of nodes (as seen in Appendix \ref{Appendix:Generalised ARHP}).
 
 
-We now look at extending the idea of the diametric attack. First we notice that we are not forced to use the graphs diameter, $\bar{d}$, we can use any distance between two selected nodes, $d$. We replacing $\bar{d}$ with $d$ we will get a two node distance attack, giving us a bound of $V \leq \max \{\frac{1}{2} ,\frac{m}{2d} \}$. However this is only possibly worse than using the graphs diameter, so this is not useful.
+We now look at extending the idea of the diametric attack. First we notice that we are not forced to use the graph's diameter, $\bar{d}$, and in fact we can use any distance between two selected nodes, $d$. We replace $\bar{d}$ with $d$ to get a two node distance attack, giving us a bound of $V \leq \max \{\frac{1}{2} ,\frac{m}{2d} \}$. However this cannot be a better bound than using the graph's diameter, so this is not useful.
 
 A useful extension, would be not using two nodes but using multiple points each the same distance apart from each other mutually.
 
@@ -750,7 +749,7 @@ We conjecture that the uneven-polygonal attack also has the same bound as the po
 As a special case of complete bipartite graph we have the star graph, $S_{n}=K_{1,n}$, that is a tree with one internal node (the centre) and $n$ leaf nodes (the external nodes). Hence $V(S_{n})=V(K_{1,n})=\frac{m}{2n}$ for $m<2n$ (by Theorem 15 (1) in \cite{Lin2013}). This is achieved by the patroller forming a patrol which alternates between different  external nodes and the centre, and embedded Hamiltonian patrol from $C_{2n}$, and the attacker attacking at all the external nodes with equal probability for a fixed time interval (or two consecutive time intervals if $m$ is odd).
 
 \subsection{Elongating the star graph}
-The line and star graphs provided a good starting point for attempting to solve the problem with a general tree graph. If a more general version of the star graph can be solved, it may provide better bounds on a general tree. 
+The line and star graphs provided a good starting point for attempting to solve the problem for a general tree graph. If a more general version of the star graph can be solved, it may provide better bounds on tree graphs. 
 
 The idea is to extend the star graph to a more general graph, which is a mix between the line and the star, by extending the length of the branches (at first just one branch). This may better model a tightly packed region to search and another that is far away, consider the example of a small town and larger city connected by a road. 
 
@@ -908,8 +907,10 @@ Similiar to the proof of the bipartite graph bounds(Theorem 15 (1) in \cite{Alpe
 \begin{definition}[Time-delayed attack]
 Let the \textit{time-delayed attack}, be the attack that attacks at the extended node labeled $1$ with probability $\frac{k+1}{n+k}$ and a particular normal node labeled $*$ with probability $\frac{1}{n+k}$.
 
-If node $1$ is chosen have the attack choose probability intervals with equal probability at the times $I,I+1,...,I+2k+1$ for some $I$ (i.e starting attacks at $\tau, \tau+1,...,\tau+2k+1$). If a $*$ node is chosen start the attacks at the times $I+k,I+k+1$ with equal probability.
+If node $1$ is chosen for the attack, choose time intervals, $I,I+1,...,I+2k+1$, each with equal probability for some fixed time interval, $I$ (i.e starting attacks at $\tau, \tau+1,...,\tau+2k+1$ equiprobably). If a $*$ node is chosen for the attack, choose time intervals, $I+k,I+k+1$, each with equal probability(i.e starting at times $\tau+k,\tau+k+1$ equiprobably).
 \end{definition}
+
+A diagram showing how the potential attacks are spaced out in time can be seen in figure \ref{Figure:Time spacing of the time-delayed attack}.
 
 \begin{myfigure}
 \begin{center}
@@ -943,7 +944,8 @@ If node $1$ is chosen have the attack choose probability intervals with equal pr
 
 \end{tikzpicture}
 \end{center}
-\caption{Diagram of attack spread in time, for both $*$ class nodes and node $1$}
+\caption{Time spacing of the time-delayed attack, for node $1$ and $*$ nodes.}
+\label{Figure:Time spacing of the time-delayed attack}
 \end{myfigure}
 
 \begin{note}
@@ -957,7 +959,7 @@ When $T \geq m+2k$, the upper bound $V \leq \max \{ \frac{k+1}{n+k} , \frac{m}{2
 This bound is analogous to the diametric bound, and as long as we are in the range where $m \geq 2(k+1)$ so the lemma gives $V \leq \frac{m}{2(n+k)}$.
 
 \begin{theorem}[Solution in $m \geq 2(k+1)$]
-By the attacker using the time-delayed attack and the patroller using a random oscillation patrol, we achieve the value, when $2(k+1) \leq m \leq 2(n+k)$, of
+When $T \geq m+2k$, by the attacker using the time-delayed attack and the patroller using a random oscillation patrol, we achieve the value, when $2(k+1) \leq m \leq 2(n+k)$, of
 $$V=\frac{m}{2(n+k)}$$
 \end{theorem}
 
@@ -1035,7 +1037,7 @@ So as long as the improvement made on $L$ and $M$ is non-decreasing then only th
 
 Similarly let $C_{\min}^{X} (\bm{\pi}) = \min\limits_{i \in X} P(\bm{\pi},i)$, where $P(\bm{\pi},i)=\max\limits_{ I \subset \mathcal{T}} P(\bm{\pi},[i,I])$, is the probability of capture under $\bm{\pi}$ and $C_{\min} (\bm{\pi}) \equiv C_{\min}^{N} = \min \left\{ C_{\min}^{L},  C_{\min}^{M},  C_{\min}^{R},  C_{\min}^{S} \right\}$. Then we seek to select $\bm{\pi}$ to get $C_{\min} (\bm{\pi}) > W_{\min} \equiv C_{\min}(\bm{\pi}_{0})$ , where $\bm{\pi}_{0}$ is the random oscillation strategy.
 
-We will use $P$ to be the probability the random oscillation is played and $Q=1-P$, to be the probability the improvement is played. We split, $Q$ into $Q=Q_{L}+Q_{M}+Q_{R}+Q_{S}$, where $Q_{X}$ is the amount of probability used to improve the probability of intersection for the set $X$. We use $q_{X}$ to be probability that the minimum of the set is improved by, so $C_{\min}^{X}=PW_{\min}^{X}+q_{X}$.
+We will use $P$ to be the probability that the random oscillation is played, and $Q=1-P$, to be the probability the improvement is played. We split, $Q$ into $Q=Q_{L}+Q_{M}+Q_{R}+Q_{S}$, where $Q_{X}$ is the amount of probability used to improve the probability of intersection for the set $X$. We use $q_{X}$ to be probability that the minimum of the set is improved by, so $C_{\min}^{X}=PW_{\min}^{X}+q_{X}$.
 
 Multiple choices for possible improvement exist, we first present the most simplest, but naive improvement. The improvement will begin by imagining the $*$ nodes are the ends of $n-1$ lines and improve as in the improvment to the line's hamiltonian bound(section 5 in \cite{Papadaki2016}). Because this approach is naive and is not fully utilising our graphical structure, we will adopt a combinatorial approach to which nodes to improve.
 
@@ -1139,7 +1141,7 @@ Let $\bm{\pi}_{C}(Q_{L},Q_{S})$ denote the combinatorial improvement policy, whi
 \begin{enumerate}
 \item[Case i)] If $R \neq \emptyset$ then $\hat{m}=n+r$, for some excess $r$. Then form an end-covering cycle on the nodes $\{ n+k+1-\hat{m},...,k+1,c,*,c,*,...,c,*,c,k+1,...,n+k+1-\hat{m} \}$. This cycle will be played with probability $Q_{S}$ and improves all the nodes in $R$(non-increasing) and $S$($c$ is better than $*$) so $q_{R}=Q_{R}$ and $q_{S}=Q_{S}$.
 
-\item[Case ii)] If $R = \emptyset$ then an end-covering cycle is formed by choosing $\hat{m}$ of the $*$ nodes (now labelled $*_{1},...,*_{\hat{m}}$) each with equal probability and forming a cycle $\{*_{1},c,*_{2},...,c,*_{\hat{m}},c,*_{1} \}$. This construction is performed with probability $Q_{S}$ and nodes in $S$ ($c$ is better than $*$). The actually improvement made for a $*$ node is $$q_{S}=Q_{S} \times \mathbb{P}(\text{A particular } * \text{ node is picked})=Q_{S} \times \frac{\hat{m}}{n-1} $$
+\item[Case ii)] If $R = \emptyset$ then an end-covering cycle is formed by choosing $\hat{m}$ of the $*$ nodes (now labelled $*_{1},...,*_{\hat{m}}$) each with equal probability and forming a cycle $\{*_{1},c,*_{2},...,c,*_{\hat{m}},c,*_{1} \}$. This construction is performed with probability $Q_{S}$ and nodes in $S$ ($c$ is better than $*$). The actual improvement made for a $*$ node is $$q_{S}=Q_{S} \times \mathbb{P}(\text{A particular } * \text{ node is picked})=Q_{S} \times \frac{\hat{m}}{n-1} $$
 \end{enumerate}
 \end{definition}
 
@@ -1164,7 +1166,7 @@ We leave the exact analysis to appendix \ref{Appendix:Combinatorial improvement 
 \caption{Interception probabilities of $S^5_{4}$ when $m=4$, with the \textcolor{red}{red Probabilities showing the Naive Improvement Policy $\alpha \left(\frac{2}{17},\frac{6}{17} \right)$} and the \textcolor{blue}{blue Probabilities showing the Choosing Improvement Policy $\beta_{2} \left(\frac{1}{7},\frac{3}{14} \right)$}.}
 \end{myfigure}
 
-It is conjectured in our future work (see section \ref{Section:Further solutions for elongated trees}) that the bound $V \geq \frac{2m}{2(n+k)+m(1+\frac{n-1}{\hat{m}})}$ is used in the region of $m < 2(k+1)$. When $m$ is even this bound becomes $V \geq \frac{2m}{2(2n+k-1)+m}$ which we will conjecture is tight with a multitude of attack strategies, however when $m$ is odd due to the half-length, $\hat{m} \equiv \floor{\frac{m}{2}}$, it makes the bound higher than when $m$ is even, which will not be tight. We suggest some slight alteration when $m$ is odd, but drop the use of end-covering cycles (we leave this idea to section \ref{Section:Further solutions for elongated trees})
+It is conjectured in our future work (see section \ref{Section:Further solutions for elongated trees}) that the bound $V \geq \frac{2m}{2(n+k)+m(1+\frac{n-1}{\hat{m}})}$ is used in the region of $m < 2(k+1)$. When $m$ is even this bound becomes $V \geq \frac{2m}{2(2n+k-1)+m}$ which we will conjecture is tight with a multitude of attack strategies, however when $m$ is odd due to the half-length, $\hat{m} \equiv \floor{\frac{m}{2}}$, it makes the bound higher than when $m$ is even, which will not be tight. We suggest some slight alteration when $m$ is odd, but have to drop the use of end-covering cycles (we leave this idea to section \ref{Section:Further solutions for elongated trees})
 
 We will now deal with the case of $m \leq 2(n-1)$, so that all $*$'s nodes cannot be covered in one end-covering cycle. First looking at the $m=2k+1,2k$,  we notice that by simplification of $S^{k}_{n}$ into $L_{k+1}$ and $S_{n-1}$ we get the bound $V \geq \frac{1}{1+\frac{2(n-1)}{m}}=\frac{m}{m+2(n-1)}$.
 
@@ -1221,22 +1223,22 @@ The labelling will be done as in figure \ref{Figure:Example of generalised label
     
 \end{tikzpicture}
 \end{center}
-\caption{Labelling of $S^{1,3,1}_{4}$}
+\caption{Labelling of $S^{1,3,1}_{4}$.}
 \label{Figure:Example of generalised labelling}
 \end{myfigure}
 
-To start our analysis of this graph, we will look at an expanded graph which can be simplified down to our general star graph. Consider the cyclic graph $C_{2(n+|k|)}$, we can simplify this graph by node identification to $S^{\bm{k}}_{n}$. The identification mapping is analogous to that of the elongated star graph's simplification from a cyclic graph; Internal branch nodes are seen twice and the centre node is seen on every return, so the cycle graph can be made from this construction as in the example in figure \ref{Figure:Example of simplification to general star graph}.
+To start our analysis of this graph, we will look at an expanded graph which can be simplified down to our general star graph. Consider the cyclic graph $C_{2(n+|k|)}$, this can simplified to $S^{\bm{k}}_{n}$ by node identification. The identification mapping is analogous to that of the elongated star graph's simplification from a cyclic graph; Internal branch nodes are seen twice and the centre node is seen on every return, so the cycle graph can be made from this construction as in the example in figure \ref{Figure:Example of simplification to general star graph}.
 
 The mapping is done as such:
 \begin{itemize}
-\item The centre is identified form nodes $1,1+2(k_{1}+1),1+2(\sum\limits_{i=1}^{2} (k_{i}+1)),...,1+2(\sum\limits_{i=1}^{h}(k_{i}+1),1+2(|k|+h)+2),...,1+2(|k|+h)+2(n-h)$
+\item The centre is identified from nodes $1,1+2(k_{1}+1),1+2(\sum\limits_{i=1}^{2} (k_{i}+1)),...,1+2(\sum\limits_{i=1}^{h}(k_{i}+1),1+2(|k|+h)+2),...,1+2(|k|+h)+2(n-h)$
 
 \item The first branch is identified from the nodes between $2$ and $2(k_{1}+1)$ (Inclusive). $n_{1,i}$ for $i=1,...,k_{1}$ are identified by the two nodes $i+1$ and $2k_{1}+3-i$ , the node $n_{1,k_{1}+1}$ is identified by the one node $k_{1}+2$.
 
 \item The $j$\textsuperscript{th} branch is identified from nodes between $2(\sum\limits_{i=1}^{j-1} (k_{i}+1)))$ and $2(\sum\limits_{i=1}^{j} (k_{i}+1)))$ (Inclusive). $n_{j,i}$ for $i=1,....,k_{j}$ are identified by the two nodes $2(\sum\limits_{i=1}^{j-1} (k_{i}+1)))+(i-1)$ and $2(\sum\limits_{i=1}^{j} (k_{i}+1)))-(i-1)$ , the node $n_{j,k_{j}+1}$ is identified by the one node $2(\sum\limits_{i=1}^{j-1} (k_{i}+1)))+k_{j}$.
 \end{itemize}
 
-This simplification mapping gives rise to the general random oscillation strategy (analogous to random oscillation on the elongated star)
+This simplification mapping gives rise to the general random oscillation strategy (analogous to random oscillation on the elongated star).
 
 \begin{definition}[General random oscillation]
 The \textit{oscillation} on $S^{\bm{k}}_{n}$ is any embedded Hamiltonian patrol on $C_{2(n+|k|)}$ under the simplification above. The \textit{random oscillation} on $S^{\bm{k}}_{n}$ is the embedded random Hamiltonian patrol on $C_{2(n+|k|)}$ under the simplification above.
@@ -1248,6 +1250,7 @@ $$V(S^{\bm{k}}_{n}) \geq V(C_{2(n+|k|)})=\frac{m}{2(n+|k|)}$$
 and if $m \geq 2(n+|k|)$ then $V(S^{\bm{k}}_{n})=1$, achieved by any oscillation. 
 \end{lemma}
 
+The proof is straight forward by the application of the simplification (Lemma 1 (4) in \cite{Alpern2011}) and the Hamiltonian solution(Theorem 13 (1) in \cite{Alpern2011}).
 
 \begin{myfigure}
 \begin{tikzpicture}[-,auto,node distance=2cm,
@@ -1310,7 +1313,7 @@ and if $m \geq 2(n+|k|)$ then $V(S^{\bm{k}}_{n})=1$, achieved by any oscillation
    (20) edge (21);
   
 \end{tikzpicture}
-\caption{Simplification of $C_{16}$ to $S^{3,2}_{3}$}
+\caption{Simplification of $C_{16}$ to $S^{3,2}_{3}$.}
 \label{Figure:Example of simplification to general star graph}
 \end{myfigure}
 
@@ -1321,8 +1324,10 @@ A \textit{type} $i$ node, is an external node which has been extended $i$ times,
 \end{definition}
 
 \begin{definition}[Type-delayed attack]
-Let the \textit{type-delayed attack}, be the attack that attacks at a type $i$ node with probability $\frac{i+1}{\denominator}$ $\forall \, i$. Choosing an attack interval $I$, the attack at a type $i$ node chooses a interval from the following with equal probability: $I+(k_{max}-i),I+(k_{max}-i)+1,...,I+k_{max}+i+1$ $\forall \, i$ (i.e statring attacks at a type $i$ node at times $\tau+(k_{max}-i)+1,...,\tau+(k_{max}+i)+1$).
+Let the \textit{type-delayed attack}, be the attack that attacks at a type $i$ node with probability $\frac{i+1}{\denominator}$ $\forall \, i$. For a fixed attack interval $I$, the attacks at a type $i$ node choose an interval from the following with equal probability: $I+(k_{max}-i),I+(k_{max}-i)+1,...,I+k_{max}+i+1$ $\forall \, i$ (i.e starting attacks at a type $i$ node at times $\tau+(k_{max}-i)+1,...,\tau+(k_{max}+i)+1$).
 \end{definition}
+
+A diagram showing how potential attacks are spaced out in time, for each node of a given type, can be seen in figure \ref{Figure:Time spacing of the type-delayed attack}.
 
 \begin{myfigure}
 \begin{center}
@@ -1385,15 +1390,20 @@ Let the \textit{type-delayed attack}, be the attack that attacks at a type $i$ n
 \end{tikzpicture}
 }
 \end{center}
+\caption{Time spacing of the type-delayed attack.}
+\label{Figure:Time spacing of the type-delayed attack}
 \end{myfigure}
 
 \begin{theorem}
-When $T \geq m+2k_{max}$, the analogous `diametric' bound is given by
+When $T \geq m+2k_{max}$, the upper bound is
 $$V(S_{n}^{\bm{k}}) \leq \max \left\{ \frac{k_{max}+1}{\denominator} , \frac{m}{2 \left( \denominator \right)} \right\}$$
+guaranteed by the type-delayed attack.
 \end{theorem}
 
+We leave the proof of this
+
 \begin{corollary}[Solution in $m \geq 2(k_{max}+1)$]
-By the attack using the type-delayed attack and the patroller using the random oscillation we achieve the value, when $2(k_{max}+1) \leq m \leq 2(n+|\bm{k}|)$,
+When $T \geq m+2k_{max}$, by the attack using the type-delayed attack and the patroller using the random oscillation we achieve the value, when $2(k_{max}+1) \leq m \leq 2(n+|\bm{k}|)$,
 $$V= \frac{m}{2(n+|\bm{k}|)} $$
 and when $m > 2(n+|\bm{k}|)$ then $V=1$.
 \end{corollary}
@@ -1402,15 +1412,17 @@ and when $m > 2(n+|\bm{k}|)$ then $V=1$.
 \begin{center}
 \input{Images/GeneralStarRegions(S_10_5,3,2,1).tex}
 \end{center}
-\caption{The value of the general star graph, $S_{10}^{5,3,2,1}$}
+\caption{The value of the general star graph, $S_{10}^{5,3,2,1}$.}
 \end{myfigure}
+
+Just like in the elognated star graph, we have solved the problem for the analogous regions to $S_{1}$ and $S_{2}$ for the line. As in the elongated star graph we expect a multitude of issues moving to the region of $m < 2(k_{\max}+1)$, so for now we shall move onto an even more general result.
 
 \subsection{Joining star graphs by centralised connections}
 
-We now look at connecting by their centres the generalised star (with branches)
+We now look at connecting by their centres the generalised star (with branches).
 
 \begin{definition}
-We define the \textit{multi general p-star graph}, $(s_{n_{1}}^{\bm{k}_{p}},...,S_{n_{}}^{\bm{k}_{p}}) \equiv \bigodot\limits_{i=1}^{p} S_{n_{i}}^{\bm{k}_{i}}$, to be the p star graphs, $S_{n_{i}}^{\bm{k}_{i}}$ initially with disconnected centres which are now made adjacent by the introduction of connections between each combination of centres (i.e the complete graph of centres)
+We define the \textit{multi general p-star graph}, $(s_{n_{1}}^{\bm{k}_{p}},...,S_{n_{}}^{\bm{k}_{p}}) \equiv \bigodot\limits_{i=1}^{p} S_{n_{i}}^{\bm{k}_{i}}$, to be the p star graphs, $S_{n_{i}}^{\bm{k}_{i}}$ initially with disconnected centres which are now made adjacent by the introduction of connections between each combination of centres (i.e the complete graph of centres).
 \end{definition}
 
 \begin{myfigure}
@@ -1470,13 +1482,15 @@ We define the \textit{multi general p-star graph}, $(s_{n_{1}}^{\bm{k}_{p}},...,
   
 \end{tikzpicture}
 \end{center}
-\caption{Example of labelling on $(S_{3}^{1,1},S_{2}^{2},S_{2},S_{1})$}
+\caption{Example of labelling on $(S_{3}^{1,1},S_{2}^{2},S_{2},S_{1})$.}
 \label{myfigure: Example of labeling on multi general star graph}
 \end{myfigure}
 
-Because we have just joined graphs we know some solutions to, we can consider decomposition for the patrollers decision and simplifiation for the attackers decision.
+Because we have just joined graphs we know some solutions to, we can use decomposition for the patrollers strategy, and simplification for the attackers strategy.
 
 \begin{theorem}[Separable solution]
+\
+
 For $ 2(K_{\text{max}}+1) \leq m \leq 2 \min\limits_{i=1,...,p} \{n_{i}+\sum\limits_{j=1}^{h_{i}} (\bm{k}_{i})_{j} \}$,
 
 \begin{align*}
@@ -1564,7 +1578,7 @@ So we have a tight upper and lower bound.
   
 \end{tikzpicture}
 \end{center}
-\caption{Example of decomposition on $(S_{3}^{1,1},S_{2}^{2},S_{2},S_{1})$}
+\caption{Example of decomposition on $(S_{3}^{1,1},S_{2}^{2},S_{2},S_{1})$.}
 \label{myfigure: Example of decomposition on multi general star graph}
 \end{myfigure}
 
@@ -1614,7 +1628,7 @@ So we have a tight upper and lower bound.
   
 \end{tikzpicture}
 \end{center}
-\caption{Example of simplification on $(S_{3}^{1,1},S_{2}^{2},S_{2},S_{1})$ to $S_{8}^{2,1,1}$}
+\caption{Example of simplification on $(S_{3}^{1,1},S_{2}^{2},S_{2},S_{1})$ to $S_{8}^{2,1,1}$.}
 \label{myfigure: Example of simplification on multi general star graph}
 \end{myfigure}
 
@@ -1628,94 +1642,94 @@ The idea of requiring the complete graph of connection between centres is not ne
 \end{note}
 
 
-\section{Strategic Patroller with Random Attackers}
-\label{Section:Strategic Patroller with Random Attackers}
-In this section we provide further work developed from the literature review in Section \ref{Section:Review of patrolling problem with random attackers}.
-
-\subsection{Deterministic Attack time experiments}
-As the theory  works for all bounded attack time distributions, we shall look at the deterministic attack time, using $P(X_{j}=x_{j})=1$, we can note that this does some level of reduction on the state space as costs are only incurred at states with $s_{j}=B_{j}$ or $B_{j}+1$. The cost function reduces to
-
-\begin{align*}
-C_{j}(\bm{s},i)=\begin{cases}
-c_{j} \lambda_{j} R_{j}  \text{ for } s_{j}=B_{j},i \neq j \\ 
-c_{j} \lambda_{j} \text{ for } s_{j}=B_{j}+1,i \neq j  \\
-0 \text{ Otherwise} \\
-\end{cases}
-\end{align*}
-
-and the index reflects this, only wanting the patroller to visit in state, $s=B$, initially and in $s=B+1$ for a higher cost.
-
-\begin{align*}
-W_{j}(\bm{s})=\begin{cases}
-c_{j} \lambda_{j} (B_{j}-1) R_{j}  \text{ for } s_{j}=B_{j}-1 \\ 
-c_{j} \lambda_{j} x_{j} \text{ for } s_{j}=B_{j},B_{j}+1  \\
-0 \text{ Otherwise} \\
-\end{cases}
-\end{align*}
-
-Looking at the single node problem, we notice that there is no cost to transition to the state $s=B$, at which point we incur a cost of $c \lambda R$ to go to $s=B+1$ and then we incur a cost of $c \lambda$.
-
-We notice that the index has its first value in the state $s=B-1$, so in our main problem, when deciding between nodes, we put an index on a state that isn't immediately about to incur cost. Then once its incurring costs, we place a higher index.
-
-However consider a large such as $B=100$ , then for states $s=1,....,98$ we have no index and have no incentive to go visit at all, whether this spike in the index causes any issue with the proposed heuristics is worth some consideration.
-
-\begin{myfigure}
-\begin{center}
-%THIS FIGURE NEEDS REPLOTTING AT SOME POINT (WITH DIFF COSTS)
-\input{Images/OldDeterministicOnly.tex}
-\end{center}
-\caption{Frequency of percentage error with only deterministic attack times}
-\label{Figure:Deterministic attack times}
-\end{myfigure}
-
-\subsection{Smoothing the index}
-To smooth the spike in index, we could suggest splitting up the index in some fashion. Before we suggest splitting the index through we must take into consideration how the benefit and penalty heuristics differ. As the penalty is measuring how much index is not claimed, it should be easy to split it amongst all states $s \leq B-1$, so that the sum is the correct index. But the benefit is measuring how much index is claimed, so it needs to be cumulative and is therefore a little harder to split amongst all the states $s \leq B-1$, we do not need that sum is the correct index.
-
-Consider a the splitting function, for node $j$'s index, $l_{j}(x)$ with $x \in [1,....,B_{j}-1]$ s.t $L_{j}(B_{j}-1)=B_{j}-1$ where $L_{j}(x)=\sum\limits_{u=1}^{x} l_{j}(u)$ , and to place more emphasis on the spike we will require that $l_{j}(x)$ is non-decreasing. For now we will assume the same splitting is used on each node, dropping the subscript.
-
-\begin{align*}
-W_{j}^{SP}(\bm{s})=\begin{cases}
-l(s_{j}) \times \frac{c_{j} \lambda R_{j}}{B}  \text{ for } s_{j} \leq B_{j} \\ 
-c_{j} \lambda_{j} \text{ for } s_{j}=B_{j}+1  \\
-\end{cases}
-\end{align*}
-
-and for the benefit use the cumulative version
-
-\begin{align*}
-W_{j}^{SB}(\bm{s})=\begin{cases}
-L(s_{j}) \times \frac{(c_{j} \lambda R_{j})}{B}  \text{ for } s_{j} \leq B_{j} \\ 
-c_{j} \lambda_{j} \text{ for } s_{j}=B_{j}+1  \\
-\end{cases}
-\end{align*}
-
-So the original index has $l(x) =0 \; \forall x \neq B-1$ and $l(B-1)=B-1$. The equal splitting has,$l(x)=1 \; \forall x$. For our numerical study, we will consider using a linear increase $l(x)=\frac{2s_{j}}{B+1} \; \forall x$ for the unequal splitting .
-
-We now present, at depth 3, both the equal and unequal splitting against its original counterpart for the penalty (\ref{Figure:Penalty splitting experiment}) and benefit heuristics (\ref{Figure:Benefit splitting experiment}).
-
-\begin{myfigure}
-%THIS FIGURE NEEDS REPLOTTING AT SOME POINT (WITH DIFF COSTS)
-\input{Images/PenaltyDetSplittingExperiment.tex}
-\caption{Equal and unequal splitting against original for penalty heuristic}
-\label{Figure:Penalty splitting experiment}
-\end{myfigure}
-
-
-\begin{myfigure}
-%THIS FIGURE NEEDS REPLOTTING AT SOME POINT (WITH DIFF COSTS)
-\input{Images/BenefitDetSplittingExperiment.tex}
-\caption{Equal and unequal splitting against original for benefit heuristic}
-\label{Figure:Benefit splitting experiment}
-\end{myfigure}
-
-Our numerical experiments would seem to indicate that splitting the index amongst all states, $s \leq B$ does not seem to provide any increase in the heuristics performance.
+%\section{Strategic Patroller with Random Attackers}
+%\label{Section:Strategic Patroller with Random Attackers}
+%In this section we provide further work developed from the literature review in Section \ref{Section:Review of patrolling problem with random attackers}.
+%
+%\subsection{Deterministic Attack time experiments}
+%As the theory  works for all bounded attack time distributions, we shall look at the deterministic attack time, using $P(X_{j}=x_{j})=1$, we can note that this does some level of reduction on the state space as costs are only incurred at states with $s_{j}=B_{j}$ or $B_{j}+1$. The cost function reduces to
+%
+%\begin{align*}
+%C_{j}(\bm{s},i)=\begin{cases}
+%c_{j} \lambda_{j} R_{j}  \text{ for } s_{j}=B_{j},i \neq j \\ 
+%c_{j} \lambda_{j} \text{ for } s_{j}=B_{j}+1,i \neq j  \\
+%0 \text{ Otherwise} \\
+%\end{cases}
+%\end{align*}
+%
+%and the index reflects this, only wanting the patroller to visit in state, $s=B$, initially and in $s=B+1$ for a higher cost.
+%
+%\begin{align*}
+%W_{j}(\bm{s})=\begin{cases}
+%c_{j} \lambda_{j} (B_{j}-1) R_{j}  \text{ for } s_{j}=B_{j}-1 \\ 
+%c_{j} \lambda_{j} x_{j} \text{ for } s_{j}=B_{j},B_{j}+1  \\
+%0 \text{ Otherwise} \\
+%\end{cases}
+%\end{align*}
+%
+%Looking at the single node problem, we notice that there is no cost to transition to the state $s=B$, at which point we incur a cost of $c \lambda R$ to go to $s=B+1$ and then we incur a cost of $c \lambda$.
+%
+%We notice that the index has its first value in the state $s=B-1$, so in our main problem, when deciding between nodes, we put an index on a state that isn't immediately about to incur cost. Then once its incurring costs, we place a higher index.
+%
+%However consider a large such as $B=100$ , then for states $s=1,....,98$ we have no index and have no incentive to go visit at all, whether this spike in the index causes any issue with the proposed heuristics is worth some consideration.
+%
+%\begin{myfigure}
+%\begin{center}
+%%THIS FIGURE NEEDS REPLOTTING AT SOME POINT (WITH DIFF COSTS)
+%\input{Images/OldDeterministicOnly.tex}
+%\end{center}
+%\caption{Frequency of percentage error with only deterministic attack times}
+%\label{Figure:Deterministic attack times}
+%\end{myfigure}
+%
+%\subsection{Smoothing the index}
+%To smooth the spike in index, we could suggest splitting up the index in some fashion. Before we suggest splitting the index through we must take into consideration how the benefit and penalty heuristics differ. As the penalty is measuring how much index is not claimed, it should be easy to split it amongst all states $s \leq B-1$, so that the sum is the correct index. But the benefit is measuring how much index is claimed, so it needs to be cumulative and is therefore a little harder to split amongst all the states $s \leq B-1$, we do not need that sum is the correct index.
+%
+%Consider a the splitting function, for node $j$'s index, $l_{j}(x)$ with $x \in [1,....,B_{j}-1]$ s.t $L_{j}(B_{j}-1)=B_{j}-1$ where $L_{j}(x)=\sum\limits_{u=1}^{x} l_{j}(u)$ , and to place more emphasis on the spike we will require that $l_{j}(x)$ is non-decreasing. For now we will assume the same splitting is used on each node, dropping the subscript.
+%
+%\begin{align*}
+%W_{j}^{SP}(\bm{s})=\begin{cases}
+%l(s_{j}) \times \frac{c_{j} \lambda R_{j}}{B}  \text{ for } s_{j} \leq B_{j} \\ 
+%c_{j} \lambda_{j} \text{ for } s_{j}=B_{j}+1  \\
+%\end{cases}
+%\end{align*}
+%
+%and for the benefit use the cumulative version
+%
+%\begin{align*}
+%W_{j}^{SB}(\bm{s})=\begin{cases}
+%L(s_{j}) \times \frac{(c_{j} \lambda R_{j})}{B}  \text{ for } s_{j} \leq B_{j} \\ 
+%c_{j} \lambda_{j} \text{ for } s_{j}=B_{j}+1  \\
+%\end{cases}
+%\end{align*}
+%
+%So the original index has $l(x) =0 \; \forall x \neq B-1$ and $l(B-1)=B-1$. The equal splitting has,$l(x)=1 \; \forall x$. For our numerical study, we will consider using a linear increase $l(x)=\frac{2s_{j}}{B+1} \; \forall x$ for the unequal splitting .
+%
+%We now present, at depth 3, both the equal and unequal splitting against its original counterpart for the penalty (\ref{Figure:Penalty splitting experiment}) and benefit heuristics (\ref{Figure:Benefit splitting experiment}).
+%
+%\begin{myfigure}
+%%THIS FIGURE NEEDS REPLOTTING AT SOME POINT (WITH DIFF COSTS)
+%\input{Images/PenaltyDetSplittingExperiment.tex}
+%\caption{Equal and unequal splitting against original for penalty heuristic}
+%\label{Figure:Penalty splitting experiment}
+%\end{myfigure}
+%
+%
+%\begin{myfigure}
+%%THIS FIGURE NEEDS REPLOTTING AT SOME POINT (WITH DIFF COSTS)
+%\input{Images/BenefitDetSplittingExperiment.tex}
+%\caption{Equal and unequal splitting against original for benefit heuristic}
+%\label{Figure:Benefit splitting experiment}
+%\end{myfigure}
+%
+%Our numerical experiments would seem to indicate that splitting the index amongst all states, $s \leq B$ does not seem to provide any increase in the heuristics performance.
 
 \section{Strategic Patroller with Random Attackers and Local-observations}
 \label{Section:Patrolling games with random attackers and local-observations}
 We now look at altering the work summarized in Section \ref{Section:Review of patrolling problem with random attackers} to incorporate suspicious behaviour of attackers who arrive while the patroller is present.
 
-\subsection{Altering the problem for instantaneous moving patroller}
-We may now wish to alter the standard set-up of a patroller moving at unit speed along the edges, if the guard was flicking through live-video feeds, while unit time is spend on each feed, there is no transition time between nodes. To more closely represent this we will alter the theory to account for an instantaneously moving patroller.
+\subsection{Altering the problem for an instantaneously moving patroller}
+We may now wish to alter the standard set-up of a patroller moving at unit speed along the edges, if the guard was flicking through live-video feeds, while unit time is spend on each feed, there is no transition time between nodes. To more closely represent this we will alter the theory to account for an instantaneously moving patroller. Figure \ref{Figure:Example of timing for instantaneously moving patroller} shows an example of the timing of a patroller who does not have to wait the one time unit to move along edges.
 
 \begin{myfigure}
 \begin{center}
@@ -1773,7 +1787,8 @@ We may now wish to alter the standard set-up of a patroller moving at unit speed
        
 \end{tikzpicture}
 \end{center}
-\caption{Example of timing}
+\caption{Example of timing at a node for an instantaneously moving patroller.}
+\label{Figure:Example of timing for instantaneously moving patroller}
 \end{myfigure} 
 
 While the standard set-up remains mostly intact, the cost function is slightly altered to accommodate this change. We note there is now a difference in cost depending on if the node is visited or not.
@@ -1785,9 +1800,7 @@ c_{j} \lambda_{j} \int_{s_{j}-1}^{s_{j}} P(X_{j} \leq t) dt \text{ if } j \neq i
 \end{cases}
 \end{align*}
 
-This change does not the theory that much, the problem can still be reduced to the single node version of the problem. However there is a slight change here, which results in a slight change to the optimal solution and hence the index which is suggested.
-
-The following are the changes
+This change does not affect the theory too much, the problem can still be reduced to the single node version of the instantaneous moving problem, by implementing the TR-constraint and using lagrangian relaxation. We now state the changes in the single node formulation,
 
 \begin{align*}
 &f(k) \equiv \frac{c \lambda \int_{0}^{k-1} P(X \leq t) dt + \omega}{k} \\
@@ -1795,7 +1808,7 @@ The following are the changes
 \end{align*}
 
 \begin{note}
-$W(0)=0$ and for $k \geq B+1$ $W(k)= c \lambda (1+E[X])$
+$W(0)=0$ still but for $k \geq B+1$ $W(k)= c \lambda (1+E[X])$
 \end{note}
 
 Using this new definition of $W(k)$, Theorem \ref{Theorem:Single node optimal policy} still holds and gives us the optimal policy. Hence suggesting an index of
@@ -1804,16 +1817,14 @@ Using this new definition of $W(k)$, Theorem \ref{Theorem:Single node optimal po
 W_{i}(\bm{s}) \equiv c_{i} \lambda_{i} \left( s_{i} \int_{s_{i}-1}^{s_{i}} P(X_{i} \leq t) dt - \int_{0}^{s_{i}-1} P(X_{i} \leq t) dt \right)
 \end{align*}
 
-\subsection{Numerical results for instantaneously moving patroller}
-For completeness sake, we provide numerical results for the IRH and IPH defined as before, but using this index.
-
+We should perform a numerical study to check that this index still performs well, however our code does not currently work for general distributions functions so this will be left to future work(section \ref{Section:Complete Numerical experiments for an instantaneously moving patroller})
 
 
 
 \subsection{Altering problem to accommodate local-observable information}
-Now that we have established a instantaneously moving patroller, we can now introduce the idea of local-observations, that is the patroller witnesses attackers arriving at there current node, but the attackers do not begin there attack immediately, as they are aware of the patroller's presence. For now we assume that any such attacker is only able to delay their attack to start at the beginning of the next time period, instead of waiting till the patroller leaves the node.
+Now that we have established a instantaneously moving patroller, we can now introduce the idea of local-observations, that is the patroller witnessing attackers arriving at their current node. We will assume that the attackers do not begin their attack immediately if they are aware of the patroller's presence when they arrive. For now we assume that any such attacker is only able to delay their attack to start at the beginning of the next time period, instead of waiting till the patroller leaves the node. Figure \ref{Figure:Example of local-observation graph diagram} shows shows an example of the current state on the graph, and figure \ref{Figure:Example of timing for instantaneous and local observations} shows shows an example of the timing at a node when the patroller arrives, with attackers delaying.
 
-\begin{figure}
+\begin{myfigure}
 \begin{center}
 \begin{tikzpicture}[-,auto,node distance=2cm,
                     thick,main node/.style={circle,fill=white,draw,font=\sffamily\Large\bfseries}]
@@ -1925,8 +1936,9 @@ Now that we have established a instantaneously moving patroller, we can now intr
     
 \end{tikzpicture}
 \end{center}
-\caption{Example of $G=(K_{4},\bm{X},\bm{b},\bm{\lambda},\bm{c})$ with patroller currently at node $3$}
-\end{figure}
+\caption{Example of $G=(K_{4},\bm{X},\bm{b},\bm{\lambda},\bm{c})$ with patroller currently at node $3$.}
+\label{Figure:Example of local-observation graph diagram}
+\end{myfigure}
 
 
 \begin{myfigure}
@@ -1994,10 +2006,11 @@ Now that we have established a instantaneously moving patroller, we can now intr
        
 \end{tikzpicture}
 \end{center}
-\caption{Example of timing}
+\caption{Example of timing at a node for an instantaneously moving patroller with local-observations.}
+\label{Figure:Example of timing for instantaneous and local observations}
 \end{myfigure}
 
-The problem can still be formulated as a MDP, however our states now need to hold the information about how many attackers where observed when the node was last visited. Our state space is
+The problem can still be formulated as a MDP, however the states now need to hold the information about how many attackers where observed when the node was last visited, in addition to when it was last visited. Our state space is
 
 $$\Omega= \{ (\bm{s},\bm{v})=(s_{1},...,s_{n},v_{1},...,v_{n}) \, | \, s_{i}=1,2,...., \; v_{i}=0,1,...  \text{ for } i=1,...,n\}$$
 
@@ -2068,7 +2081,7 @@ To bound $\bm{v}$ we introduce a observable capacity, $\bm{b}$, where $b_{i}$ is
 \end{tikzpicture}
 }
 \end{center}
-\caption{State space diagram for node $j$, with \textcolor{blue}{$b_{j}=5$} and \textcolor{red}{$B_{j}=4$} (e.g. $X_{j} \leq 3.7$)}
+\caption{State space diagram for node $j$, with \textcolor{blue}{$b_{j}=5$} and \textcolor{red}{$B_{j}=4$} (e.g. $X_{j} \leq 3.7$).}
 \end{figure}
 
 This change to a finite state space, $\Omega = \{ (\bm{s},\bm{v})=(s_{1},...,s_{n},v_{1},...,v_{n}) \, | \, s_{i}=1,2,....,B_{i}+1 \; v_{i}=0,1,...,b_{i}  \text{ for } i=1,...,n\}$ and caps the transitions. That is that $\widetilde{s}_{j}= \min \{s_{j}+1, B_{j}+1 \}$ and $\widetilde{v}_{i} \sim TPo(\lambda_{i},b_{i)}$, where $TPo(\lambda,b)$ is the truncated Poisson distribution, with all the tail probability at the value $b_{i}$. I.e.
@@ -2081,21 +2094,17 @@ P(Po(\lambda) \geq i) \text{ if } i=b \\
 \end{cases}
 \end{align*}
 
-Even though the state space is now finite, the transitions are not deterministic, so a cyclic behaviour is not induced when the same state is reached again. For notational purposes we will still use $\phi^{k}_{\pi}(\bm{s}_{0},\bm{v}_{0})$ to be the state after $k$ transitions from $(\bm{s}_{0},\bm{v}_{0})$.
+Even though the state space is now finite, the transitions are not deterministic, so a cyclic behaviour is not induced when the same state is reached again. For notational purposes we will still use $\phi^{k}_{\pi}(\bm{s}_{0},\bm{v}_{0})$ to be the state after $k$ transitions from $(\bm{s}_{0},\bm{v}_{0})$. We might be able to get some cycles that happen with some probability instead, however we leave this idea of cycles behind for now (and state that it is future work considered in section \ref{Section:Complete Numerical experiments for an instantaneously moving patroller} because it is useful to better evaluate policies).
 
-\begin{Huge}
-More work is needed to see if the cyclic behaviour property does still hold just in some probabilistic fashion
-\end{Huge}
-
-This problem, as before, can be solved by standard techniques such as value iteration or linear programing to compute the long-run average cost. This is left to Appendix \ref{Appendix:Optimal Solution for Random Attacker with Local-Observations}.
+This problem, as before, can be solved by standard techniques such as value iteration or linear programming to compute the long-run average cost. This is left to Appendix \ref{Appendix:Optimal Solution for Random Attacker with Local-Observations}.
 
 We can then use the standard reduction tools of making the problem into a MN problem and then applying the TR constraint and/or the Lagrangian relaxation. We shall therefore focus on the Lagrangian relaxation which is equivalent to the single node problem.
 
-That is we wish to minimize $V(\pi)+\omega \mu(\pi)$. Our state space is more complicated than before due to the inclusion of the time since it was last visited and the amount of local-observations made when it was last visited.
+We wish to minimize, $V(\pi)+\omega \mu(\pi)$. Our state space is more complicated than before due to the inclusion of the time since it was last visited and the amount of local-observations made when it was last visited.
 
 \subsection{Deterministic attack time assumption}
 \label{Section:Deterministic attack time assumption}
-Because our state space is hard to deal with,in the single node problem, we shall reduce the problem, by assuming that the attack times are deterministic, that is $P(X=x)=1$, this reduces our cost function to
+Because our state space is hard to deal with, in the single node problem, we shall reduce the problem, by assuming that the attack times are deterministic, that is $P(X=x)=1$, this reduces our cost function to
 
 \begin{align*}
 C_{j}(\bm{s},\bm{v},i)=\begin{cases}
@@ -2110,17 +2119,17 @@ This allows us to see a clear solution to the single node problem.
 
 \subsection{Single node solution}
 \label{Section:Single node solution}
-Again we wish to minimize the long-run average cost, paying $\omega$ when we choose to visit a node. We note as mentioned in Section [refer to section on not cycling] that we are not in a cycle, so will take a different approach. At each state our choice is binary; we either wait or renew/visit.
+Again we wish to minimize the long-run average cost, paying $\omega$ when we choose to visit a node. At each state our choice is binary; we either wait or renew/visit.
 
 We wish to solve
 
 \begin{align*}
-g=\min\limits_{\pi_{1} \in \Pi^{\text{MN}}_{1}} V(\pi_{1})+\omega \mu(\pi_{1})
+g=\min\limits_{\pi \in \Pi^{\text{MN}}} V(\pi)+\omega \mu(\pi)
 \end{align*}
 
 And because $g$ is the long-run average cost, we know that in the limit of $n \rightarrow \infty$ that $V_{n}(s,v)=ng + h(s,v)$ where $h(s,v)$ is bias from starting at the state $(s,v)$ rather than in equilibrium.
 
-It should be clear that as the cost of all states where $s<B$ are zero, we should wait until $s=B$ before making any form of decision. However for completeness sake we present a formal argument
+It should be clear that as the cost of all states where $s<B$ are zero, we should wait until $s=B$ before making any form of decision. However for completeness sake we present a formal argument.
 
 From any $(s,v)$ with $s<B$ consider the policy $\pi_{k}$ which waits $k$ time periods and then renews and follows some optimal policy, $\sigma$, with $k=0,...,B-s$.
 
@@ -2139,7 +2148,7 @@ Now we will pick policy $\pi_{k+1}$ over $\pi_{k}$ (or be indifferent) if
 & \iff g \geq 0
 \end{align*}
 
-As we only have positive costs, we know that $g \geq 0$ and hence the above argument shows that in such a state it is always best to wait another time period and then make a decision, making the same decision to wait again if we have not reached $s=B$.
+As we only have positive costs, we know that $g \geq 0$ and hence the above argument shows that in such a state, it is always best to wait another time period and then make a decision, making the same decision to wait again if we have not reached $s=B$.
 
 \begin{myfigure}
 \begin{center}
@@ -2191,7 +2200,7 @@ As we only have positive costs, we know that $g \geq 0$ and hence the above argu
 \end{tikzpicture}
 }
 \end{center}
-\caption{Optimal movements for $s<B$}
+\caption{Optimal movements for $s<B$.}
 \end{myfigure}
 
 We will look at getting a similar idea for the states $s=B+1$, as it should be clear that if we do not renew initially then as our state does not change, we will never renew. However for completeness sake we will provide a formal argument.
@@ -2270,10 +2279,10 @@ Now we introduce a policy, $\pi_{\text{Neg}}(s,v)=0 \; \forall (s,v) \in \Omega$
 \end{tikzpicture}
 }
 \end{center}
-\caption{Optimal movements for $s<B$ and $s=B+1$}
+\caption{Optimal movements for $s<B$ and $s=B+1$.}
 \end{myfigure}
 
-Because either side of our states with $s=B$ we know the decision, we can see in states $(B,v)$ whether we should renew now or wait one period and then renew. Using a similar argument to the two previously, we shall consider a policy, $\pi^{\text{R}}$ a policy which renews immediately and a policy $\pi^{\text{NR}}$ which does not renew immediately, but renews in one time period, which both after these decisions follow some optimal policy, $\sigma$ from the renewed state, $\theta$. Using Such policies will get us
+Because either side of our states with $s=B$ we know the decision, we can see in states $(B,v)$ whether we should renew now or wait one period and then renew. Using a similar argument to the two previously, we shall consider a policy, $\pi^{\text{R}}$ a policy which renews immediately and a policy $\pi^{\text{NR}}$ which does not renew immediately, but renews in one time period, which both after these decisions follow some optimal policy, $\sigma$ from the renewed state, $\theta$. Using such policies will get us
 
 \begin{align*}
 &V_{n}^{\pi_{\text{R}}}(s,v)= \omega + E[V_{n-1}^{\sigma}(\theta)] \\
@@ -2369,7 +2378,7 @@ A policy, $\pi_{\text{Th}}(v_{\text{crit}})$, is said to be a \textit{threshold}
 \end{tikzpicture}
 }
 \end{center}
-\caption{Threshold policy, $\pi_{\text{Th}}(2)$, with \textcolor{blue}{$b_{j}=5$} and \textcolor{red}{$B_{j}=4$} (e.g. $X_{j} \leq 3.7$)}
+\caption{Threshold policy, $\pi_{\text{Th}}(2)$, with \textcolor{blue}{$b_{j}=5$} and \textcolor{red}{$B_{j}=4$} (e.g. $X_{j} \leq 3.7$).}
 \end{myfigure}
 
 But due to knowing that, $g \leq c \lambda$, we may have some maximum threshold. We will define
@@ -2389,7 +2398,7 @@ While we do not yet know, $g$, we can consider splitting it up into regions whic
 \item $c \lambda R + c v_{\text{max}} < g \leq c \lambda$ gives $v_{\text{crit}}=v_{\text{max}}+1$
 \end{itemize}
 
-Given that we are using a threshold policy, with threshold $\pi_{\text{crit}}$, we can work out the long-run average cost as a function of $\omega$
+Given that we are using a threshold policy, with threshold $\pi_{\text{crit}}$, we can work out the long-run average cost as a function of $\omega$.
 
 \begin{align*}
 &g^{\pi_{\text{Th}}(v_{\text{crit}})}(\omega)=\frac{\text{Expected cost per renewal}}{\text{Expected renewal length}} \\
@@ -2398,13 +2407,14 @@ Given that we are using a threshold policy, with threshold $\pi_{\text{crit}}$, 
 
 This allows us to convert our previous bounds on, $g$, which imply a  certain threshold should be picked, to bounds on our visitation cost, $\omega$.
 
-\begin{itemize}
-\item $0 \leq \omega \leq c \lambda R (B+1) \equiv \Delta(0)$ if $v_{\text{crit}}=0$.
-
-\item $\Delta(v_{\text{crit}}-1) < \omega \leq  \Delta(v_{\text{crit}})$ if $v_{\text{crit}} \neq 0,v_{\text{max}}$
-
-\item $\Delta(v_{\text{max}}) < \omega \leq \widetilde{\Delta}$ if $v_{\text{crit}}=v_{\text{max}}+1$
-\end{itemize}
+\begin{equation}
+\begin{aligned}
+&0 \leq \omega \leq c \lambda R (B+1) \equiv \Delta(0) \text{ if } v_{\text{crit}}=0. \\
+&\Delta(v_{\text{crit}}-1) < \omega \leq  \Delta(v_{\text{crit}}) \text{ if } v_{\text{crit}} \neq 0,v_{\text{max}}. \\
+&\Delta(v_{\text{max}}) < \omega \leq \widetilde{\Delta} \text{ if } v_{\text{crit}}=v_{\text{max}}+1.
+\end{aligned}
+\label{Equation:Omega equations}
+\end{equation}
 
 Where
 \begin{itemize}
@@ -2418,11 +2428,11 @@ Hence we have solved the single node problem, and hence $C(\omega)$.
 \subsection{Index and heuristics}
 As we know the strategy at a single node, we can imagine in all states `bidding' for how much they want to be visited from the current state of the system, `bidding' a `fair price'.
 
-This fair price can be seen from [reference to omega equations], and considering what a node would be willing to `bid' to be visited now.
+This fair price can be seen from the expressions for bounds in equation \ref{Equation:Omega equations}, and considering what a node would be willing to `bid' to be visited now.
 
 Consider a state $(s,v)$ with $s< B$ then the node is not willing to pay for a visit (or will pay zero), so these states are given an index of zero.
 
-To find the fair cost in states $(B,v)$ consider that they will be renewed in threshold policy with $v_{\text{crit}}=0,1,...,v$ policy, but not for any higher thresholds, so the maximum service price it is willing to pay is $Delta(v)$ for visit now.
+To find the fair cost in states $(B,v)$ consider that they will be renewed in threshold policy with $v_{\text{crit}}=0,1,...,v$ policy, but not for any higher thresholds. Therefore the maximum service price the node is willing to pay, to be visited now, is $\Delta(v)$.
 
 \begin{note}
 Due to $v_{\text{max}}$ this can be capped to $\widetilde{\Delta}$ for $v \geq v_{\text{max}}+1$
@@ -2443,7 +2453,7 @@ W(s,v)&=\begin{cases}
 
 Then if $\omega \leq W(s,v)$ the optimal action is to renew now.
 
-We can reinsert the node subscript, $i$, and attempt to use this index to aim to implement it as the price a node is willing to pay to be visited
+We can reinsert the node subscript, $i$, and attempt to use this index to aim to implement it as the price a node is willing to pay to be visited.
 
 \begin{align*}
 W_{i}(\bm{s},\bm{v})&=\begin{cases}
@@ -2456,46 +2466,46 @@ W_{i}(\bm{s},\bm{v})&=\begin{cases}
 
 Now we can form a simple heuristic, called the Index Heuristic(IH), which just picks to go an adjacent node with the highest index.
 
-We can see the index as a benefit for visiting the selected node. The patroller can use a look-ahead window of length, $l$, that is to look at all paths of length $l$ and sum all the benefits (indices) collected along the path and using the maximum path for our immediate action. We call this heuristic the Index Benefit Heuristic(IBH).
+We can see the index as a benefit for visiting the selected node. The patroller can use a look-ahead window of length, $l$, that is to look at all paths of length $l$ and sum all the benefits (indices) collected along the path and using the maximum path for our immediate action. We call this heuristic the Index Reward Heuristic(IRH).
 
 We can repeat this for every state to get a look-up table for the action to take in any given state.
 
-We notice that as we are looking at summing all indices for all $l$ steps in the look ahead window, we have already calculated this for all look ahead windows $l' \leq l$. We might as well use this information, as it is being computed. We shall call this the heuristics depth, $d$, and denote IBH($d$) to be the index benefit heuristic that look at all look ahead windows $l=1,...,d$ and for each $l$ returns an action to take.
+We notice that as we are looking at summing all indices for all $l$ steps in the look ahead window, we have already calculated this for all look ahead windows $l' \leq l$. We might as well use this information, as it is being computed. We shall call this the heuristics depth, $d$, and denote IRH($d$) to be the index benefit heuristic that look at all look ahead windows $l=1,...,d$ and for each $l$ returns an action to take.
 
 To select between the $d$ paths (and therefore actions) from the different look ahead windows, we need some form of path selection heuristic. We decide to use a proxy for the long-run average cost, by analysing the expected short term average cost along the path and biasing this with the average cost to decay to the fully neglected state $(\bm{B}+\bm{1},\bm{v})$ from the end of the path's state by the patroller leaving the system (and no longer visiting any node).
 
-Instead of seeing the index as a benefit for selecting a node, we can see the index as a penalty for not selecting a node. The patroller can use a look-ahead window of length, $l$, and sum all the penalties (indices for nodes not selected) collected along the path and using the minimum path for our immediate action. We call this heuristic the Index Penalty Heuristic(IPH) and similarly we can look at depth $d$ called the IPH($d$) by comparing all look-ahead window choices of lengths $l=1,...,d$ and using the same path selection as IBH($d$).
+Instead of seeing the index as a benefit for selecting a node, we can see the index as a penalty for not selecting a node. The patroller can use a look-ahead window of length, $l$, and sum all the penalties (indices for nodes not selected) collected along the path and using the minimum path for our immediate action. We call this heuristic the Index Penalty Heuristic(IPH) and similarly we can look at depth $d$ called the IPH($d$) by comparing all look-ahead window choices of lengths $l=1,...,d$ and using the same path selection as IRH($d$).
 
 \begin{note}
-IBH($1$), IPH($1$) are the same heuristic
+IRH($1$), IPH($1$) are the same heuristic.
 \end{note}
 
-We could also consider a short-sighted for numerical study purposes. We know in state $(\bm{s},\bm{v})$ and the patroller choosing node $i$ then the expected number of attacks they can detect is $\lambda_{i} \int_{0}^{s_{i}-1} P(X_{i} > t ) dt + v_{i} P(X_{i} > s_{i}-1)$. Therefore we define the cost avoided (reward gained) if the patroller visits $i$ from state $(\bm{s},\bm{v})$
+We could also consider, for the purposes of our numerical study, a short-sighted heuristic. When in state $(\bm{s},\bm{v})$ , with patroller choosing node $i$, the expected number of attacks they can detect is $\lambda_{i} \int_{0}^{s_{i}-1} P(X_{i} > t ) dt + v_{i} P(X_{i} > s_{i}-1)$. Therefore we define the cost avoided (reward gained) if the patroller visits $i$ from state $(\bm{s},\bm{v})$.
 
 \begin{align*}
 R(\bm{s},\bm{v},i)= c_{i} ( \lambda_{i} \int_{0}^{s_{i}-1} P(X_{i} > t ) dt + v_{i} P(X_{i} > s_{i}-1)
 \end{align*}
 
-Using this reward function for selecting a node is an option instead of seeing the index as some benefit is an option.The patroller can use a look-ahead window of length, $l$, and sum all the rewards collected along the path and using the maximum path for our immediate action. We call this heuristic the Myopic Heuristic(MH) and similarly we can look at depth $d$ called the MH($d$) by comparing all look-ahead window choices of lengths $l=1,...,d$ and using the same path selection as IBH($d$).
+Using this reward function for selecting a node is an option, instead of seeing the index as some benefit/penalty. The patroller can use a look-ahead window of length, $l$, and sum all the rewards collected along the path and using the maximum path for our immediate action. We call this heuristic the Myopic Heuristic(MH) and similarly we can look at depth $d$ called the MH($d$) by comparing all look-ahead window choices of lengths $l=1,...,d$ and using the same path selection as IRH($d$).
 
 \begin{note}
 Due to the path selection method used for the depth heuristics, we cannot guarantee that increasing the depth increases the overall optimal answer provided by the heuristics.
 \end{note}
 
 \subsection{Numerical experiments}
-We now Look at using our heuristic, at certain depths to see how good it is against optimal. To do this we generate 500 scenario's on the complete graph, $K_{4}$ with attack times, $X_{i}$, on the 4 nodes picked uniformly from $[1,3]$, we lock $b_{i}=1 \; \forall i$ and allow each arrival rates, $\lambda_{i}$, to be picked uniformly from $[0,1]$ and use $c_{i}=1 \; \forall i$ so that the cost incurred can be interpreted as the probability of missing an attack.
+We now look at using our heuristic, at certain depths to see how good it is against optimal. To do this we generate 500 scenario's on the complete graph, $K_{4}$ with attack times, $X_{i}$, on the 4 nodes picked uniformly from $[1,3]$, we lock $b_{i}=1 \; \forall i$ and allow each arrival rates, $\lambda_{i}$, to be picked uniformly from $[0,1]$ and use $c_{i}=1 \; \forall i$ so that the cost incurred can be interpreted as the probability of missing an attack.
 
-For the same scenario, we run BH($d$),PH($d$) for $d=1,2,3,4$ and return the percentage error.
+For the same scenario, we run IRH($d$),IPH($d$) for $d=1,2,3,4$ and return the percentage error.
 
 \begin{myfigure}
 \input{Images/BHvsPHInitialPlainComplete.tex}
-\caption{Frequency density of percentage errors made by heuristics in simulations}
-\label{Figure:Initial BH and PH for plain index}
+\caption{Frequency density of percentage errors made by heuristics in simulations.}
+\label{Figure:Initial RH and PH for plain index}
 \end{myfigure}
 
-From Figure \ref{Figure:Initial BH and PH for plain index} we can see that while sometimes the heuristic performs well, in the majority of cases it performs very badly.
+From Figure \ref{Figure:Initial RH and PH for plain index} we can see that while sometimes the heuristic performs well, in the majority of cases it performs very badly.
 
-We propose altering the index to
+We propose altering the index to,
 
 \begin{align}
 W_{i}(s_{i},v_{i})&=\begin{cases}
@@ -2505,16 +2515,15 @@ W_{i}(s_{i},v_{i})&=\begin{cases}
 \widetilde{\Delta_{i}} \text{ If } s_{i}=B_{i}+1, v_{i} \geq v_{i,\text{max}} \\
 \end{cases}
 \end{align}
-
-We run the same scenarios with our changed index
+and run the same scenarios with our changed index.
 
 \begin{myfigure}
 \input{Images/BHvsPHNewPlainComplete.tex}
-\caption{Frequency density of percentage errors made by heuristics in simulations for new index}
-\label{Figure:BH and PH for new plain index}
+\caption{Frequency density of percentage errors made by heuristics in simulations for new index.}
+\label{Figure:RH and PH for new plain index}
 \end{myfigure}
 
-As we can see from Figure \ref{Figure:BH and PH for new plain index} the change to index, significantly. We can also note that on the complete the penalty heuristic seems to outperform the benefit heuristic. This agrees with the findings in \cite{Lin2013}.
+As we can see by comparing figure \ref{Figure:Initial RH and PH for plain index} to figure \ref{Figure:RH and PH for new plain index} the change to the index has significantly increased the performance. We can also note that for complete graph the penalty heuristic seems to outperform the reward heuristic. This agrees with the findings in \cite{Lin2013}, that the penalty heuristic seems to perform better.
 
 \section{Future Work}
 \label{Section:Future Work}
@@ -2526,7 +2535,7 @@ We now want to look at $m < 2k$, but first we will look at extending the combina
 
 \textbf{Combinatorial improvement extension}
 
-We alter the idea of using end-covering cycles on $S$ to improve the $*$ nodes (and $c$ node) by using a cycle of length $m' \equiv m+1$(which is not a covering). When this cycle is played the patroller has a probability of catching the attacker in $*$ nodes of $\frac{m}{m'}$(instead of being guaranteed when it was covering).
+We alter the idea of using end-covering cycles on $S$ to improve the $*$ nodes (and $c$ node) by using a cycle of length $m' \equiv m+1$(which is not a covering). When this cycle is played the patroller has a probability of $\frac{m}{m'}$ instead of $1$ for catching an attacker in $*$ nodes.
 
 As before we will need to play a collection of all combinations of such cycles, each cycle has a choice of $\frac{m'}{2}$ end points to visit. So we have a total of $\left( \begin{array}{c}
 n-1 \\
@@ -2687,60 +2696,35 @@ by the patroller using the combinatorial improvement (extended for odd $m$) and 
 
 \textbf{Plan:} The type of attacking strategy for a variety of $m$ has been conjectured, along with some cyclic property of $m$ and which attack strategy should be picked. We need to formally define the attacks, then formally prove the cyclic relationship between $m$ and which attack strategy should be used. Then formal proof of the attacker bound needs to be fine, however this links in with the plan of section \ref{Section:Proof completions} and an idea of how to bring these proofs together into a need idea needs to formed.
 
-
-\subsection{Use of trees in general graphs for patrolling games}
-For now we will assume that the value of the game for all tree graphs has been found. We know consider the role of spanning tree graph, $T=(N_{T},E_{T})$, in a general graph, $G=(N,E)$. Then we know $V(G) \leq V(T)$, as the introduction of more edges cannot harm the patroller.
-
-As a graph may have more than one spanning tree, we may wish to find the best spanning tree, $T_{\text{min}}(m)=\argmin_{T} \{V(T,m) \, | \, T \text{ is a spanning tree of } G  \}$.
-
-We propose that we may take all spanning trees, $\mathcal{T}$ and there values and play the strategies suggested by these with certain probabilities, prompted by the values of the trees.  
-
-
-
 \subsection{Proof completions}
 \label{Section:Proof completions}
-The proof for the time-limited diametric attack (See Appendix \ref{Appendix:Proof of time-limited diametric attack}) needs cleaning up. The idea of this proof needs extending to the time-delayed diametric attack and type-delayed diametric attack
+The proof for the time-limited diametric attack(see appendix \ref{Appendix:Proof of time-limited diametric attack}) needs consolidating and the general logic which will be used in the other similar proofs(see appendix \ref{Appendix:Proof of time-delayed attack} and \ref{Appendix:Proof of type-delayed attack}).
 
 \subsubsection{Plan}
 \textbf{Time Estimate:} 1 Month
 
-\textbf{Plan:} !Not sure what to go here!
+\textbf{Plan:} Need to develop a way to combine all the proofs under a uniform idea and/or possibly rewrite them as smaller lemmas which build to a theorem. Notational convention needs to be picked so that the proof looks and reads cleanly. Getting across the idea of the spacing in time is what stops the patroller getting any more potential attacks.
 
-\subsection{Complete Numerical experiment for simultaneous moving patroller}
-We first focus on the deterministic case, so that
+\subsection{Complete numerical experiments for an instantaneously moving patroller}
+\label{Section:Complete Numerical experiments for an instantaneously moving patroller}
+The current code can only deal with deterministic attack times, as it was initially developed for local-observations. To deal with distributions functions, we must rewrite the code and how it formats the attack.
 
-\begin{align*}
-C_{j}(\bm{s},i) &= \begin{cases}
-c_{j} \lambda_{j} R_{j} \text{ if } s_{j}=B_{j} , j \neq i \\
-c_{j} \lambda_{j} \text{ if } s_{j}=B_{j} , j \neq i \\
-0 \text{ otherwise} 
-\end{cases}
-\end{align*}
+It also will prompt us to look into using probabilistic cycles around the state space in the local-observation set-up to find $g$ instead of using value iteration, which currently has the issue of periodicity and not converging. This could be avoided by recoding the heuristics to look at probabilistic cycles around the state space under the policy for each look-ahead window.
 
-and an index
-
-\begin{align*}
-W_{i}(\bm{s}) \equiv \begin{cases}
-0 \text{ if } s_{i} < B_{i} \\
-B_{i} c_{i} \lambda_{i} R_{i} \text{ if } s_{i}=B_{i} \\
-(1+X_{i})c_{i} \lambda_{i} \text{if} s_{i}=B_{i}+1
-\end{cases}
-\end{align*}
-
-
+\subsubsection{Plan}
 \textbf{Time Estimate:} 1 Month
 
-\textbf{Plan:} To rewrite code to deal with generic attack distributions, by using functions and integration tables. To alter code to use a path selection which works out the optimal long-run average cost for the heuristic policy at a certain look-ahead, by the use of cycles. Then to run numerical experiments, with the same set up as in \citep{Lin2013} and compare the results to the optimum. We also want to check if the same issue is found when we use purely deterministic attack times an whether splitting the index seems to help (as it does with local observations)
+\textbf{Plan:} To rewrite code to deal with generic attack distributions, by using functions and integration tables. To alter code to use a path selection which works out the optimal long-run average cost for the heuristic policy at a certain look-ahead, by the use of cycles. Then run numerical experiments, with the same set up as in \citep{Lin2013} and compare the results to the optimum. We also want to check if the same issue is found when we use purely deterministic attack times and whether splitting the index seems to help (as it does with local observations).
 
-\subsection{Extending Discrete Attack time to generic distributions for local observations}
+\subsection{Extending discrete attack time to generic distributions for local observations}
 We want to look at removing the restriction placed on the attack time to be deterministic, as in section \ref{Section:Deterministic attack time assumption}. This will allow us to deal with any generic distribution, to do so we will focus on the single node problem with a generic distribution.
 
-As before if we start in states $(B+1,v)$ we will renew if $g \leq c \lambda$ and by the neglecting strategy we know this to guaranteed. So the optimal strategy will have all states with $s=B+1$ renew immediately.
+As before if we start in states $(B+1,v)$ we will renew if $g \leq c \lambda$ and by the neglecting strategy we know this is guaranteed. So the optimal strategy will have all states with $s=B+1$ renew immediately.
 
-No we will work backwards, aiming to use backwards recursion to work through to some multi-stage threshold policy, $\pi^{\text{TH}}(\bm{v}_{\text{crit}})$ where $(\bm{v}_{\text{crit}})_{i}$ is the threshold on the state space row of $s=i$. We expect this threshold to be triangular on the state space, that is that $\bm{v}_{\text{crit}}$ is a non-increasing vector.
+Now we will work backwards, aiming to use backwards recursion to work through to some multi-stage threshold policy, $\pi^{\text{TH}}(\bm{v}_{\text{crit}})$ where $(\bm{v}_{\text{crit}})_{i}$ is the threshold on the state space row of $s=i$. We expect this threshold to be triangular on the state space, that is that $\bm{v}_{\text{crit}}$ is a non-increasing vector.
 
 \begin{definition}[Multi-stage threshold policy]
-
+A policy, $\pi_{\text{Th}}(\bm{v}_{\text{crit}})$, is said to be a \textit{multi-stage threshold} policy, with thresholds, $\bm{v}_{\text{crit}}=(v_{\text{crit},1},...,v_{\text{crit},B+1}) \in \mathbb{Z}_{+}^{B+1}$, if in states $(s,v)$ we renew now if $v \geq v_{\text{crit},s}$ and otherwise we wait for one time period and then make the decision again.
 \end{definition}
 
 \begin{myfigure}
@@ -2834,21 +2818,21 @@ No we will work backwards, aiming to use backwards recursion to work through to 
 \caption{Threshold policy, $\pi_{\text{Th}}(6,4,2,2,0)$, with \textcolor{blue}{$b_{j}=5$} and \textcolor{red}{$B_{j}=4$} (e.g. $X_{j} \leq 3.7$)}
 \end{myfigure}
 
-As an example we will now start to work out what to  do in states $s=B$ and how to work out the threshold. We can do the same process in these states, either choosing to wait $0$ or $1$ time period and then renew, which are the policies $\pi^{\text{R}}$ and $\pi^{\text{NR}}$ respectively. Then
+As an example we will now start to work out what to  do in states $s=B$ and how to work out the threshold. We can do the same process in these states, either choosing to wait $0$ or $1$ time period and then renew, which are the policies $\pi^{\text{R}}$ and $\pi^{\text{NR}}$ respectively. Then,
 
 \begin{align*}
-&V_{n}^{\pi_{\text{R}}}(s,v)= \omega + E[V_{n-1}^{\sigma}(\theta)] \\
-&V_{n}^{\pi_{\text{NR}}}(s,v)= c (vP(B-1 < X \leq B) + \lambda \int_{B-1}^{B} P(X \leq t ) dt) \omega + E[V_{n-1}^{\sigma}(\theta)] \\
+&V_{n}^{\pi_{\text{R}}}(s,v)= \omega + E[V_{n-1}^{\sigma}(\theta)], \\
+&V_{n}^{\pi_{\text{NR}}}(s,v)= c (vP(B-1 < X \leq B) + \lambda \int_{B-1}^{B} P(X \leq t ) dt) \omega + E[V_{n-1}^{\sigma}(\theta)]. \\
 \end{align*}
 
-And the policy $\pi^{\text{R}}$ is picked over $\pi^{\text{NR}}$ (or be indifferent) if
+With the policy $\pi^{\text{R}}$ being picked over $\pi^{\text{NR}}$ (or be indifferent) if
 
 \begin{align*}
 &\lim\limits_{n \rightarrow \infty} V_{n}^{\pi_{NR}} (B,v) - V_{n}^{\pi_{R}}(B,v) \geq 0 \\
 & \iff \lim\limits_{n \rightarrow \infty} c (\lambda \int_{B-1}^{B} P(X \leq t ) dt + v P(B-1 < X \leq B)) + E[V_{n-1}^{\sigma}(B+1,0)] - (\omega + E[V_{n-1}^{\sigma}(\theta)]) \geq 0 \\
 & \iff g \leq c (\lambda \int_{B-1}^{B} P(X \leq t ) dt +v P(B-1 < X \leq B)) = c( \lambda R_{B} + v p_{B})
 \end{align*}
-Where $R_{x} \equiv \int_{x-1}^{x} P(X \leq t ) dt = \int_{x-1}^{x} F(t) dt$ and $p_{x} \equiv P(x-1 < X \leq x) = F(x)-F(x-1)$ (For our generic distributions c.d.f $F$)
+Where $R_{x} \equiv \int_{x-1}^{x} P(X \leq t ) dt = \int_{x-1}^{x} F(t) dt$ and $p_{x} \equiv P(x-1 < X \leq x) = F(x)-F(x-1)$ (For our generic distributions c.d.f $F$).
 
 This means the bound for renewing now is almost the same as before, $g \leq c (\lambda R_{B} + v p_{B}) \equiv g_{B}$.
 
@@ -2859,20 +2843,20 @@ We could split ourself into cases, of $v$ such that $g \leq g_{B}$ (so if we wai
 \subsubsection{Plan}
 \textbf{Time Estimate:} 3 Months
 
-\textbf{Plan:} To complete the backwards recursion case by cases to get the optimal policy to be that of a multi-stage threshold policy. Then to develop an index using the fair price for renewal in each state to allow us to form an index. Implement the index for numerical studies with some simple distributions e.g. uniform and triangular. We also want to investigate whether on two nodes that the IH performs optimally. We want to extend the theory further to have attackers wait until the patroller leaves before beginning their attack. 
+\textbf{Plan:} To complete the backwards recursion case by case, to get the optimal policy to be that of a multi-stage threshold policy. Then to develop an index using the fair price for renewal in each state to allow us to form an index. Implement the index for numerical studies with some simple distributions e.g. uniform and triangular. We also want to investigate whether on two nodes that the IH performs optimally. We want to extend the theory further to have attackers wait until the patroller leaves before beginning their attack. 
 
 \subsection{Strategic Patroller with Random Attackers on Edges}
 We want to look at considering similar work to that in section, \ref{Section:Review of patrolling problem with random attackers} but instead of attackers arriving at nodes, we could consider attackers arriving on edges. We provide a brief introduction to this idea now focusing on directed graphs.
 
-We use an directed graph, $Q=(N,E)$, with nodes $N=\{1,...,n \}$ and edges $E= \subset E_{\text{Comp}}= \{(i,j) \, | (i,j) \in N  \}$. We have our adjacency matrix, $A$, where $A_{i,j}$ means that a transition from node $i$ to node $j$ is possible.
+We use a directed graph, $Q=(N,E)$, with nodes $N=\{1,...,n \}$ and edges $E= \subset E_{\text{Comp}}= \{(i,j) \, | (i,j) \in N  \}$. We have our adjacency matrix, $A$, where $A_{i,j}$ means that a transition from node $i$ to node $j$ is possible.
 
 Attackers arrive at each edge according to a Poisson process of rate, $\lambda_{i,j}$ and pick a position along the unit length edge according to a distribution function, $f_{i,j}(x)$ (with support, $x \in [0,1]$, and c.d.f, $F_{i,j}(x)$). The attack lasts, $X_{i,j}$ time units before completion and a cost is incurred to the patroller of $c_{i,j}$.
 
-The patrollers strategy is some walk (with possible waiting), we will assume as before that they walk along the edges at unit speed. The decision are which edge to traverse (which is equivalent to which node to walk to).
+The patroller's strategy is a walk (with possible waiting at nodes), we will assume as before that they walk along the edges at unit speed, taking one time period to traverse one edge. The decisions are which edge to traverse next (which is equivalent to which node to walk to).
 
 Our state space is $\Omega= \{ \bm{s}=(s_{i,j})_{(i,j) \in E} \, | \, s_{i,j}=1,2,... \; \forall (i,j) \in E \}$, where $s_{i,j}$ is the number of time periods since the edge $(i,j)$ was last traversed.
 
-From a state, $\bm{s}$, we can identify the current node by $l(\bm{s}) = (\argmin_{(i,j)} \bm{s})_{2} $ the patroller can choose to move to $\mathcal{A}(\bm{s})= \{ j' \, | (A)_{l(\bm{s}),j'}=1 \}$  and choosing node, $j'$,is equivalent to choosing to traverse edge $(j,j')$. When node, $j'$ is chosen to be moved to we transition to state, $\phi(\bm{s},j')=\widetilde{\bm{s}}$ where $s_{l(\bm{s}),j}=1$ and $s_{i,j}=s_{i,j}+1 \; \forall (i,j) \in E \\ \{(l(\bm{s}),j') \}$. 
+From a state, $\bm{s}$, we can identify the current node by $l(\bm{s}) = (\argmin_{(i,j)} \bm{s})_{2} $ the patroller can choose to move to $\mathcal{A}(\bm{s})= \{ j' \, | (A)_{l(\bm{s}),j'}=1 \}$  and choosing node, $j'$,is equivalent to choosing to traverse edge $(j,j')$. When node, $j'$ is chosen to be moved to we transition to state, $\phi(\bm{s},j')=\widetilde{\bm{s}}$ where $s_{l(\bm{s}),j}=1$ and $s_{i,j}=s_{i,j}+1 \; \forall (i,j) \in E \setminus \{(l(\bm{s}),j') \}$. 
 
 Again the future of the process is independent of its past, we can formulate its  movement as a MC and the patroller's problem is a MDP.
 
@@ -2889,7 +2873,7 @@ We note due to all edges being traversed at the same speed, the last time a poin
 
 As before we bound the attack times by, using $B_{i,j} \equiv \min \{ k \, | k \in \mathbb{Z}^{+} P(X_{i,j} \leq k)=1 \}$ to create a finite state space, $\Omega= \{\bm{s} \, | s_{i,j}=1,2,...,B_{i,j} \; \forall (i,j) \in E \}$ and our transition is modified to $\widetilde{s}_{i,j}=\min\{s_{i,j}+1,B_{i,j}+1 \} \; \forall (i,j) \in E \setminus \{(l(\bm{s}),j') \}$.
 
-The objective again is to minimize the long-run average cost among all edges and as we have a finite state space as before, we can focus on the class of stationary, deterministic policies, $\Pi = \{ \pi: \Omega \rightarrow E \, | \pi(\bm{s}) \in  \{(l(\bm{s}),j') \, | \, j \in \mathcal{A}(\bm{s}) \} \}$ and we wish to solve
+The objective again is to minimize the long-run average cost among all edges, and as we have a finite state space as before, we can focus on the class of stationary, deterministic policies, $\Pi = \{ \pi: \Omega \rightarrow E \, | \pi(\bm{s}) \in  \{(l(\bm{s}),j') \, | \, j \in \mathcal{A}(\bm{s}) \} \}$. We wish to solve,
 
 \begin{align*}
 C^{\text{OPT}}(\bm{s}_{0}) \equiv \min\limits_{\pi \in \Pi} \sum\limits_{(i,j) \in E} V_{i,j}(\pi,\bm{s}_{0})
@@ -2901,42 +2885,94 @@ V_{i,j}(\pi,\bm{s}_{0}) \equiv \lim\limits_{N \rightarrow \infty} \frac{1}{N} \s
 Where $\phi^{k}_{\pi}(\bm{s}_{0})$ is the state after $k$ transitions starting from $\bm{s}_{0}$ under the policy $\pi$.
 
 
-We now notice and extreme similarity to the `solved' problem in \ref{Section:Review of patrolling problem with random attackers} and in-fact we can see a link between the edges here and the nodes in the original proble. To seek some correspondence between the two problems by using the edge-vertex dual for a directed graphs (as in ).
+We now notice an extreme similarity to the `solved' problem in \ref{Section:Review of patrolling problem with random attackers} and in fact we can see a link between the edges here and the nodes in the original problem in \cite{Lin2013}. We seek some correspondence between the two problems by using the edge-vertex dual for directed graphs (see appendix \ref{Appendix:Graph Definitions} for a definition). This correspondence, allows us to use the heuristics and theory as section \ref{Section:Review of patrolling problem with random attackers}.
 
 \begin{note}
-The resultant edge-vertex dual graph is directed, but the original problem has no issue with this.
+The resultant edge-vertex dual graph is directed, but the original problem has no issue with this as it just a reduction in the action space for certain states.
 \end{note}
-
-\begin{Huge}
-Do I need to show this 1-1 correspondence ?
-\end{Huge}
-
-This correspondence, allows us to use the heuristics and theory as section \ref{Section:Review of patrolling problem with random attackers}.
 
 The idea now is does this still work with undirected graphs, we shall note that the cost function changes slightly and the way we traverse the graph matters due to the orientation of the arrivals at positions.
 
 \subsubsection{Plan}
 \textbf{Time Estimate:} 2 Months
 
-\textbf{Plan:} To extend the theory to deal with the undirected graph, which  will include modifying the cost function and state space for the opposite traversal's . Then to isolate particular examples which can be `solved' with the previous reduction tools; such as acyclic graphs, which remove the dependency on which way the edges are traversed. The study of the class of  acyclic graphs will be important as all walks which consider using the same edge always traverse it in the opposite direction to as before. Then to see if there is a way to convert an undirected problem to a directed problem and hence use the correspondence for the solution. Finally we wish to try to solve it from first principals without any intuitive understanding.
+\textbf{Plan:} To extend the theory to deal with the undirected graph, which  will include modifying the cost function and state space for the opposite traversal's . Then to isolate particular examples which can be `solved' with the previous reduction tools; such as acyclic graphs, which remove the dependency on which way the edges are traversed. The study of the class of  acyclic graphs will be important as all walks which consider using the same edge always traverse them in the opposite direction to as before. Then to see if there is a way to convert an undirected problem to a directed problem and hence use the correspondence for the solution. Finally we wish to try to solve it from first principals without any intuitive understanding.
 
 
-\subsection{Investigate weighted graphs }
-We may wish to incorporate the idea of distance between nodes, which is not of unit length as proposed in the earlier formulations. We would also like to introduce a concept of the patrollers speed into the model as well.
+\subsection{Investigate weighted graphs}
+A weighted graph is a graph in which each edge has an associated number called its `weight', they are often used to represent distance. We suggest now using a weighted graph with the distance between locations in a graph.
+
+That is a \textit{weighted graph}, $G=(N,E,w)$ where $w: E \rightarrow \mathbb{R}^{+}$ is a \textit{weight function} which assigns each edge to a real positive weight. As the patrol problem is currently an integer time problem we will assume that $w: E \rightarrow \mathbb{Z}^{+}$.
+
+We propose that we can convert a weighted graph patrol problem for random attackers into a standard patrol problem for random attackers, by the directed sub-division of an integer weighted edge. This division introduces intermediate nodes which we will say that no waiting is possible, by changing the possible actions and we will have no attackers arrive at this node, by picking the probability to be zero. An example of how to convert the game can be seen in figure \ref{Figure:Example of converting a weighted patrol problem}.
+
+\begin{note} 
+we note that waiting is not allowed at intermediate nodes and we have directed edges, so the adjacency matrix will not be symmetric. However we conjecture that this has no affect on the theory and heuristic.
+\end{note}
+
+\begin{myfigure}
+\begin{center}
+\begin{tikzpicture}[baseline=(current bounding box.north),-,auto,node distance=2cm,
+                    thick,main node/.style={circle,draw,font=\sffamily\Large\bfseries}]
+
+  \node[main node] (1) {$1$};
+  \node[main node] (2) [below of=1] {$2$};
+  \node[main node] (3) [below of=2] {$3$};
+  \node[main node] (4) [below of=3] {$4$};
+
+  \node (P1) [shift={(1,-1)}] at (2) {};
+  \node (P2) [right of=P1] {};
+  
+  \draw[->] (P1) edge (P2);
+  
+  \node[main node] (a1) [shift={(3,3)}] at (P2) {$1$};
+  \node[main node] (a2) [shift={(3,1.5)}] at (P2) {$2$};
+  \node[main node] (a3) [right of=P2] {$2,3$};
+  \node[main node] (a4) [right of=a3] {$3,2$};
+  \node[main node] (a5) [shift={(3,-1.5)}] at (P2) {$3$};
+  \node[main node] (a6) [shift={(3,-3)}] at (P2) {$4$};
+
+  \draw  (1)--(2) node[pos=0.5,label=right:$1$] {};
+  \draw  (2)--(3) node[pos=0.5,label=right:$2$] {};
+  \draw  (3)--(4) node[pos=0.5,label=right:$1$] {};
+  
+  \draw (a1) --(a2);
+  \draw[->] (a2) to (a3);
+  \draw[->] (a3) to (a5); 
+  \draw[->] (a5) to (a4);
+  \draw[->] (a4) to (a2);
+  \draw (a5)--(a6);   
+  
+     
+\end{tikzpicture}
+\end{center}
+\caption{Converting a weighted edge.}
+\label{Figure:Example of converting a weighted patrol problem}
+\end{myfigure}
+
+We could then use a similar theory as in section 4 of \cite{Lin2013} to get heuristics for both a strategic attacker and patroller, to find near optimal answers for a the weighted version of the patrolling game. We also want consider alternative approaches to solve the weighted patrol problem, as for large weights this approach is suggested to become intractable. Consider the example as in figure \ref{Figure:Example of converting a weighted patrol problem} but with $(2,3)$ having a weight of $1000$ , then $2000$ nodes are introduced to convert the problem.
+
+This may bring up an issue with how the proposed heuristics in \cite{Lin2013} look into the future, as they will be unable to see the actual nodes and therefore the indices, we propose that it is possible to `ignore' these nodes with such low indices.
+
+We may also want to consider non-integer weights for a weighted patrol problem, then for rational weights it is a case of scaling. For irrational weights rounding and scaling is proposed. However we believe it is possible a more elegant way to think about the problem exists. 
+
 
 \subsubsection{Plan}
 \textbf{Time Estimate:} 2 Months
 
-\textbf{Plan:} 
+\textbf{Plan:} We first need to show that for a graph with an asymmetric adjacency matrix that the theory in \ref{Section:Review of patrolling problem with random attackers} still holds (which it will as only the Action set changes). We will then check that the heuristic still works optimally and that having an asymmetric matrix does not affect it that much. We then need to formalize the conversion between the weighted patrol problem with random attackers and the standard patrol problem with random attackers. After this we need to look at how we can use the heuristic depth when nodes which are far apart are the only ones with indices, by possibly altering the heuristic to `ignore' nodes of insignificant index and performing numerical experiments.
 
 \subsection{Investigate types of patrolling}
-Further to the idea that the patroller may overlook an attacker (\citep{Lin2014}), we may propose that not only can the patroller make the decision of where to move to, but also in what `mode' they search the region, fast or slow, each with different chances of overlook.
+Further to the idea that the patroller may overlook an attacker (\cite{Lin2014}), we may propose that not only can the patroller make the decision of where to move to, but also in what `mode' they search the region, fast or slow, each with different chances of overlook.
 
+We believe that in the single-node problem version, we can introduce two service costs; a slow cost, $\omega_{s}$; and a fast cost, $\omega_{f}$ with long run service rates; a slow service rate, $\mu_{s}$; and a fast service rate, $\mu_{f}$ .We expect to get similar results to those in theorem 2 in \cite{Lin2014}, that is that for fixed service rates, $\mu_{s},\mu_{f}$ we expect to visit the node in mode, slow every $\frac{1}{\mu_{s}}$ time units, and fast every $\frac{1}{\mu_{f}}$.
+
+However we may run into the issue in which we wish to visit every $4$ in slow and every $3$ in fast, then every $12$ we wish visit in both slow and fast simultaneously. We may propose an even more relaxed game in which the patroller can visit the single node in multiples modes upon each visit. When developing an index heuristic, we will assign an index to nodes which is the sum of two mode indices for the node(form the slow and fast game separation), then deciding the mode by which mode index provided a greater value to the sum.
 
 \subsubsection{Plan}
 \textbf{Time Estimate:} 3 Months
 
-\textbf{Plan:} 
+\textbf{Plan:} Reread \cite{Lin2014} and try to rewrite the Lagrangian relaxation to relax to two separate single node games. Use the theory in section 3.2/3.3 in \cite{Lin2014} for the two separate(slow/fast) games to have two indices for the two modes. We need to look the technical side of the theory to see if we can sum the indices for the combined game, making it a staged decision of when to visit and then in which mode. Once the technical details are checked we need to provide numerical experiments to see how good these heuristics are. We can then look at moving this into a strategic game for the attacker using the same idea as in section 4 of \cite{Lin2014}(or equally section 4 in \cite{Lin2013}).
 
 
 %End of main part of document
@@ -3926,6 +3962,7 @@ Hence if $m \leq 2(k+1)$ (i.e $r \leq 0$) then we get $\frac{k+1}{n+k}$ and if $
 \end{proof}
 
 \subsection{Proof of type-delayed attack}
+\label{Appendix:Proof of type-delayed attack}
 We begin with a lemma used in the proof
 \begin{lemma}
 When $k_{max}-i \leq t \leq k_{max}+i$ we get that
