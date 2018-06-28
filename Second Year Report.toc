@@ -57,4 +57,3 @@
 \contentsline {subsection}{\numberline {D.3}Combinatorial improvement analysis}{xxviii}{subsection.D.3}
 \contentsline {subsection}{\numberline {D.4}Combinatorial improvement extension}{xxix}{subsection.D.4}
 \contentsline {section}{\numberline {E}Optimal Solution for a Random Attacker}{xxix}{appendix.E}
-\contentsline {section}{\numberline {F}Optimal Solution for Local-Observations}{xxx}{appendix.F}
