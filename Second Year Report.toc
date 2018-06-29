@@ -16,29 +16,29 @@
 \contentsline {subsection}{\numberline {2.3}Star graph solution}{19}{subsection.2.3}
 \contentsline {subsection}{\numberline {2.4}Elongating the star graph}{19}{subsection.2.4}
 \contentsline {subsection}{\numberline {2.5}Generalising the star graph}{28}{subsection.2.5}
-\contentsline {subsection}{\numberline {2.6}Joining star graphs by centralised connections}{31}{subsection.2.6}
+\contentsline {subsection}{\numberline {2.6}Joining star graphs by centralised connections}{32}{subsection.2.6}
 \contentsline {section}{\numberline {3}Strategic Patroller with Random Attackers and Local-observations}{35}{section.3}
 \contentsline {subsection}{\numberline {3.1}Altering the problem for an instantaneously moving patroller}{35}{subsection.3.1}
 \contentsline {subsection}{\numberline {3.2}Altering problem to accommodate local-observable information}{36}{subsection.3.2}
-\contentsline {subsection}{\numberline {3.3}Deterministic attack time assumption}{39}{subsection.3.3}
-\contentsline {subsection}{\numberline {3.4}Single node solution}{39}{subsection.3.4}
-\contentsline {subsection}{\numberline {3.5}Index and heuristics}{44}{subsection.3.5}
-\contentsline {subsection}{\numberline {3.6}Numerical experiments}{46}{subsection.3.6}
-\contentsline {section}{\numberline {4}Future Work}{47}{section.4}
-\contentsline {subsection}{\numberline {4.1}Further solutions for elongated trees}{47}{subsection.4.1}
-\contentsline {subsubsection}{\numberline {4.1.1}Plan}{48}{subsubsection.4.1.1}
-\contentsline {subsection}{\numberline {4.2}Proof completions}{50}{subsection.4.2}
-\contentsline {subsubsection}{\numberline {4.2.1}Plan}{50}{subsubsection.4.2.1}
-\contentsline {subsection}{\numberline {4.3}Complete numerical experiments for an instantaneously moving patroller}{50}{subsection.4.3}
-\contentsline {subsubsection}{\numberline {4.3.1}Plan}{50}{subsubsection.4.3.1}
-\contentsline {subsection}{\numberline {4.4}Extending discrete attack time to generic distributions for local observations}{51}{subsection.4.4}
-\contentsline {subsubsection}{\numberline {4.4.1}Plan}{53}{subsubsection.4.4.1}
-\contentsline {subsection}{\numberline {4.5}Strategic Patroller with Random Attackers on Edges}{53}{subsection.4.5}
-\contentsline {subsubsection}{\numberline {4.5.1}Plan}{55}{subsubsection.4.5.1}
-\contentsline {subsection}{\numberline {4.6}Investigate weighted graphs}{55}{subsection.4.6}
-\contentsline {subsubsection}{\numberline {4.6.1}Plan}{56}{subsubsection.4.6.1}
-\contentsline {subsection}{\numberline {4.7}Investigate types of patrolling}{57}{subsection.4.7}
-\contentsline {subsubsection}{\numberline {4.7.1}Plan}{57}{subsubsection.4.7.1}
+\contentsline {subsection}{\numberline {3.3}Deterministic attack time assumption}{40}{subsection.3.3}
+\contentsline {subsection}{\numberline {3.4}Single node solution}{40}{subsection.3.4}
+\contentsline {subsection}{\numberline {3.5}Index and heuristics}{45}{subsection.3.5}
+\contentsline {subsection}{\numberline {3.6}Numerical experiments}{47}{subsection.3.6}
+\contentsline {section}{\numberline {4}Future Work}{48}{section.4}
+\contentsline {subsection}{\numberline {4.1}Further solutions for elongated trees}{48}{subsection.4.1}
+\contentsline {subsubsection}{\numberline {4.1.1}Plan}{49}{subsubsection.4.1.1}
+\contentsline {subsection}{\numberline {4.2}Proof completions}{51}{subsection.4.2}
+\contentsline {subsubsection}{\numberline {4.2.1}Plan}{51}{subsubsection.4.2.1}
+\contentsline {subsection}{\numberline {4.3}Complete numerical experiments}{51}{subsection.4.3}
+\contentsline {subsubsection}{\numberline {4.3.1}Plan}{51}{subsubsection.4.3.1}
+\contentsline {subsection}{\numberline {4.4}Extending discrete attack time to generic distributions for local observations}{52}{subsection.4.4}
+\contentsline {subsubsection}{\numberline {4.4.1}Plan}{54}{subsubsection.4.4.1}
+\contentsline {subsection}{\numberline {4.5}Strategic Patroller with Random Attackers on Edges}{54}{subsection.4.5}
+\contentsline {subsubsection}{\numberline {4.5.1}Plan}{56}{subsubsection.4.5.1}
+\contentsline {subsection}{\numberline {4.6}Investigate weighted graphs}{56}{subsection.4.6}
+\contentsline {subsubsection}{\numberline {4.6.1}Plan}{57}{subsubsection.4.6.1}
+\contentsline {subsection}{\numberline {4.7}Investigate types of patrolling}{58}{subsection.4.7}
+\contentsline {subsubsection}{\numberline {4.7.1}Plan}{58}{subsubsection.4.7.1}
 \contentsline {section}{Appendices}{i}{section*.36}
 \contentsline {section}{\numberline {A}Graph Definitions}{i}{appendix.A}
 \contentsline {section}{\numberline {B}Examples}{iv}{appendix.B}
