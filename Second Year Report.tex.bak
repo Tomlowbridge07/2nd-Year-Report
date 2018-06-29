@@ -115,7 +115,7 @@ cross/.default={1pt}}
 
 In section \ref{Section:Literature Reviews} we provide an overview of the current work done on security problems, which focuses on a patroller attempting to stop some malicious entity. We will also provide an in-depth review of \cite{Alpern2011} and \cite{Lin2013} upon which our extensions in sections \ref{Section:Patrolling games} and \ref{Section:Patrolling games with random attackers and local-observations} will be based.
 
-In section \ref{Section:Patrolling games} we progress last year's initial findings of new tools and a possible ambiguity issue with Lemma 9 in \cite{Alpern2011}. We analyse the issue of the time horizon as discussed in last years report, as well as provide a small correction and limits for which bounds hold. We generalise the idea the in order to provide us with more tools, and in particular try to find solutions solutions to a more general star graph, using the idea of spacing potential attacks in time.
+In section \ref{Section:Patrolling games} we progress last year's initial findings of new tools and a possible ambiguity issue with Lemma 9 in \cite{Alpern2011}, $V \leq \max \left\{ \frac{1}{2},\frac{m}{\raisebox{-0.5ex}{$\scriptstyle 2 \bar{d}$}} \right\}$. We analyse the issue of the time horizon as discussed in last years report, as well as provide a small correction and limits for which bounds hold. We generalise the idea the in order to provide us with more tools, and in particular try to find solutions solutions to a more general star graph, $S_{n}^{\bm{k}}$ in which distances from the centre are generalised. The solution to the general star graph will use the idea of spacing the potential attacks in time correctly depending on the distance from the centre.
 
 In section \ref{Section:Patrolling games with random attackers and local-observations} we build on the work done in \cite{Lin2013} by introducing the concept of the patroler who can move instantaneously. And later who observes suspicious behaviour of arriving attackers and try to incorporate this information in an effort to develop a heuristic which is near optimal.
 
@@ -625,7 +625,7 @@ The key point is that the upper bound given by the diametric attack is dependent
 
 \begin{lemma}[Condition on $T$ for bound to hold]
 \label{Lemma:Condition on time horizon for diametric bound to hold}
-When $T=m-1+(k+1)\bar{d}$ for some $k \in \mathbb{N}_{0}$ then the diametric bound holds. Furthermore as $T \rightarrow \infty$ then the diametric bound holds and moreover the errors are maximal when $T=2m-1+(k+1)\bar{d}$ for some $k \in \mathbb{N}_{0}$ with an error, inversely proportional to the time horizon, explicitly $\frac{m\bar{d}-(m-\bar{d})^{2}}{2\bar{d}(m+(k+1)\bar{d})}=\mathcal{O}(\frac{1}{T})$
+When $T=m-1+(k+1)\bar{d}$ for some $k \in \mathbb{N}_{0}$ then the diametric bound holds. Furthermore as $T \rightarrow \infty$ then the diametric bound holds and moreover the errors are maximal when $T=2m-1+k\bar{d}$ for some $k \in \mathbb{N}_{0}$ with an error, inversely proportional to the time horizon, explicitly $\frac{m\bar{d}-(m-\bar{d})^{2}}{2\bar{d}(m+(k+1)\bar{d})}=\mathcal{O}(\frac{1}{T})$
 \end{lemma}
 
 For proof see Appendix \ref{Appendix:Proof of conditions on T for diametric attack}.
@@ -2474,7 +2474,7 @@ We could also consider, for the purposes of our numerical study, a short-sighted
 R(\bm{s},\bm{v},i)= c_{i} ( \lambda_{i} \int_{0}^{s_{i}-1} P(X_{i} > t ) dt + v_{i} P(X_{i} > s_{i}-1)
 \end{align*}
 
-Using this reward function for selecting a node is an option, instead of seeing the index as some benefit/penalty. The patroller can use a look-ahead window of length, $l$, and sum all the rewards collected along the path and using the maximum path for our immediate action. We call this heuristic the Myopic Heuristic (MH) and similarly we can look at depth $d$ called the MH($d$) by comparing all look-ahead window choices of lengths $l=1,...,d$ and using the same path selection as IRH($d$).
+Using this reward function for selecting a node is an option, instead of seeing the index as some benefit/penalty. The patroller can use a look-ahead window of length, $l$, and sum all the rewards collected along the path and using the maximum path for our immediate action. We call this heuristic the Myopic Heuristic (MH) and similarly we can look at depth $d$ called the MH($d$) by comparing all look-ahead window choices of lengths $l=1,...,d$ and using the same path selection as IRH($d$). We leave the implementation of this to future work (see \ref{Section:Complete Numerical experiments for an instantaneously moving patroller})
 
 \begin{note}
 Due to the path selection method used for the depth heuristics, we cannot guarantee that increasing the depth increases the overall optimal answer provided by the heuristics.
@@ -2548,7 +2548,7 @@ Hence when we play this strategy with probability $Q_{S}$, we improve each $*$ w
 
 We will give the details and the bounds in the appendix \ref{Appendix:Combinatorial improvement extension} but the bound is $V \geq \frac{2m}{2(n+k)+m+2(n-1)}$, which, for $m$ odd, is better than the old combinatorial improvement.
 
-We now present an example of an attacking strategy which seems to get a tight bound. Looking at figure \ref{Figure:Example of attack below bound}, which shows a time and space placement of attacks for $S_{7}^{5}$ when $m=6$, where shaded points are potential attacked and when circled potential attacked twice. As potential attacks last $6$ time units we note the number of ongoing attacks in the diagrams points and use each potential attack with the same weight. We also note there are $7$ star nodes each attacked as seen in the diagram
+We now present an example of an attacking strategy which seems to get a tight bound. Looking at figure \ref{Figure:Example of attack below bound}, which shows a time and space placement of attacks for $S_{7}^{5}$ when $m=6$, where shaded points are potential attacked and when circled potential attacked twice. As potential attacks last $6$ time units we note the number of ongoing attacks in the diagrams points and use each potential attack with the same weight. We also note there are $7$ star nodes each attacked as seen in the figure.
 
 
 We also provide two sample paths for the patroller to highlight that we conjecture that at maximum $6$ out of $21$ attacks can be caught for all patrols, hence achieving a bound of $V \leq \frac{6}{21}$, which by combinatorial improvement we can get $V \geq \frac{6}{21}$ and hence $V=\frac{6}{21}$.
@@ -2682,27 +2682,29 @@ by the patroller using the combinatorial improvement (extended for odd $m$) and 
 \subsubsection{Plan}
 \textbf{Time Estimate:} 1 Month
 
-\textbf{Plan:} The type of attacking strategy for a variety of $m$ has been conjectured, along with some cyclic property of $m$ and which attack strategy should be picked. We need to formally define the attacks, then formally prove the cyclic relationship between $m$ and which attack strategy should be used. Then formal proof of the attacker bound needs to be fine, however this links in with the plan of section \ref{Section:Proof completions} and an idea of how to bring these proofs together into a need idea needs to formed.
+\textbf{Plan:} The type of attacking strategy for a variety of $m$ has been conjectured, along with some cyclic property of $m$ and which attack strategy should be picked. We need to formally define the attacks, then formally prove the cyclic relationship between $m$ and which attack strategy should be used. Then formal proof of the attacker bound needs to be fine, however this links in with the plan of section \ref{Section:Proof completions} and an idea of how to bring these proofs together into a need idea needs to be formed.
 
 \subsection{Proof completions}
 \label{Section:Proof completions}
-The proof for the time-limited diametric attack(see appendix \ref{Appendix:Proof of time-limited diametric attack}) needs consolidating and the general logic which will be used in the other similar proofs(see appendix \ref{Appendix:Proof of time-delayed attack} and \ref{Appendix:Proof of type-delayed attack}).
+The proof for the time-limited diametric attack (see appendix \ref{Appendix:Proof of time-limited diametric attack}) needs consolidating and the general logic which will be used in the other similar proofs (see appendix \ref{Appendix:Proof of time-delayed attack} and \ref{Appendix:Proof of type-delayed attack}).
 
 \subsubsection{Plan}
 \textbf{Time Estimate:} 1 Month
 
 \textbf{Plan:} Need to develop a way to combine all the proofs under a uniform idea and/or possibly rewrite them as smaller lemmas which build to a theorem. Notational convention needs to be picked so that the proof looks and reads cleanly. Getting across the idea of the spacing in time is what stops the patroller getting any more potential attacks.
 
-\subsection{Complete numerical experiments for an instantaneously moving patroller}
+\subsection{Complete numerical experiments}
 \label{Section:Complete Numerical experiments for an instantaneously moving patroller}
 The current code can only deal with deterministic attack times, as it was initially developed for local-observations. To deal with distributions functions, we must rewrite the code and how it formats the attack.
 
 It also will prompt us to look into using probabilistic cycles around the state space in the local-observation set-up to find $g$ instead of using value iteration, which currently has the issue of periodicity and not converging. This could be avoided by recoding the heuristics to look at probabilistic cycles around the state space under the policy for each look-ahead window.
 
+We also need to code the MH and see how this performs against the indices developed by Lagrangian relaxation for the instantaneously moving patroller (with and without local-observations).
+
 \subsubsection{Plan}
 \textbf{Time Estimate:} 1 Month
 
-\textbf{Plan:} To rewrite code to deal with generic attack distributions, by using functions and integration tables. To alter code to use a path selection which works out the optimal long-run average cost for the heuristic policy at a certain look-ahead, by the use of cycles. Then run numerical experiments, with the same set up as in \citep{Lin2013} and compare the results to the optimum. We also want to check if the same issue is found when we use purely deterministic attack times and whether splitting the index seems to help (as it does with local observations).
+\textbf{Plan:} To rewrite code to deal with generic attack distributions, by using functions and integration tables. To alter code to use a path selection which works out the optimal long-run average cost for the heuristic policy at a certain look-ahead, by the use of cycles. Then run numerical experiments, with the same set up as in \citep{Lin2013} and compare the results to the optimum. We also want to check if the same issue is found when we use purely deterministic attack times and whether splitting the index seems to help (as it does with local observations). We also need to code up the Myopic heuristic and see how that performs against the suggested heuristics.
 
 \subsection{Extending discrete attack time to generic distributions for local observations}
 We want to look at removing the restriction placed on the attack time to be deterministic, as in section \ref{Section:Deterministic attack time assumption}. This will allow us to deal with any generic distribution, to do so we will focus on the single node problem with a generic distribution.
@@ -2938,7 +2940,7 @@ we note that waiting is not allowed at intermediate nodes and we have directed e
 \label{Figure:Example of converting a weighted patrol problem}
 \end{myfigure}
 
-We could then use a similar theory as in section 4 of \cite{Lin2013} to get heuristics for both a strategic attacker and patroller, to find near optimal answers for a the weighted version of the patrolling game. We also want consider alternative approaches to solve the weighted patrol problem, as for large weights this approach is suggested to become intractable. Consider the example as in figure \ref{Figure:Example of converting a weighted patrol problem} but with $(2,3)$ having a weight of $1000$ , then $2000$ nodes are introduced to convert the problem.
+We could then use a similar theory as in section 4 of \cite{Lin2013} to get heuristics for both a strategic attacker and patroller, to find near optimal answers for a the weighted version of the patrolling game. We also want to consider alternative approaches to solve the weighted patrol problem, as for large weights this approach is suggested to become intractable. Consider the example as in figure \ref{Figure:Example of converting a weighted patrol problem} but with $(2,3)$ having a weight of $1000$ , then $2000$ nodes are introduced to convert the problem.
 
 This may bring up an issue with how the proposed heuristics in \cite{Lin2013} look into the future, as they will be unable to see the actual nodes and therefore the indices, we propose that it is possible to `ignore' these nodes with such low indices.
 
@@ -2955,7 +2957,7 @@ Further to the idea that the patroller may overlook an attacker (\cite{Lin2014})
 
 We believe that in the single-node problem version, we can introduce two service costs; a slow cost, $\omega_{s}$; and a fast cost, $\omega_{f}$ with long run service rates; a slow service rate, $\mu_{s}$; and a fast service rate, $\mu_{f}$ .We expect to get similar results to those in theorem 2 in \cite{Lin2014}, that is that for fixed service rates, $\mu_{s},\mu_{f}$ we expect to visit the node in mode, slow every $\frac{1}{\mu_{s}}$ time units, and fast every $\frac{1}{\mu_{f}}$.
 
-However we may run into the issue in which we wish to visit every $4$ in slow and every $3$ in fast, then every $12$ we wish visit in both slow and fast simultaneously. We may propose an even more relaxed game in which the patroller can visit the single node in multiples modes upon each visit. When developing an index heuristic, we will assign an index to nodes which is the sum of two mode indices for the node(form the slow and fast game separation), then deciding the mode by which mode index provided a greater value to the sum.
+However we may run into the issue in which we wish to visit every $4$ in slow and every $3$ in fast, then every $12$ we wish visit in both slow and fast simultaneously. We may propose an even more relaxed game in which the patroller can visit the single node in multiples modes upon each visit. When developing an index heuristic, we will assign an index to nodes which is the sum of two mode indices for the node (form the slow and fast game separation), then deciding the mode by which mode index provided a greater value to the sum.
 
 \subsubsection{Plan}
 \textbf{Time Estimate:} 3 Months
@@ -3519,30 +3521,26 @@ giving $m-\bar{d}+mk+ \pospart{\bar{d}}+\pospart{0}=m(k+1)$.
 Giving the fraction of $\frac{m(k+1)}{2(k+1)\bar{d}}=\frac{m}{2 \bar{d}}$.
 
 
-For the second part, first we seek to prove that within the choice of $T$ from $m-1+(k+1)\bar{d}+r$ where $0 \leq r < \bar{d}$ is the maximum when $r=m$ (i.e $T=2m-1+(k+1)\bar{d}$).
+For the second part, first we seek to prove that within the choice of $T$ from $m-1+(k+1)\bar{d}+r$ where $0 \leq r < \bar{d}$ is the maximum when $r=m-\bar{d}$ (i.e $T=2m-1+k\bar{d}$).
 
 As the choice of $r$ only affects the final 3 parts (middle and ends values), we can just look at considering these values and seeing what the maximal choice is.
 
 Upon substitution we get that:
 $M=\floor{\frac{(k+1)\bar{d}+r-m}{\bar{d}}}=(k+1)+\floor{\frac{r-m}{\bar{d}}}$
 
-so the formula becomes
-$\pospart{m(M+1)}+\pospart{(k+1)\bar{d}+r-(M+1)\bar{d}}+
-\pospart{(k+1)\bar{d}+r-(M+2)\bar{d}}$. To decide $r$ we need to know if middle values or end values are non-zero.
-
-Note. The second end value will never be non-zero as $(k+1)\bar{d}+r-(M+2)\bar{d}=(k+1)\bar{d}+r-((k+1)+\floor{\frac{r-m}{\bar{d}}}+2)\bar{d}=r-(\floor{\frac{r-m}{\bar{d}}+2}\bar{d} < r-(-1+2)\bar{d}=r-\bar{d}<0$.
+Then we notice two cases:
 
 \begin{itemize}
-\item No visits which get $m$ is impossible assuming $k \in \mathbb{N}_{0}$.
+\item[1.] If $0 \leq r < m-\bar{d}$ then $M=k-1$ and we get a fraction of potential attacks caught of $\frac{m(k+1)+2r}{2((k+1)\bar{d}+r)}$
 
-\item Middle values but no end values. As we really want to maximize the end value, increasing $r$ up to the point where $\alpha$ increases (giving a raise of $m$ attacks captured) but increases the number of total attacks by 2 each time it is raised. Hence minimal $r$ is chosen to increase $\alpha$. This is when $r-m=-\bar{d}$ i.e $r=m-\bar{d}$ changes $\alpha$ by 1 (as $r<m-\bar{d}$ gives an -1 to $\alpha$, but critical point is when equal to).
-
-\item Middle values and end value. As we are looking at $(m-\bar{d})(\alpha+1)+(k+1)\bar{d}+r$, we still want to increase $\alpha$ without increasing the number of attacks too much, i.e as above.
+\item[2.] If $m-\bar{d} \leq r < \bar{d}$ then $M=k$ and we get a fraction of potential attacks caught of $\frac{m(k+1)+r+m-\bar{d}}{2((k+1)\bar{d}+r)}$ 
 \end{itemize}
+
+Hence the best in the first case is $r=m-\bar{d}-1$ for $\frac{m(k+3)-2\bar{d}-2}{2(k\bar{d}+m-1)}$ and in the second case $r=m-\bar{d}$ for $\frac{m(k+3)-2\bar{d}}{2(k\bar{d}+m)}$, hence it is clear the best is $r=m-\bar{d}$.
 
 Then we show that the maximal subsequence tends to the bound as $T \rightarrow \infty$, i.e as $k \rightarrow \infty$.
 When substituted, we get that
-$\alpha=(k+1)$ and so the formula becomes
+$M=(k+1)$ and so the formula becomes
 $m-\bar{d}+\pospart{m + m(k+2)} + \pospart{2m-1-(m-1+(k+2)\bar{d})}+\pospart{2m-1-(m-1+(k+3)\bar{d})}$
 giving $m-\bar{d}+(k+3)m + \pospart{m-(k+2)\bar{d}}+\pospart{m-(k+3)\bar{d}}$.
 As $m < 2\bar{d}$ then we get $m(k+4) -\bar{d}$ caught out of $2(m+k\bar{d})$
