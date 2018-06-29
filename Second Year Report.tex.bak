@@ -26,6 +26,7 @@
 \usetikzlibrary{calc}
 \usetikzlibrary{fit}
 \usetikzlibrary{decorations.shapes,shapes.misc,calc, positioning, hobby, backgrounds}
+\usepackage{geometry}
 
 
 \tikzset{decorate sep/.style 2 args=
@@ -79,11 +80,18 @@ cross/.default={1pt}}
     
 %\counterwithin{figure}{section}
 
+\geometry{
+ a4paper,
+ left=20mm,
+ right=20mm,
+ top=20mm,
+ }
+
 \bibliographystyle{plain}
 
-\title{Second Year Report}
+\title{\begin{Huge}\textbf{Second Year Report} \end{Huge}}
 \date{\today}
-\author{Thomas Lowbridge \\ School of Mathematical Sciences \\ University of Nottingham}
+\author{Thomas Lowbridge, \\ School of Mathematical Sciences, \\ University of Nottingham.}
 
 \begin{document}
 
@@ -107,17 +115,17 @@ cross/.default={1pt}}
 \pagestyle{empty}
 {
 \begin{center}
-\begin{Huge}
+\begin{huge}
 \textbf{Summary of report}
-\end{Huge}
+\end{huge}
 \end{center}
 
 
-In section \ref{Section:Literature Reviews} we provide an overview of the current work done on security problems, which focuses on a patroller attempting to stop some malicious entity. We will also provide an in-depth review of \cite{Alpern2011} and \cite{Lin2013} upon which our extensions in sections \ref{Section:Patrolling games} and \ref{Section:Patrolling games with random attackers and local-observations} will be based.
+In section \ref{Section:Literature Reviews} we provide an overview of the current work done on security problems, which focuses on a the deplotment of a patroller attempting who is attempting to stop some malicious entity. We will also provide an in-depth review of \cite{Alpern2011} and \cite{Lin2013} upon which our extensions/alterations in sections \ref{Section:Patrolling games} and \ref{Section:Patrolling games with random attackers and local-observations} will be based.
 
-In section \ref{Section:Patrolling games} we progress last year's initial findings of new tools and a possible ambiguity issue with Lemma 9 in \cite{Alpern2011}, $V \leq \max \left\{ \frac{1}{2},\frac{m}{\raisebox{-0.5ex}{$\scriptstyle 2 \bar{d}$}} \right\}$. We analyse the issue of the time horizon as discussed in last years report, as well as provide a small correction and limits for which bounds hold. We generalise the idea the in order to provide us with more tools, and in particular try to find solutions solutions to a more general star graph, $S_{n}^{\bm{k}}$ in which distances from the centre are generalised. The solution to the general star graph will use the idea of spacing the potential attacks in time correctly depending on the distance from the centre.
+In section \ref{Section:Patrolling games} we progress last year's initial findings of new tools and a possible ambiguity issue with Lemma 9 in \cite{Alpern2011}, $V \leq \max \left\{ \frac{1}{2},\frac{m}{\raisebox{-0.5ex}{$\scriptstyle 2 \bar{d}$}} \right\}$. We analyse the issue of the time horizon as discussed in last years report, as well as provide a small correction and limits for which the bounds holds without the ambiguity. We generalise the idea that led to this bound in order to provide us with more tools, and in particular try to find solutions to a more general star graph, $S_{n}^{\bm{k}}$ in which distances from the centre are generalised to $k_{i}$ for each branch of the star graph. The solution to the general star graph will use the idea of spacing the potential attacks in time which depends on the distance from the centre, $k_{i}$.
 
-In section \ref{Section:Patrolling games with random attackers and local-observations} we build on the work done in \cite{Lin2013} by introducing the concept of the patroler who can move instantaneously. And later who observes suspicious behaviour of arriving attackers and try to incorporate this information in an effort to develop a heuristic which is near optimal.
+In section \ref{Section:Patrolling games with random attackers and local-observations} we build on the work done in \cite{Lin2013} by introducing the concept of the patroller who can move instantaneously. Then further introducing one who observes suspicious behaviour of arriving attackers, who are always aware of the patrollers presence. We restrict ourselves to the model with deterministic attack times (instead of general distributions) at nodes and try to incorporate the observable information in an effort to develop a heuristic which is near optimal. However we find that the heuristic developed does not perform very well, so fine tuning is done is the heuristic in order to increase performance. It is conjectured that this fine tuning may be needed as the attack times are deterministic, however we leave this as a furtu
 
 Finally in section \ref{Section:Future Work} we conclude the report with a list of uncompleted work as well as a brief introduction to ideas for future work and extensions to our type of security problems. 
 
@@ -136,29 +144,27 @@ We leave most proofs to the appendix, unless they provide some useful insight. W
 \section{Literature Reviews}
 \label{Section:Literature Reviews}
 \subsection{Overview of Security Problems}
-Security problems arise in many real world scenarios, such as a security guard patrolling a museum, police patrolling a city and military personnel guarding bases and borders. At the core of all these problems is the need to deploy resources to locations in order to find undesirable activity. When multiple resources are available, it is a question of where to deploy them and for what length of time, such as a fire brigade being deployed to sectors to fight a spreading forest fire. However when resources are scarce but can be used continuously, one may suggest a patrol of the locations. Using a patrol means the structure of the locations and how they can be traversed is of key importance, rather than just where to deploy the resources. While most of the time this idea of traversing is physical, be it a guard walking around a museum or a drone flying over a region, it is not necessarily true, as it may be a guard flicking through live-video feeds.
+Security problems arise in many real world scenarios, such as a security guard patrolling a museum, police patrolling a city and military personnel guarding bases and borders. At the core of all these problems is the need to deploy resources to locations in order to find undesirable activity. When multiple resources are available, it is a question of where to deploy them and for what length of time, such as a fire brigade being deployed to sectors to fight a spreading forest fire. However when resources are scarce but can be used continuously, one may suggest our limited resources patrolling between connected locations. When considering the use of a patrol, the structure of the locations and how they can be traversed is of key importance, rather than just where to deploy the resources. While most of the time this idea of traversing is physical, be it a guard walking around a museum or a drone flying above a region, it is not necessarily true, as it may be a guard flicking between live-video feeds.
 
-Early work in the area focused on police patrols in urban areas (\cite{Larson1972},\cite{Chelst1978},\cite{Chaiken1978}), using many techniques including statistics based on $M/M/c$ queues (with small modifications due to the stochasticity in the number of servers) for the purpose of alloacting patrols, later moving onto patrolling rural areas (\cite{Birge1989}), in which the primary difference was the incorporation of the travel time into the service rate. Furthermore work was done on police patrolling highways (\cite{Taylor1985}), using a non-linear goal program reflecting the non-linear relationship between deployment and performance with multiple objective criteria. These early works relied on the fact that the crime rate was known at the different locations and that they remained constant while the patrol was happening. The solution to the problems involved randomizing the patrols in order to maximize the probability of intercepting a crime in progress.
+Early work, in the area of secruity deployment, focused on police patrols in urban areas (\cite{Larson1972},\cite{Chelst1978},\cite{Chaiken1978}), using many techniques including statistics based on $M/M/c$ queues (with small modifications due to the stochasticity in the number of servers) for the purpose of alloacting patrol cars to sectors a city. Later this was adaparted to the alloacation of patrol cars in rural areas (\cite{Birge1989}), in which the primary difference was the incorporation of the travel time into the service rate. Furthermore work was done on police cars patrolling highways (\cite{Taylor1985}), which used a different model to that of servicing crimes in queues, a non-linear goal program formulation was used to reflect the non-linear relationship between deployment and performance of patrol units with the hope to achieve multiple objective criteria. These early works relied on the fact that the crime rate was known at the different locations and that they remained constant while the session of allocation was happening. The solution to the problems involved randomizing the patrols in order to maximize the probability of intercepting a crime in progress.
 
-While the work done in scheduling police patrols are a strategic only from the police force's point of view, one may wish to introduce a strategic problem for the attacker. This makes the problem a game-theoretic one, while differential game formulations exist (\cite{Feichtinger1983}) these tend to focus on a dynamic (and often strategic) process of mutual adjustment, rather than confronting the problem of a scheduler who has to determine the path of the patrol to take beforehand.
+While the work done in scheduling police patrols are a strategic only from the police force's point of view, against an unaware criminal, one may wish to introduce a strategic problem for the crinimal. This makes the problem a game-theoretic one, and while differential game formulations exist (\cite{Feichtinger1983}) these tend to focus on a dynamic (and often strategic) process of mutual adjustment, rather than confronting the problem of a scheduler who has to determine the strategies chosen before the allocation occurs.
 
-A baseline to start searching for an entity is the search game, a game-theoretic formulation, which involves a searcher aiming to minimize the time until they find either an immobile or mobile hider in some search space (\cite{Steve2003}). As a special search space, graphs are considered to just be subset of $\mathbb{R}^{3}$ (or $\mathbb{R}^{2}$ if planar) by embedding.
+Game-theoretic analyses have been done in studies of counter-terrorism actions (\cite{Brown2006}), to find how a patroller should randomize their patrol. Finding the best graph for a covert network that needs to stay in communication, but wishes to minimize the risk of exposure has been studied (\cite{Lindelauf2009}), and the complete graph and star graph are optimal for uniform detection of communication links. It has been shown that the obvious strategy of; given $n$ targets, spend $\frac{1}{n}$ of the available patrol time on every target; is not necessarily a good idea (\cite{Fox}). The game has also been formulated as a Stackleberg (leader-follower decisions) type game, instead of a simultaneous decision one (\cite{Paruchuri2008}). The Stackleberg game is useful as police often know how the criminals have acted previously, be it through public reports or expert knowledge, and in turn once the police change there methods, criminals are known to alter there patterns in response.
 
-Game-theoretic analyses have been done in studies of counter-terrorism actions (\cite{Brown2006},\cite{Lindelauf2009}), to find how a patroller should randomize their patrol. It has been shown that the obvious strategy of; given $n$ targets, spend $\frac{1}{n}$ of the available patrol time on every target; is not necessarily a good idea (\cite{Fox}). The game has also been formulated as a Stackleberg (leader-follower decisions) type game, instead of a simultaneous decision one, in which near optimal heuristics have been found (\cite{Paruchuri2008}).
+A baseline model is the search game, a game-theoretic formulation in which a searcher aims to minimize the time until they find a hider (who may be immobile or mobile) in some search space (\cite{Steve2003}). As a special search space, graphs are considered to just be subset of $\mathbb{R}^{3}$ (or $\mathbb{R}^{2}$ if planar) by embedding. Many extensions of the search game have been studied, such as a searcher who has multiple modes (such as fast or slow), they can search in, this work was applied to a predator prey model, to analyse at what frequency a predator should ambush the prey (\cite{Alpern2011a}). Another variation of the search game, is the accumulation game, in which the hider can hide portions of their self across the search space, with some critical amount of their self which needs to avoid being found in order to be effective. For a continuous portioning of the hider in a discrete (\cite{Kikuta2002a}) and continuous (\cite{Ruckle2000}) search space, the strategies were found to be pure. While later this was studied with a graphical structure and it was found that mixed strategies need to be employed in optimum (\cite{Alpern2014}).
 
-Many extensions of the search game have been studied, such as a searcher who has multiple modes (such as fast or slow), they can search in, this work was applied to a predator prey model, to analyse at what frequency a predator should ambush the prey (\cite{Alpern2011a}). Another variation of the search game, is the accumulation game, in which the hider can hide portions of their self across the search space, with some critical amount of their self which needs to avoid being found in order to be effective. For a continuous portioning of the hider in a discrete (\cite{Kikuta2002a}) and continuous (\cite{Ruckle2000}) search space, the strategies were found to be pure. While later this was studied with a graphical structure and it was found that mixed strategies need to be employed in optimum (\cite{Alpern2014}).
+A common assumption about the search space, besides implementing a graphical structure, is that we can divide it into regions/cells, in which the hider is known to be in one of these regions. Assuming some initial probability distribution of where the hider is, which is known by the searcher, then the searcher upon completion of a search where the hider is not found, can update the prior probability in a bayesian fashion (\cite{Black1965},\cite{Matula1964}). This cell search game is important when cells have different costs to search them, and the searcher needs to tradeoff between higher probability cells at higher costs and lower probability cells at lower cost, but also needs to incorporate the idea of future information gathered, if they fail to find the hider. In such problems it has been found that the searcher has a uniformly optimal strategy for all time horizons and so even if the searcher has an unknown deadline, to find the hider, they can act optimally (\cite{Lin2016}). Work has also been done to incorporate the portioning of the hider as in the accumulation game, both when we have unlimited capacity search cells(\cite{Ruckle1983}) and further when these cells have a limited capacity of how much the hider can hide in them (\cite{Zoroa1999},\cite{Zoroa2004}).
 
-Another common assumption about the search space is that we can divide it into cells, in which the hider is known to be in one of these cells. We assume some initial probability distribution of where the hider is, is known by the searcher and that searching a cell costs the searcher a differing amount dependent on the cell. Then the searcher upon completion of a search where the hider is not found, can update the prior probability in a bayesian fashion (\cite{Black1965},\cite{Matula1964}). It has been found that the searcher has a uniformly optimal strategy for all time horizons and so even if the searcher has an unknown deadline, to find the hider, they can act optimally (\cite{Lin2016}). Work has also been done to incorporate the portioning of the hider as in the accumulation game, but when we have search cells(\cite{Ruckle1983}) and further when these cells have a limited capacity of how much the hider can hide in them (\cite{Zoroa1999},\cite{Zoroa2004})
+While search games (and there successors) are of major importance when there are two uncooperative elements, they have also been expended to rendezvous games (\cite{Steve2003}). A rendezvous game is a game where two rendezvours wish to detect each other in the search space, without the knowledge of where the other is, or what the other is doing. Such games change the min-max objective of search games into a min-min objective, with play being cooperative instead of competitive. While rendezvous games do not inherently have a malicious entity, they are still useful in security problems such as, the regrouping of military assets in an unknown environment and with the development of communication technologies have been applied to the decision of which frequency channels military assets should try to communicate. Unlike a search game, the idea of joint planning between two cooperative elements cannot be ignored and the game splits into asymmetric and symmetric variants. Often a graphical structure can be applied to the search space (\cite{Alpern1999}), in which strategies were found to depend highly on the graphical structure. To reintroduce a mallicous entity in the field of communication, a searcher is introduced to create a three player problem, with two rendezvours who are cooperative and an enemy searcher. This idea has been applied to the wire-tapping of phone lines (\cite{Alpern1998}) and the jamming of signals in millitary communications (\cite{Abdel-Rahman2014}).
 
-While search games (and there successors) are of major importance when there are two uncooperative elements, they have also been expended to rendezvous search games(\cite{Steve2003}). A rendevous game is a game where two rendezvours wish to detect each other in the search space. Such games change the min-max objective of search games into a min-min objective. While rendezvous games do not inherently have a mallicous entity, they are still useful in security problems such as, the regrouping of military assets in an unknown environment and with the development of communication technologies have been applied to the frequencies on military assets communicate. Often a graphical structure can be applied to the search space (\cite{Alpern1999}), in which strategies depend highly on the type of graphical structure. To reintroduce a mallicous entity in the field of communication, a searcher is introduced to create a three player problem, with two rendezvours who are cooperative and a enemy searcher. This idea has been applied to the wire-tapping of phone lines (\cite{Alpern1998}) and the jamming of signals in millitary communications (\cite{Abdel-Rahman2014}).
+The main focus of our work is on the patrolling game (\citep{Alpern2011}), which takes the search game where the hider is always in the search space, and allows the hider (now called an attacker) to only be in the space for a subset of the time horizon, which is chosen by the attacker. This means that the patrol games are win-lose games instead of games of degree (the degree being the time to find the ider) like the original search game was. Section \ref{Section:Review of Strategic Patrolling games} reviews the formulation and initial results of patrolling games on graphs. While general tools were found, only exact solutions to certain classes of graphs were found. In particular only a partial solution to the line graph was found, which was later completed (\cite{Papadaki2016}). A continuous time version of the patrol game has also been formulated and solved for the line graph, with results agreeing with the discrete case (\cite{Alpern2016}). Throughout it is proposed that the intuitive solution, of simply going back and forth on the line, is not optimal and that it is the spacing between potential attacks which is of key importance to be optimal. In section \ref{Section:Patrolling games} we propose an issue with the ambiguity on the time horizon, for one attacking strategy. We correct this issue of ambiguity making more concrete statements and propose a more general application of the idea of attack time spacing on a graph where distance matters. This is all done with the aim of getting a solution for generalised star graphs, $S_{n}^{\bm{k}}$, which is a central hub and connections to other locations a multitude of distances away. With the long term goal to see the application to tree graphs, which can provide great lower bounds for a generic graph.
 
-A patrolling game (\citep{Alpern2011}) takes the search game in which the hider is always in the search space, and allows the hider (now called an attacker) to only be in the space for a subset of the time horizon, which is chosen by the attacker. This means that the patrol games are win-lose games instead of games of degree like the original search game. Section \ref{Section:Review of Strategic Patrolling games} reviews the formulation and initial results of patrol games on graphs. While general tools were found, only exact solutions to certain classes of graphs were found and in particular only a partial solution to the line graph was found, which was later completed (\cite{Papadaki2016}). A continuous time version of the patrol game has also been formulated and solved for the line graph, agreeing with the discrete case (\cite{Alpern2016}). Throughout it is proposed that the intuitive solution, of simply going back and forth on the line, is not optimal and that it is the size of the gap between visits relative to how long the attacker is in the network that matters. In section \ref{Section:Patrolling games} we propose an issue with one attacking strategy developed when the time horizon is finite, correcting the issue and proposing a more general application. This is all done with the aim of getting a solution for all tree graphs, which provide a great lower bound for any graph.
+Due to the difficulty of optimally solving the patrolling game, a infinite time horizon patrol problem was formulated for the patroller. This problem allows generic attack times for nodes, instead of a constant discrete attack (\citep{Lin2013}) but only deal with infinite time horizon setup. This problem is reviewed in Section \ref{Section:Review of patrolling problem with random attackers}. By relaxing the problem to a signle node and using work related to indices developed for multi-armed bandits (\cite{Gittins2011}), they manage to develop near optimal heuristics for the patrol problem. They then move to the infinite time horizon patrol game, by introducing a strategic attacker, and again find near optimal heuristics for the problem. In section \ref{Section:Patrolling games with random attackers and local-observations} we alter the theory to deal with a problem, where the patroller may observe some suspicious behaviour from attackers and incorporates this information into their decision. First however we look at accounting for instantaneous movement of a patroller in the graph, in order to model that of a guard flicking through live-video feeds.
 
-Following this work, a infinite time horizon patrol problem was formulated for generic attack times which can differ between nodes (\citep{Lin2013}), this problem is reviewed in Section \ref{Section:Review of patrolling problem with random attackers}. By using work related to indices developed for multi-arm bandits, they manage to develop near optimal heuristics for the patrol problem. They then move to the infinite time horizon patrol game, by introducing a strategic attacker, and again find near optimal heuristics for the problem. In section \ref{Section:Patrolling games with random attackers and local-observations} we alter the theory to deal with a problem, where the patroller may observe some suspicious behaviour from attackers and incorporates this information into their decision, but first we look at accounting for instantaneous movement of a patroller in the graph, in order to model that of a guard flicking through live-video feeds.
+Overlooking hiders/attackers has always been an issue if the searcher/patroller is not 100\% effective, and this probability may be influenced by the space within the search space. The patrol problem and game were extended to include the idea of overlooking an attack instead of capture being ensured and again near optimal heuristics were developed (\cite{Lin2014}), however the construction of indices from the relaxed problem is not possible and the construction is done by a surrogate mapping from a state to a intermediate which is indexable.
 
-The patrol problem and game were later extended to include the idea of overlooking an attack instead of capture being ensured and again near optimal heuristics were developed (\cite{Lin2014}).
-
-\subsection{Review of Strategic Patrolling games}
+\subsection{Review of the Patrolling game}
 \label{Section:Review of Strategic Patrolling games}
 This section summarizes the key work from \cite{Alpern2011} and their work on patrolling games. This will provide a baseline for future work done in section \ref{Section:Patrolling games}.
 
@@ -297,11 +303,11 @@ When $m$ is odd, the use of two fixed time intervals $I$ and $I+1$ is made to `b
 \subsubsection{Conclusion on review of patrolling problem}
 While \cite{Alpern2011} introduced the patrolling game and along with \cite{Papadaki2016} solved the game for some of the most common graphical structures, they present no solution for generic graphs and comment that exact solutions to graphs are difficult to find. However with common graph classes solved they have provided a good baseline for our future work, which will continue their theory, discussing new strategies and their applications to a more generalised line graph, called the extended star graph.
 
-\subsection{Review of patrolling problem with random attackers}
+\subsection{Review of the patrolling problem with random attackers}
 \label{Section:Review of patrolling problem with random attackers}
 As discussed towards the end of section \ref{Section:Review of Strategic Patrolling games}, it proves quite difficult to find exact solutions to the patrolling game for general graphs. With an aim to develop strategies to the patrolling game on any graph, \cite{Lin2013} first develops a model similar to the patrol game, the patrolling problem, which is only strategic for the patroller and uses stochastic attack time distributions in the infinite time horizon for randomly arriving attackers. They manage to find a near optimal heuristic for the patroller by using Lagrangian relaxation and finding an index, referred to as the fair cost to visit a node, along the lines of those developed by \cite{Whittle1988}. Later they reintroduce the game-theoretic element of a strategic attacker by formulating a normal-form(matrix) game, in which the patroller has only a finite list of strategies, picked to be `appropriately good'.
 
-We now provide a summary of the work done in \cite{Lin2013} with some new notation.
+We now provide a summary of the work done in \cite{Lin2013} with some new notation in preperation for our alteration in section \ref{Section:Patrolling games with random attackers and local-observations}
 
 \subsubsection{Problem set-up}
 A patrolling problem with random attackers, $G=G(Q,\bm{X},\Lambda,\bm{p},\bm{c})$ is a minimizing problem for the patroller. The parameters of the problem are
@@ -588,10 +594,16 @@ A natural question to ask is; does increasing the look-ahead window improve the 
 IRH($1$) $\equiv$ IPH($1$) $\equiv$ IH.
 \end{note}
 
-The numerical results of these heuristics can be found in Section 3.4 in \citep{Lin2013}. A key result of the study, that we will look at later is that IPH seems to outperform IRH on the Complete and Line graph.
+The numerical results of these heuristics can be found in Section 3.4 in \cite{Lin2013}. A key result of the study, that we will look at later is that IPH seems to outperform IRH on the Complete and Line graph.
+
+\subsubsection{Conclusion on review of patrolling problem}
+The main ideas used throught \cite{Lin2013} are that of the Lagrangian relaxation in which the patroller can do multiple actions instead of one action, as long as they pay some service cost per action. The maximum service cost that they would be willing to pay allows the calibration of a index from a state. This patrolling problem is made into a patrolling game by reintroducing a strategic attacker, and using a finite matrix game to find the optimal Nash equilibrium.
+
 
 \section{Patrolling games}
 \label{Section:Patrolling games}
+
+In this section we will deal with the issue of ambiguity in the time horizon for Lemma 9 in \cite{Alpern2011}, making more concrete statements and suggesting an alternative strategy for the attacker. This will then be extended to provide better bounds, and in particular will be applied to more generalised star graphs, $S_{n}^{\bm{k}}$.
 
 \subsection{Issue and correction of the diametric bound}
 \label{Section:Issue and correction of the diametric bound}
@@ -631,7 +643,9 @@ When $T=m-1+(k+1)\bar{d}$ for some $k \in \mathbb{N}_{0}$ then the diametric bou
 For proof see Appendix \ref{Appendix:Proof of conditions on T for diametric attack}.
 
 \begin{myfigure}
+\begin{center}
 \input{Images/DiametricAttack(m_45,d_30).tex}
+\end{center}
 \caption{Best Upper Bound achievable under the diametric strategy}
 \label{Figure:Example of upper bound achieved by diametric attack}
 \end{myfigure}
@@ -1245,6 +1259,7 @@ and if $m \geq 2(n+|k|)$ then $V(S^{\bm{k}}_{n})=1$, achieved by any oscillation
 The proof is straight forward by the application of the simplification (Lemma 1 (4) in \cite{Alpern2011}) and the Hamiltonian solution(Theorem 13 (1) in \cite{Alpern2011}).
 
 \begin{myfigure}
+\begin{center}
 \begin{tikzpicture}[-,auto,node distance=2cm,
                     thick,main node/.style={circle,draw,font=\sffamily\Large\bfseries}]
 
@@ -1305,6 +1320,7 @@ The proof is straight forward by the application of the simplification (Lemma 1 
    (20) edge (21);
   
 \end{tikzpicture}
+\end{center}
 \caption{Simplification of $C_{16}$ to $S^{3,2}_{3}$.}
 \label{Figure:Example of simplification to general star graph}
 \end{myfigure}
@@ -1716,7 +1732,7 @@ The idea of requiring the complete graph of connection between centres is not ne
 %
 %Our numerical experiments would seem to indicate that splitting the index amongst all states, $s \leq B$ does not seem to provide any increase in the heuristics performance.
 
-\section{Strategic Patroller with Random Attackers and Local-observations}
+\section{Patrolling problem with local-observations}
 \label{Section:Patrolling games with random attackers and local-observations}
 We now look at altering the work summarized in Section \ref{Section:Review of patrolling problem with random attackers} to incorporate suspicious behaviour of attackers who arrive while the patroller is present.
 
@@ -2025,7 +2041,7 @@ We run into the same problem as before, with a countably infinite state space, $
 
 To bound $\bm{v}$ we introduce a observable capacity, $\bm{b}$, where $b_{i}$ is the maximum number of local-observations at node $i$. We assume that all other attackers fail once this capacity is reached.
 
-\begin{figure}[H]
+\begin{figure}
 \begin{center}
 \resizebox{0.8\linewidth}{!}{
 \begin{tikzpicture}[-,auto,node distance=1cm,
@@ -2144,7 +2160,7 @@ As we only have positive costs, we know that $g \geq 0$ and hence the above argu
 
 \begin{myfigure}
 \begin{center}
-\resizebox{0.8\linewidth}{!}{
+%\resizebox{0.8\linewidth}{!}{
 \begin{tikzpicture}[-,auto,node distance=1cm,
                     thick,main node/.style={circle,fill=white,draw,font=\sffamily\large,minimum size=0.5cm}]
  \foreach \x in {0,...,5}
@@ -2190,7 +2206,7 @@ As we only have positive costs, we know that $g \geq 0$ and hence the above argu
    
 
 \end{tikzpicture}
-}
+%}
 \end{center}
 \caption{Optimal movements for $s<B$.}
 \end{myfigure}
@@ -2216,7 +2232,7 @@ Now we introduce a policy, $\pi_{\text{Neg}}(s,v)=0 \; \forall (s,v) \in \Omega$
 
 \begin{myfigure}
 \begin{center}
-\resizebox{0.8\linewidth}{!}{
+%\resizebox{0.8\linewidth}{!}{
 \begin{tikzpicture}[-,auto,node distance=1cm,
                     thick,main node/.style={circle,fill=white,draw,font=\sffamily\large,minimum size=0.5cm}]
  \foreach \x in {0,...,5}
@@ -2269,7 +2285,7 @@ Now we introduce a policy, $\pi_{\text{Neg}}(s,v)=0 \; \forall (s,v) \in \Omega$
        \draw[-] (1.5*6,-1.5*0.6) to (1.5*6,1.5*0.4);                                    
 
 \end{tikzpicture}
-}
+%}
 \end{center}
 \caption{Optimal movements for $s<B$ and $s=B+1$.}
 \end{myfigure}
@@ -2304,7 +2320,7 @@ A policy, $\pi_{\text{Th}}(v_{\text{crit}})$, is said to be a \textit{threshold}
 
 \begin{myfigure}
 \begin{center}
-\resizebox{0.9\linewidth}{!}{
+%\resizebox{0.9\linewidth}{!}{
 \begin{tikzpicture}[-,auto,node distance=1cm,
                     thick,main node/.style={circle,fill=white,draw,font=\sffamily\large,minimum size=0.5cm}]
  \foreach \x in {0,...,5}
@@ -2368,7 +2384,7 @@ A policy, $\pi_{\text{Th}}(v_{\text{crit}})$, is said to be a \textit{threshold}
    
 
 \end{tikzpicture}
-}
+%}
 \end{center}
 \caption{Threshold policy, $\pi_{\text{Th}}(2)$, with \textcolor{blue}{$b_{j}=5$} and \textcolor{red}{$B_{j}=4$} (e.g. $X_{j} \leq 3.7$).}
 \end{myfigure}
@@ -2486,7 +2502,9 @@ We now look at using our heuristic, at certain depths to see how good it is agai
 For the same scenario, we run IRH($d$),IPH($d$) for $d=1,2,3,4$ and return the percentage error.
 
 \begin{myfigure}
+\begin{center}
 \input{Images/BHvsPHInitialPlainComplete.tex}
+\end{center}
 \caption{Frequency density of percentage errors made by heuristics in simulations.}
 \label{Figure:Initial RH and PH for plain index}
 \end{myfigure}
@@ -2506,7 +2524,9 @@ W_{i}(s_{i},v_{i})&=\begin{cases}
 and run the same scenarios with our changed index.
 
 \begin{myfigure}
+\begin{center}
 \input{Images/BHvsPHNewPlainComplete.tex}
+\end{center}
 \caption{Frequency density of percentage errors made by heuristics in simulations for new index.}
 \label{Figure:RH and PH for new plain index}
 \end{myfigure}
@@ -2555,7 +2575,7 @@ We also provide two sample paths for the patroller to highlight that we conjectu
 
 \begin{myfigure}
 \begin{center}
-\resizebox{!}{0.8\linewidth}{
+%\resizebox{!}{0.8\linewidth}{
 \begin{tikzpicture}[-,auto,node distance=1cm,
                     thick,main node/.style={circle,fill=white,draw,font=\sffamily\Large\bfseries,minimum size=0.5cm}]
  \foreach \x in {0,...,9}
@@ -2667,7 +2687,7 @@ We also provide two sample paths for the patroller to highlight that we conjectu
 \end{scope}
 
                    
-\end{tikzpicture}}
+\end{tikzpicture}%}
 \end{center}
 \caption{Grid solution of $m=6$ on $S_{7}^{5}$ with two example paths}
 \label{Figure:Example of attack below bound}
@@ -2719,7 +2739,7 @@ A policy, $\pi_{\text{Th}}(\bm{v}_{\text{crit}})$, is said to be a \textit{multi
 
 \begin{myfigure}
 \begin{center}
-\resizebox{0.9\linewidth}{!}{
+%\resizebox{0.9\linewidth}{!}{
 \begin{tikzpicture}[-,auto,node distance=1cm,
                     thick,main node/.style={circle,fill=white,draw,font=\sffamily\large,minimum size=0.5cm}]
  \foreach \x in {0,...,5}
@@ -2802,8 +2822,7 @@ A policy, $\pi_{\text{Th}}(\bm{v}_{\text{crit}})$, is said to be a \textit{multi
 \node[main node] (Example) [shift={(-1,0.5)}] at (05) {$(s_{j},v_{j})$};
    
 
-\end{tikzpicture}
-}
+\end{tikzpicture}%}
 \end{center}
 \caption{Threshold policy, $\pi_{\text{Th}}(6,4,2,2,0)$, with \textcolor{blue}{$b_{j}=5$} and \textcolor{red}{$B_{j}=4$} (e.g. $X_{j} \leq 3.7$)}
 \end{myfigure}
@@ -3538,15 +3557,7 @@ Then we notice two cases:
 
 Hence the best in the first case is $r=m-\bar{d}-1$ for $\frac{m(k+3)-2\bar{d}-2}{2(k\bar{d}+m-1)}$ and in the second case $r=m-\bar{d}$ for $\frac{m(k+3)-2\bar{d}}{2(k\bar{d}+m)}$, hence it is clear the best is $r=m-\bar{d}$.
 
-Then we show that the maximal subsequence tends to the bound as $T \rightarrow \infty$, i.e as $k \rightarrow \infty$.
-When substituted, we get that
-$M=(k+1)$ and so the formula becomes
-$m-\bar{d}+\pospart{m + m(k+2)} + \pospart{2m-1-(m-1+(k+2)\bar{d})}+\pospart{2m-1-(m-1+(k+3)\bar{d})}$
-giving $m-\bar{d}+(k+3)m + \pospart{m-(k+2)\bar{d}}+\pospart{m-(k+3)\bar{d}}$.
-As $m < 2\bar{d}$ then we get $m(k+4) -\bar{d}$ caught out of $2(m+k\bar{d})$
-giving a fraction of $\frac{m(k+4)-\bar{d}}{2(m+k\bar{d})} \rightarrow \frac{m}{2\bar{d}}$.
-
-Hence as the maximal subsequence tends down to the bound, it implies the result.
+Then we show that the maximal subsequence tends to the bound as $T \rightarrow \infty$, i.e as $k \rightarrow \infty$. Well the maximal subsequence is $\frac{m(k+3)-2 \bar{d}}{2(k \bar{d}+m)} \rightarrow \frac{m}{2 \bar{d}}$ as $k \rightarrow \infty$, hence as the maximal subsequence tends down to the bound, it implies the result stated.
 \end{proof}
 
 \subsection{Proof of time-limited diametric attack}
@@ -4245,5 +4256,5 @@ As discussed in \ref{Section:Review of patrolling problem with random attackers}
 &g+h(\bm{s}) \leq C(\bm{s},i) + h(\phi(\bm{s},i)) \quad \forall i \in \mathcal{A}(\bm{s}) \quad \forall \bm{s} \in \Omega
 \end{align*}
 
-This multichain linear program idea can be used for all finite state space MDP's and so it be easily adapted to deal with a change in cost and state space as in \ref{Section:Patrolling games with random attackers and local-observations}. We also note that it is possible to determine the attack using the dual linear program (see equations 9.3.4,9.3.5,9.3.6 in \cite{Puterman1994})
+This multichain linear program idea can be used for all finite state space MDP's and so it be easily adapted to deal with a change in cost and state space as in \ref{Section:Patrolling games with random attackers and local-observations}. We also note that it is possible to determine the attack using the dual linear program (see equations 9.3.4, 9.3.5, 9.3.6 in \cite{Puterman1994})
 \end{document}
